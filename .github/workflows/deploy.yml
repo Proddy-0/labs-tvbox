@@ -8,8 +8,7 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - name: Puxar atualizacoes direto na TV Box
+      - name: Puxar atualizacoes na TV Box
         run: |
           cd /var/www/html
           git pull origin main
-          sudo chown -R www-data:www-data /var/www/html/
