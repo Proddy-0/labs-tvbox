@@ -2,7 +2,7 @@ name: Deploy Automatico Proddyt Labs
 
 on:
   push:
-    branches: ["main"] # Toda vez que você der push na branch main, o deploy dispara
+    branches: [ "main" ]
 
 jobs:
   deploy:
@@ -14,7 +14,7 @@ jobs:
       - name: Executar Deploy via SSH na TV Box
         uses: appleboy/ssh-action@master
         with:
-          host: 192.168.1.121 # IP da TV Box
+          host: tvbox.proddyt.com # <--- Mudou do IP local para o domínio do Cloudflare Tunnel
           username: proddyt
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
