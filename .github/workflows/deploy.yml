@@ -14,9 +14,10 @@ jobs:
       - name: Executar Deploy via SSH na TV Box
         uses: appleboy/ssh-action@master
         with:
-          host: tvbox.proddyt.com # <--- Mudou do IP local para o domínio do Cloudflare Tunnel
-          username: proddyt
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: tvbox.proddyt.com   # Endereço público que passa pelo Cloudflare Tunnel
+          username: proddyt         # O seu usuário lá na TV Box (visto no terminal: proddyt@rk322x-box)
+          port: 22                  # Porta padrão do SSH
+          key: ${{ secrets.SSH_PRIVATE_KEY }}  # Aquela chave privada gigante que você salvou nos Secrets
           script: |
             cd /var/www/html
             git pull origin main
