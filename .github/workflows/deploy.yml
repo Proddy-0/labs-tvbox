@@ -1,4 +1,4 @@
-name: Deploy via SCP
+name: Deploy Automatico Labs
 
 on:
   push:
@@ -6,18 +6,14 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted # <--- Aqui está o segredo: usa a TV Box como servidor do GitHub
     steps:
       - name: Checkout do Código
         uses: actions/checkout@v4
 
-      - name: Enviar arquivos para a TV Box
-        uses: appleboy/scp-action@master
-        with:
-          host: tvbox.proddyt.com
-          username: proddyt
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: "."
-          target: "/var/www/html"
-          rm: false # Deixa como false para não apagar arquivos que já estão lá por engano
+      - name: Copiar arquivos para a pasta do Nginx
+        run: |
+          # Copia tudo da pasta do repo para o diretório web do Nginx
+          sudo cp -r . /var/www/html/
+          # Garante que o Nginx é o dono dos arquivos
+          sudo chown -R www-data:www-data /var/www/html/
