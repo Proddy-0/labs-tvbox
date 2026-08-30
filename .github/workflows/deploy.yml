@@ -1,0 +1,22 @@
+name: Deploy Automatico Proddyt Labs
+
+on:
+  push:
+    branches: ["main"] # Toda vez que você der push na branch main, o deploy dispara
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Executar Deploy via SSH na TV Box
+        uses: appleboy/ssh-action@master
+        with:
+          host: 192.168.1.121 # IP da TV Box
+          username: proddyt
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html
+            git pull origin main
