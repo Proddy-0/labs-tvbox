@@ -1,0 +1,252 @@
+:root {
+  --bg-color: #09090b; /* Fundo super escuro */
+  --card-bg: #121217; /* Fundo do card */
+  --card-border: #23232c;
+  --text-main: #f3f3f6;
+  --text-muted: #a1a1aa;
+  --accent-green: #34d399; /* Aquele verde menta do print */
+  --accent-purple: #818cf8;
+  --tag-bg: #202029;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Customização da Barra de Rolagem (Scrollbar) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a35;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f4e;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+/* HEADER DO TOPO */
+.top-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 25px 40px;
+  border-bottom: 1px solid var(--card-border);
+  background: rgba(18, 18, 23, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.logo-box {
+  font-family: "Fira Code", monospace;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--accent-purple);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 10px 15px;
+  background: var(--card-bg);
+}
+
+.header-titles h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.header-titles span {
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* HEADER DA SEÇÃO CATÁLOGO */
+.section-header {
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+.section-tag {
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-green);
+  letter-spacing: 1px;
+}
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 10px 0;
+  font-family: "Fira Code", monospace;
+}
+.section-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-family: "Fira Code", monospace;
+}
+
+/* GRID E CARDS */
+.grid-catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.craft-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 25px;
+  text-decoration: none;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+.craft-card:hover {
+  transform: translateY(-3px);
+  border-color: #3f3f4e;
+  box-shadow: 0 10px 30px -15px rgba(129, 140, 248, 0.2);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-category {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cat-id {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #3f3f4e;
+  font-family: "Fira Code", monospace;
+  font-size: 0.7rem;
+  color: var(--accent-purple);
+}
+.cat-name {
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-green);
+  letter-spacing: 0.5px;
+}
+.card-status {
+  font-size: 0.75rem;
+  color: #525260;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+.card-desc {
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 25px 0;
+  flex-grow: 1;
+}
+
+.card-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tag {
+  background-color: var(--tag-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-family: "Fira Code", monospace;
+  font-size: 0.7rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: color 0.2s;
+}
+.craft-card:hover .tag {
+  color: var(--text-main);
+  border-color: #3f3f4e;
+}
+
+/* HEADER DO TOPO */
+.top-header {
+  display: flex;
+  justify-content: space-between; /* Joga um pra cada ponta */
+  align-items: center;
+  padding: 25px 40px;
+  border-bottom: 1px solid var(--card-border);
+  background: rgba(18, 18, 23, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-box {
+  font-family: "Fira Code", monospace;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--accent-purple);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 10px 15px;
+  background: var(--card-bg);
+}
+
+.header-titles h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.header-titles span {
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* WIDGET RELÓGIO/TEMP */
+.header-widget {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Fira Code", monospace;
+  color: var(--accent-green);
+  background: var(--card-bg);
+  padding: 8px 15px;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.header-widget .separator {
+  color: var(--card-border);
+}

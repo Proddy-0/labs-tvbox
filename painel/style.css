@@ -1,0 +1,290 @@
+:root {
+  --bg: #121214;
+  --card-bg: #202024;
+  --text: #e1e1e6;
+  --accent: #00adb5;
+  --border: #323238;
+}
+
+/* Ajuste pro painel ocupar exatamente 100% da tela */
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Trava a rolagem da página inteira */
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  grid-template-rows: 90px 1fr;
+  gap: 15px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+/* Topo: Horário e Pomodoro */
+.top-bar {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.time-box {
+  font-size: 2.5rem;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.pomodoro-box {
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+}
+.pomo-display {
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+.pomo-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.pomo-controls button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.pomo-controls input {
+  width: 50px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  padding: 6px;
+}
+
+/* Kanban */
+.kanban-container {
+  overflow: hidden;
+}
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  height: 100%;
+}
+.kanban-col {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.kanban-col h3 {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+/* Rolagem interna dos cards do kanban */
+.kanban-cards {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+/* Esconde a barra de rolagem, mas deixa rolar */
+.kanban-cards::-webkit-scrollbar {
+  width: 4px;
+}
+.kanban-cards::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.task-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 10px;
+  border-radius: 6px;
+  cursor: grab;
+  position: relative;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+}
+.task-card button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: transparent;
+  color: #ef4444;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.add-task-btn {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: 1px dashed var(--accent);
+  color: var(--accent);
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: auto;
+  font-weight: bold;
+}
+.add-task-btn:hover {
+  background: rgba(0, 173, 181, 0.1);
+}
+
+/* Coluna da Direita */
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow: hidden;
+}
+
+/* Links Editáveis */
+.links-panel {
+  flex: 0 0 auto;
+}
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+.links-grid::-webkit-scrollbar {
+  width: 4px;
+}
+.links-grid::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+.link-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 8px;
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.link-item:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.del-link {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  background: transparent;
+  color: #ef4444;
+  border: none;
+  cursor: pointer;
+  font-size: 0.7rem;
+  display: none;
+}
+.link-item:hover .del-link {
+  display: block;
+}
+.add-link-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.add-link-form input {
+  width: 100%;
+  padding: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: white;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.add-link-form button {
+  width: 100%;
+  padding: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Bloco de Notas */
+.notes-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+textarea {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px;
+  border-radius: 8px;
+  resize: none;
+  box-sizing: border-box;
+  font-size: 15px;
+  line-height: 1.5;
+  font-family: inherit;
+}
+textarea:focus {
+  outline: 1px solid var(--accent);
+}

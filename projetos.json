@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "categoria": "PRODUTIVIDADE",
+    "titulo": "Dashboard Pessoal",
+    "descricao": "Meu painel de produtividade com Kanban e Pomodoro.",
+    "status": "Online",
+    "tags": ["Kanban", "Tools", "UI"],
+    "url": "/painel/index.html"
+  },
+  {
+    "id": "2",
+    "categoria": "BACKEND",
+    "titulo": "Sistema PHP",
+    "descricao": "Área de testes e desenvolvimento backend.",
+    "status": "Dev",
+    "tags": ["PHP", "Testes", "Server"],
+    "url": "/php.php"
+  }
+]
