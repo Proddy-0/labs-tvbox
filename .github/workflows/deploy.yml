@@ -6,14 +6,10 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted # <--- Aqui está o segredo: usa a TV Box como servidor do GitHub
+    runs-on: self-hosted
     steps:
-      - name: Checkout do Código
-        uses: actions/checkout@v4
-
-      - name: Copiar arquivos para a pasta do Nginx
+      - name: Puxar atualizacoes direto na TV Box
         run: |
-          # Copia tudo da pasta do repo para o diretório web do Nginx
-          sudo cp -r . /var/www/html/
-          # Garante que o Nginx é o dono dos arquivos
+          cd /var/www/html
+          git pull origin main
           sudo chown -R www-data:www-data /var/www/html/
