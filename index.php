@@ -52,7 +52,7 @@ if ($json_data === false) {
         <section class="section-header">
             <span class="section-tag">— PAGES & PROJETOS</span>
             <h2 class="section-title">Catálogo</h2>
-            <p class="section-desc">Projetos, exercícios do CTI, labs visuais e páginas publicadas por este craft.</p>
+            <p class="section-desc">Hub pessoal de projetos, ideias e estudos, com tarefas organizadas no GitHub Project Proddyt Labs.</p>
         </section>
 
         <section class="grid-catalogo">

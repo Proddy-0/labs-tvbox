@@ -19,19 +19,55 @@ O `labs-tvbox` funciona como ponto central para navegação dos repositórios `l
 - [labs-punch](https://github.com/Proddy-0/labs-punch)
 - [labs-vector](https://github.com/Proddy-0/labs-vector)
 
-## ✅ Gestão de tarefas (GitHub Project: Proddyt Labs)
-Use o Project **Proddyt Labs** como quadro operacional único do ecossistema:
+## ✅ Hub de gestão (GitHub Project: Proddyt Labs)
+Use o Project **Proddyt Labs** como centro pessoal de execução e conhecimento:
 
-- **Concluído (Done):**
-  - Estrutura inicial do hub em `labs-tvbox`
-  - Catálogo dinâmico via `projetos.json`
-  - Publicação contínua com Nginx + PHP-FPM + Cloudflare Tunnel
-- **Em aberto (To do / Missing):**
-  - Padronizar README dos repositórios `labs-*`
-  - Revisar status de cada repositório e registrar tarefas faltantes
-  - Manter backlog priorizado com próximas entregas do ecossistema
+- URL do Project: <https://github.com/users/Proddy-0/projects/3/views/1>
+- Nome mantido: **Proddyt Labs**
 
-> Dica de operação do Project: manter colunas **Backlog**, **Doing** e **Done**, e usar labels por repositório (ex.: `repo:labs-book`, `repo:labs-tools`) para visão rápida do que já foi entregue vs. pendente.
+### Views sugeridas (simples e práticas)
+- **Projetos** → foco em implementação ativa
+- **Ideias** → brainstorm e experimentos futuros
+- **Estudos** → resumos, matérias e revisões
+- **Tarefas / Backlog** → ações operacionais e manutenção
+- **Concluídos** → histórico do que foi finalizado
+
+### Campos recomendados para separar bem os itens
+- **Tipo** (single select): `Projeto`, `Ideia`, `Estudo`, `Tarefa`
+- **Status** (single select): `Backlog`, `Doing`, `Done`, `Blocked`
+- **Repositório** (text): `labs-tvbox`, `labs-book`, etc.
+- **Prioridade** (single select): `Alta`, `Média`, `Baixa`
+
+### Reclassificação inicial dos itens existentes
+**Concluídos (Done)**
+- Estrutura inicial do hub em `labs-tvbox`
+- Catálogo dinâmico via `projetos.json`
+- Publicação contínua com Nginx + PHP-FPM + Cloudflare Tunnel
+
+**Projetos (faltando / em andamento)**
+- Implementar notificações push
+- Sistema de Project + Task + TimeEntry
+- Finalizar fluxo `/oauth/authorize` com tela de consent
+- Implementar refresh tokens
+- Implementar PKCE
+- Admin UI para gerenciar clients OAuth
+
+**Ideias (faltando / backlog)**
+- Considerar migração para Vue/Vite quando crescer
+- Decidir Vector vs GitHub Projects
+- Decidir caso de uso real do Wire
+- Definir relação Nexo ↔ `context/`
+
+**Estudos (faltando / backlog)**
+- Adicionar resumo de C++
+- Adicionar resumo de SQL
+- Adicionar resumo de Aplicativos I (HTML/CSS)
+- Adicionar resumo de Gestão de Negócios
+- Adicionar resumo de Sistemas Operacionais
+
+**Tarefas (faltando / operacionais)**
+- Extrair `groups/roles` para módulo compartilhado
+- Isolamento real por grupo para managers
 
 ## 📡 Acessos e Links
 * **Domínio Público:** [https://tvbox.proddyt.com](https://tvbox.proddyt.com)
