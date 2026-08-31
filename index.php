@@ -4,6 +4,7 @@ $projetos = json_decode($json_data, true);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +14,14 @@ $projetos = json_decode($json_data, true);
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
     <header class="top-header">
         <!-- Lado Esquerdo: Logo e Títulos -->
         <div class="header-left">
             <div class="logo-box">&lt;.&gt;</div>
             <div class="header-titles">
-                <h1>Proddyt Labs</h1>
+                <h1>Proddyt Labssssssssssssssssssssssss</h1>
                 <span>Forjando código, testando limites e quebrando a web em ambiente controlado.</span>
             </div>
         </div>
@@ -67,7 +69,10 @@ $projetos = json_decode($json_data, true);
         // Relógio
         function updateClock() {
             const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('clock').innerText = now.toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
         }
         setInterval(updateClock, 1000);
         updateClock();
@@ -85,4 +90,5 @@ $projetos = json_decode($json_data, true);
         setInterval(fetchWeather, 180000);
     </script>
 </body>
+
 </html>
