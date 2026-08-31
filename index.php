@@ -1,6 +1,20 @@
 <?php
-$json_data = file_get_contents('projetos.json');
-$projetos = json_decode($json_data, true);
+$json_path = __DIR__ . '/projetos.json';
+$json_data = @file_get_contents($json_path);
+$projetos = [];
+$json_error = null;
+
+if ($json_data === false) {
+    $json_error = 'Erro ao carregar o catálogo: não foi possível ler projetos.json.';
+} else {
+    $decoded = json_decode($json_data, true);
+
+    if (!is_array($decoded)) {
+        $json_error = 'Erro ao carregar o catálogo: projetos.json inválido (' . json_last_error_msg() . ').';
+    } else {
+        $projetos = $decoded;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -42,26 +56,30 @@ $projetos = json_decode($json_data, true);
         </section>
 
         <section class="grid-catalogo">
-            <?php foreach ($projetos as $proj): ?>
-                <a href="<?= $proj['url'] ?>" class="craft-card">
-                    <div class="card-top">
-                        <div class="card-category">
-                            <span class="cat-id"><?= $proj['id'] ?></span>
-                            <span class="cat-name"><?= $proj['categoria'] ?></span>
+            <?php if ($json_error !== null): ?>
+                <p class="card-desc"><?= htmlspecialchars($json_error, ENT_QUOTES, 'UTF-8') ?></p>
+            <?php else: ?>
+                <?php foreach ($projetos as $proj): ?>
+                    <a href="<?= $proj['url'] ?>" class="craft-card">
+                        <div class="card-top">
+                            <div class="card-category">
+                                <span class="cat-id"><?= $proj['id'] ?></span>
+                                <span class="cat-name"><?= $proj['categoria'] ?></span>
+                            </div>
+                            <span class="card-status"><?= $proj['status'] ?></span>
                         </div>
-                        <span class="card-status"><?= $proj['status'] ?></span>
-                    </div>
 
-                    <h3 class="card-title"><?= $proj['titulo'] ?></h3>
-                    <p class="card-desc"><?= $proj['descricao'] ?></p>
+                        <h3 class="card-title"><?= $proj['titulo'] ?></h3>
+                        <p class="card-desc"><?= $proj['descricao'] ?></p>
 
-                    <div class="card-tags">
-                        <?php foreach ($proj['tags'] as $tag): ?>
-                            <span class="tag"><?= $tag ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                </a>
-            <?php endforeach; ?>
+                        <div class="card-tags">
+                            <?php foreach ($proj['tags'] as $tag): ?>
+                                <span class="tag"><?= $tag ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </section>
     </main>
 
