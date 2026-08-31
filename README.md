@@ -1,6 +1,37 @@
-# 🚀 Proddyt Hub - TV Box Server
+# 🚀 Proddyt Labs Hub (labs-tvbox)
 
-Este repositório/servidor é o meu laboratório pessoal e hub de projetos estáticos e dinâmicos, rodando 24/7 de forma super econômica.
+Este repositório/servidor é o hub principal do ecossistema **Proddyt Labs** e também o ambiente pessoal de projetos estáticos e dinâmicos, rodando 24/7 de forma econômica.
+
+## 🧭 Sobre o projeto
+O `labs-tvbox` funciona como ponto central para navegação dos repositórios `labs-*`, catálogo de experimentos e operação contínua do ambiente web.
+
+## 📈 Status
+- **Hub (`labs-tvbox`):** Ativo
+- **Ecossistema `labs-*`:** Em organização e padronização de documentação
+
+## 🔗 Ecossistema Labs (repositórios)
+- [labs-tvbox](https://github.com/Proddy-0/labs-tvbox) (hub atual)
+- [labs-book](https://github.com/Proddy-0/labs-book)
+- [labs-craft](https://github.com/Proddy-0/labs-craft)
+- [labs-tools](https://github.com/Proddy-0/labs-tools)
+- [labs-nexo](https://github.com/Proddy-0/labs-nexo)
+- [labs-wire](https://github.com/Proddy-0/labs-wire)
+- [labs-punch](https://github.com/Proddy-0/labs-punch)
+- [labs-vector](https://github.com/Proddy-0/labs-vector)
+
+## ✅ Gestão de tarefas (GitHub Project: Proddyt Labs)
+Use o Project **Proddyt Labs** como quadro operacional único do ecossistema:
+
+- **Concluído (Done):**
+  - Estrutura inicial do hub em `labs-tvbox`
+  - Catálogo dinâmico via `projetos.json`
+  - Publicação contínua com Nginx + PHP-FPM + Cloudflare Tunnel
+- **Em aberto (To do / Missing):**
+  - Padronizar README dos repositórios `labs-*`
+  - Revisar status de cada repositório e registrar tarefas faltantes
+  - Manter backlog priorizado com próximas entregas do ecossistema
+
+> Dica de operação do Project: manter colunas **Backlog**, **Doing** e **Done**, e usar labels por repositório (ex.: `repo:labs-book`, `repo:labs-tools`) para visão rápida do que já foi entregue vs. pendente.
 
 ## 📡 Acessos e Links
 * **Domínio Público:** [https://tvbox.proddyt.com](https://tvbox.proddyt.com)
@@ -42,3 +73,5 @@ O processo para subir um novo laboratório ou página no Hub é automático e n�
        "tags": ["PHP", "API"],
        "url": "/novo-projeto/index.php"
    }
+   ```
+4. **Salve o arquivo:** após salvar, o novo projeto passa a aparecer automaticamente na página inicial.
