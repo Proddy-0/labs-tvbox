@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protótipo de Estrutura - Home Page</title>
+    <link rel="stylesheet" href="css/wireframe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body id="top">
+
+    <!-- Indicador do Protótipo -->
+    <div class="proto-page-header">
+        <div class="container">
+            <h1><i class="fa-solid fa-layer-group"></i> PROTÓTIPO ESTRUTURAL (HOME PAGE WIREFRAME)</h1>
+        </div>
+    </div>
+
+    <!-- HEADER FIXO EM UMA ÚNICA LINHA COMPACTA COM ÍCONES -->
+    <header class="proto-header-sticky">
+        <div class="container">
+            <div class="proto-header-row">
+
+                <!-- Logo -->
+                <div class="proto-box proto-logo-compact solid">
+                    <i class="fa-solid fa-bolt" style="color: var(--proto-accent); margin-right: 6px;"></i>
+                    <span>[ LOGO ]</span>
+                </div>
+
+                <!-- Busca Compacta -->
+                <div class="proto-box proto-search-compact">
+                    <i class="fa-solid fa-magnifying-glass" style="margin-right: 6px; flex-shrink: 0;"></i>
+                    <span>[ BUSCA ]</span>
+                </div>
+
+                <!-- Botões e Links com Ícones em 1 Única Linha -->
+                <nav class="proto-nav-group">
+                    <a href="#top" class="proto-box proto-btn-compact accent" title="Home">
+                        <i class="fa-solid fa-house" style="margin-right: 4px;"></i> [ Home ]
+                    </a>
+                    <a href="#produtos" class="proto-box proto-btn-compact" title="Produtos">
+                        <i class="fa-solid fa-store" style="margin-right: 4px;"></i> [ Produtos ]
+                    </a>
+                    <a href="#diferenciais" class="proto-box proto-btn-compact" title="Sobre Nós">
+                        <i class="fa-solid fa-circle-info" style="margin-right: 4px;"></i> [ Sobre ]
+                    </a>
+                    <a href="#video" class="proto-box proto-btn-compact" title="Contato">
+                        <i class="fa-solid fa-envelope" style="margin-right: 4px;"></i> [ Contato ]
+                    </a>
+                    <a href="#footer" class="proto-box proto-btn-compact" title="Desenvolvedores">
+                        <i class="fa-solid fa-code" style="margin-right: 4px;"></i> [ Devs ]
+                    </a>
+                    <a href="#top" class="proto-box proto-btn-compact accent" title="Carrinho de Compras">
+                        <i class="fa-solid fa-cart-shopping" style="margin-right: 4px;"></i> [ Carrinho (0) ]
+                    </a>
+                </nav>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Banner Principal (Hero Carrossel) -->
+        <section id="banner" class="proto-hero-section">
+            <div class="proto-box proto-hero-box accent">
+                <span class="proto-tag">[ SEÇÃO: BANNER PRINCIPAL / HERO CARROSSEL ]</span>
+                <h2 style="font-size: 1.1rem; margin: 0.5rem 0; text-align: center;">[ TÍTULO DA PROMOÇÃO PRINCIPAL / SLIDE HERO ]</h2>
+                <p style="color: var(--proto-text-muted); font-size: 0.85rem; text-align: center;">[ SUBTÍTULO COM DESCRIÇÃO DA OFERTA EM DESTAQUE ]</p>
+
+                <div style="margin-top: 0.75rem;">
+                    <div class="proto-box proto-btn-compact accent" style="padding: 0.6rem 1.5rem; height: auto; display: inline-flex;">
+                        <span><i class="fa-solid fa-arrow-right" style="margin-right: 6px;"></i> [ BOTÃO DE AÇÃO: Saiba Mais / Comprar ]</span>
+                    </div>
+                </div>
+
+                <div class="proto-hero-controls">
+                    <div class="proto-box proto-btn-compact"><i class="fa-solid fa-chevron-left"></i> [ Anterior ]</div>
+                    <div class="proto-box proto-btn-compact">[ Indicadores: • • • ]</div>
+                    <div class="proto-box proto-btn-compact">[ Próximo ] <i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Produtos em Destaque -->
+        <section id="produtos">
+            <div class="proto-box proto-section-title">
+                <strong><i class="fa-solid fa-store"></i> [ SEÇÃO: PRODUTOS EM DESTAQUE - TÍTULO E SUBTÍTULO ]</strong>
+            </div>
+
+            <div class="proto-products-grid">
+
+                <!-- Card Produto 1 -->
+                <article class="proto-product-card">
+                    <span class="proto-tag" style="align-self: flex-start;">[ BADGE: Oferta ]</span>
+                    <div class="proto-box proto-img-area">
+                        <i class="fa-regular fa-image" style="font-size: 1.5rem; margin-right: 8px;"></i>
+                        <span>[ ÁREA DA IMAGEM DO PRODUTO 1 ]</span>
+                    </div>
+                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ TÍTULO: Produto 1 ]</div>
+                    <div class="proto-box" style="padding: 0.5rem; font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO DO PRODUTO 1 ]</div>
+                    <div class="proto-box solid" style="padding: 0.5rem; color: var(--proto-accent);">[ PREÇO: R$ 100,00 ]</div>
+                    <div class="proto-box proto-btn-compact accent" style="justify-content: center; height: 38px;">
+                        <i class="fa-solid fa-cart-plus" style="margin-right: 6px;"></i>
+                        <span>[ BOTÃO: Adicionar ]</span>
+                    </div>
+                </article>
+
+                <!-- Card Produto 2 -->
+                <article class="proto-product-card">
+                    <span class="proto-tag" style="align-self: flex-start;">[ BADGE: Novo ]</span>
+                    <div class="proto-box proto-img-area">
+                        <i class="fa-regular fa-image" style="font-size: 1.5rem; margin-right: 8px;"></i>
+                        <span>[ ÁREA DA IMAGEM DO PRODUTO 2 ]</span>
+                    </div>
+                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ TÍTULO: Produto 2 ]</div>
+                    <div class="proto-box" style="padding: 0.5rem; font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO DO PRODUTO 2 ]</div>
+                    <div class="proto-box solid" style="padding: 0.5rem; color: var(--proto-accent);">[ PREÇO: R$ 200,00 ]</div>
+                    <div class="proto-box proto-btn-compact accent" style="justify-content: center; height: 38px;">
+                        <i class="fa-solid fa-cart-plus" style="margin-right: 6px;"></i>
+                        <span>[ BOTÃO: Adicionar ]</span>
+                    </div>
+                </article>
+
+                <!-- Card Produto 3 -->
+                <article class="proto-product-card">
+                    <span class="proto-tag" style="align-self: flex-start;">[ BADGE: Desconto ]</span>
+                    <div class="proto-box proto-img-area">
+                        <i class="fa-regular fa-image" style="font-size: 1.5rem; margin-right: 8px;"></i>
+                        <span>[ ÁREA DA IMAGEM DO PRODUTO 3 ]</span>
+                    </div>
+                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ TÍTULO: Produto 3 ]</div>
+                    <div class="proto-box" style="padding: 0.5rem; font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO DO PRODUTO 3 ]</div>
+                    <div class="proto-box solid" style="padding: 0.5rem; color: var(--proto-accent);">[ PREÇO: R$ 300,00 ]</div>
+                    <div class="proto-box proto-btn-compact accent" style="justify-content: center; height: 38px;">
+                        <i class="fa-solid fa-cart-plus" style="margin-right: 6px;"></i>
+                        <span>[ BOTÃO: Adicionar ]</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Diferenciais da Empresa -->
+        <section id="diferenciais">
+            <div class="proto-box proto-section-title">
+                <strong><i class="fa-solid fa-award"></i> [ SEÇÃO: DIFERENCIAIS / POR QUE COMPRAR CONOSCO? ]</strong>
+            </div>
+
+            <div class="proto-features-grid">
+                <div class="proto-box proto-feature-box">
+                    <i class="fa-solid fa-truck-fast" style="font-size: 1.4rem; color: var(--proto-accent);"></i>
+                    <strong>[ ÍCONE + TÍTULO: Entrega Rápida ]</strong>
+                    <span style="font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO 1 ]</span>
+                </div>
+
+                <div class="proto-box proto-feature-box">
+                    <i class="fa-solid fa-shield-halved" style="font-size: 1.4rem; color: var(--proto-accent);"></i>
+                    <strong>[ ÍCONE + TÍTULO: Pagamento Seguro ]</strong>
+                    <span style="font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO 2 ]</span>
+                </div>
+
+                <div class="proto-box proto-feature-box">
+                    <i class="fa-solid fa-award" style="font-size: 1.4rem; color: var(--proto-accent);"></i>
+                    <strong>[ ÍCONE + TÍTULO: Produtos Originais ]</strong>
+                    <span style="font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO 3 ]</span>
+                </div>
+
+                <div class="proto-box proto-feature-box">
+                    <i class="fa-solid fa-headset" style="font-size: 1.4rem; color: var(--proto-accent);"></i>
+                    <strong>[ ÍCONE + TÍTULO: Suporte 24/7 ]</strong>
+                    <span style="font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO 4 ]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section style="margin-top: 2.5rem;">
+            <div class="proto-box solid" style="padding: 1.5rem; flex-direction: column; gap: 1rem;">
+                <span class="proto-tag">[ SEÇÃO: CAPTAÇÃO DE NEWSLETTER ]</span>
+                <strong>[ TÍTULO DA NEWSLETTER & SUBTÍTULO ]</strong>
+                <div style="display: flex; gap: 0.5rem; width: 100%; max-width: 500px; flex-wrap: wrap;">
+                    <div class="proto-box proto-search-compact" style="flex: 1 1 180px; max-width:100%;">
+                        <i class="fa-solid fa-envelope" style="margin-right:6px;"></i> [ INPUT: E-mail ]
+                    </div>
+                    <div class="proto-box proto-btn-compact accent">
+                        <span>[ BOTÃO: Inscrever-se ]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer id="footer" class="proto-footer">
+        <div class="container">
+            <div class="proto-footer-grid">
+
+                <!-- Coluna 1 -->
+                <div class="proto-footer-col">
+                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ LOGO NO RODAPÉ ]</div>
+                    <div class="proto-box" style="padding: 0.5rem; font-size: 0.75rem; color: var(--proto-text-muted);">[ RESUMO DA EMPRESA ]</div>
+                </div>
+
+                <!-- Coluna 2 -->
+                <div class="proto-footer-col">
+                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ INSTITUCIONAL ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-chevron-right" style="margin-right:4px;"></i> [ Sobre Nós ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-chevron-right" style="margin-right:4px;"></i> [ Missão e Visão ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-chevron-right" style="margin-right:4px;"></i> [ Contato ]</div>
+                </div>
+
+                <!-- Coluna 3 -->
+                <div class="proto-footer-col">
+                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ REDES SOCIAIS ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-brands fa-instagram" style="margin-right:4px;"></i> [ Instagram ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-brands fa-facebook" style="margin-right:4px;"></i> [ Facebook ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-brands fa-tiktok" style="margin-right:4px;"></i> [ TikTok ]</div>
+                </div>
+
+                <!-- Coluna 4 -->
+                <div class="proto-footer-col">
+                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ DESENVOLVEDORES ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-code" style="margin-right:4px;"></i> [ DEV 01 ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-code" style="margin-right:4px;"></i> [ DEV 02 ]</div>
+                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-code" style="margin-right:4px;"></i> [ DEV 03 ]</div>
+                </div>
+
+            </div>
+
+            <div class="proto-box solid" style="padding: 0.75rem; font-size: 0.75rem; color: var(--proto-text-muted); text-align: center;">
+                [ DIREITOS AUTORAIS / COPYRIGHT © 2026 - NOME DA EMPRESA ]
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTÃO FLUTUANTE DE ÂNCORA "VOLTAR AO TOPO" -->
+    <a href="#top" class="proto-scroll-top-btn" title="Voltar ao início da página">
+        <i class="fa-solid fa-arrow-up"></i>
+        <span>[ TOPO ]</span>
+    </a>
+
+</body>
+
+</html>

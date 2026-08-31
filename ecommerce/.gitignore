@@ -1,0 +1,12 @@
+# variaveis de ambiente
+.env
+
+# arquivos do sistema Windows
+Thumbs.db
+desktop.ini
+
+# arquivos do VS Code
+.vscode/
+
+# logs
+*.log

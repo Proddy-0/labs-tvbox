@@ -1,0 +1,329 @@
+/* ==========================================================================
+   PROTOTIPO "CRU" / LOW-FIDELITY WIREFRAME SYSTEM (HEADER COMPACTO & RESPONSIVO)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root {
+    --proto-bg: #090d16;
+    --proto-card: #111827;
+    --proto-border: #374151;
+    --proto-border-dashed: #4b5563;
+    --proto-accent: #60a5fa;
+    --proto-text: #e5e7eb;
+    --proto-text-muted: #9ca3af;
+    --proto-box-bg: rgba(31, 41, 55, 0.6);
+    --max-width: 1280px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: var(--proto-bg);
+    color: var(--proto-text);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+/* Anchor Target */
+#top {
+    scroll-margin-top: 100px;
+}
+
+/* Base Prototype Box */
+.proto-box {
+    background: var(--proto-box-bg);
+    border: 2px dashed var(--proto-border-dashed);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--proto-text);
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.proto-box.solid {
+    border-style: solid;
+    border-color: var(--proto-border);
+}
+
+.proto-box.accent {
+    border-color: var(--proto-accent);
+    background: rgba(96, 165, 250, 0.08);
+    color: var(--proto-accent);
+}
+
+.proto-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--proto-accent);
+    background: rgba(96, 165, 250, 0.15);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    margin-bottom: 0.4rem;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+/* Page Banner Indicator */
+.proto-page-header {
+    background: #0f172a;
+    border-bottom: 1px solid var(--proto-border);
+    padding: 0.5rem 0;
+    text-align: center;
+}
+
+.proto-page-header h1 {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--proto-accent);
+    text-transform: uppercase;
+}
+
+/* HEADER FIXO EM UMA ÚNICA LINHA COMPACTA */
+header.proto-header-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--proto-border);
+    padding: 0.6rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.proto-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    width: 100%;
+}
+
+.proto-logo-compact {
+    height: 38px;
+    font-weight: 700;
+    padding: 0 0.75rem;
+    flex-shrink: 0;
+}
+
+.proto-search-compact {
+    flex: 1 1 200px;
+    max-width: 320px;
+    height: 38px;
+}
+
+.proto-nav-group {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+}
+
+.proto-btn-compact {
+    height: 38px;
+    padding: 0 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.proto-hero-section {
+    padding: 1.75rem 0;
+}
+
+.proto-hero-box {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.75rem 1rem;
+    border-width: 2px;
+    white-space: normal;
+}
+
+.proto-hero-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Section Title Prototype */
+.proto-section-title {
+    text-align: center;
+    margin: 2rem 0 1.25rem 0;
+    padding: 0.6rem 0.85rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed var(--proto-border-dashed);
+    white-space: normal;
+}
+
+/* Products Grid Prototype */
+.proto-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.proto-product-card {
+    background: var(--proto-card);
+    border: 1px solid var(--proto-border);
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.proto-img-area {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
+    font-weight: 700;
+    white-space: normal;
+}
+
+/* Differentials Grid */
+.proto-features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.proto-feature-box {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    white-space: normal;
+    padding: 0.85rem;
+}
+
+/* Video Frame */
+.proto-video-frame {
+    width: 100%;
+    max-width: 800px;
+    height: 360px;
+    margin: 0 auto;
+    white-space: normal;
+}
+
+/* Footer Prototype */
+footer.proto-footer {
+    background: #050811;
+    border-top: 2px solid var(--proto-border);
+    padding: 2.5rem 0 1.5rem 0;
+    margin-top: 3rem;
+}
+
+.proto-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.proto-footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+/* FLOATING SCROLL TOP BUTTON */
+.proto-scroll-top-btn {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    z-index: 999;
+    background: rgba(15, 23, 42, 0.95);
+    border: 2px solid var(--proto-accent);
+    color: var(--proto-accent);
+    padding: 0.5rem 0.85rem;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.proto-scroll-top-btn:hover {
+    background: var(--proto-accent);
+    color: #090d16;
+    transform: translateY(-3px);
+}
+
+/* RESPONSIVIDADE MOBILE COMPACTA */
+@media (max-width: 992px) {
+    .proto-products-grid { grid-template-columns: repeat(2, 1fr); }
+    .proto-features-grid { grid-template-columns: repeat(2, 1fr); }
+    .proto-footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .proto-header-row {
+        flex-wrap: wrap;
+    }
+    
+    .proto-search-compact {
+        order: 3;
+        max-width: 100%;
+        width: 100%;
+        flex: 1 1 100%;
+    }
+    
+    .proto-nav-group {
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .proto-products-grid { grid-template-columns: 1fr; }
+    .proto-features-grid { grid-template-columns: 1fr; }
+    .proto-footer-grid { grid-template-columns: 1fr; }
+    .proto-video-frame { height: 210px; }
+}
