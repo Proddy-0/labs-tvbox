@@ -1,6 +1,42 @@
 [
   {
     "id": "1",
+    "categoria": "E-COMMERCE",
+    "titulo": "Loja E-commerce",
+    "descricao": "Plataforma de comércio eletrônico com catálogo de produtos.",
+    "status": "Dev",
+    "tags": ["HTML/CSS", "PHP", "SQL"],
+    "url": "/ecommerce/front/index.html"
+  },
+  {
+    "id": "2",
+    "categoria": "E-COMMERCE",
+    "titulo": "Ficha Técnica E-commerce",
+    "descricao": "Documento com as especificações técnicas do projeto.",
+    "status": "Finalizado",
+    "tags": ["DOCX", "PDF"],
+    "url": "https://docs.google.com/document/d/1HBWF3PRafylc-43ha8ku8Q8LD60rzlI6/preview"
+  },
+  {
+    "id": "3",
+    "categoria": "E-COMMERCE",
+    "titulo": "GitHub E-commerce",
+    "descricao": "Repositório do projeto no GitHub.",
+    "status": "Dev",
+    "tags": ["GIT", "HTML/CSS", "PHP", "SQL"],
+    "url": "https://github.com/Proddy-0/E-commerce"
+  },
+  {
+    "id": "4",
+    "categoria": "E-COMMERCE",
+    "titulo": "Tarefas E-commerce",
+    "descricao": "Lista de tarefas do projeto no Notion.",
+    "status": "Dev",
+    "tags": ["Notion", "Tarefas"],
+    "url": "https://app.notion.com/p/Tarefas-CTI-LogicDeck-156ea6c71d488346b0b8810561041ff1?source=copy_link"
+  },
+  {
+    "id": "100",
     "categoria": "PRODUTIVIDADE",
     "titulo": "Dashboard Pessoal",
     "descricao": "Meu painel de produtividade com Kanban e Pomodoro.",
@@ -8,22 +44,4 @@
     "tags": ["Kanban", "Tools", "UI"],
     "url": "/painel/index.html"
   },
-  {
-    "id": "2",
-    "categoria": "BACKEND",
-    "titulo": "Sistema PHP",
-    "descricao": "Área de testes e desenvolvimento backend.",
-    "status": "Dev",
-    "tags": ["PHP", "Testes", "Server"],
-    "url": "/php.php"
-  },
-  {
-    "id": "3",
-    "categoria": "E-COMMERCE",
-    "titulo": "Loja E-commerce",
-    "descricao": "Plataforma de comércio eletrônico com catálogo de produtos.",
-    "status": "Dev",
-    "tags": ["HTML/CSS", "PHP", "SQL"],
-    "url": "/ecommerce/front/index.html"
-  }
 ]
