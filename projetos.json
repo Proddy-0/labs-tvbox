@@ -16,5 +16,14 @@
     "status": "Dev",
     "tags": ["PHP", "Testes", "Server"],
     "url": "/php.php"
+  },
+  {
+    "id": "3",
+    "categoria": "E-COMMERCE",
+    "titulo": "Loja E-commerce",
+    "descricao": "Plataforma de comércio eletrônico com catálogo de produtos.",
+    "status": "Dev",
+    "tags": ["HTML/CSS", "PHP", "SQL"],
+    "url": "/ecommerce/front/index.html"
   }
 ]

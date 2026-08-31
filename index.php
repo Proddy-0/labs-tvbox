@@ -21,7 +21,7 @@ $projetos = json_decode($json_data, true);
         <div class="header-left">
             <div class="logo-box">&lt;.&gt;</div>
             <div class="header-titles">
-                <h1>Proddyt Labssssssssssssssssssssssss</h1>
+                <h1>Proddyt Labs</h1>
                 <span>Forjando código, testando limites e quebrando a web em ambiente controlado.</span>
             </div>
         </div>
