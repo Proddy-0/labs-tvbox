@@ -138,8 +138,6 @@ export function initPlasmaWave(container, options = {}) {
   if (!container) return () => {};
   const o = { ...DEFAULTS, ...options };
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {};
-
   let renderer;
   try {
     renderer = new Renderer({
