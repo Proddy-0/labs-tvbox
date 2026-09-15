@@ -30,7 +30,6 @@ if ($json_data === false) {
 </head>
 
 <body>
-    <div class="bg-fx" id="bgFx" aria-hidden="true"></div>
     <header class="top-header">
         <!-- Lado Esquerdo: Logo e Títulos -->
         <div class="header-left">
@@ -107,18 +106,6 @@ if ($json_data === false) {
         }
         fetchWeather();
         setInterval(fetchWeather, 180000);
-    </script>
-    <script type="module">
-      import { initPlasmaWave } from '/plasma-wave.js';
-      initPlasmaWave(document.getElementById('bgFx'), {
-        colors: ['#642fd5', '#642fd5'],
-        speed1: 0.2,
-        speed2: 0.2,
-        dir2: 1,
-        focalLength: 0.7,
-        bend1: 2,
-        bend2: 2
-      });
     </script>
 </body>
 
