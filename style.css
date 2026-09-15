@@ -5,8 +5,22 @@
   --text-main: #f3f3f6;
   --text-muted: #a1a1aa;
   --accent-green: #34d399; /* Aquele verde menta do print */
-  --accent-purple: #818cf8;
+  --accent-purple: #9d7ce5;  /* roxo claro da marca — texto/link sobre --bg-color */
+  --accent-purple-strong: #642fd5; /* roxo escuro da marca — fill de CTA, texto claro por cima */
   --tag-bg: #202029;
+}
+
+/* fundo PlasmaWave (WebGL) — z-index -1: acima do bg do body, abaixo do conteudo */
+.bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .42;  /* atenua o plasma pra nao competir com os cards */
+}
+
+@media (max-width: 720px) {
+  .bg-fx { display: none; }
 }
 
 body {
