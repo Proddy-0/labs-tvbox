@@ -36,6 +36,15 @@
     "url": "https://app.notion.com/p/Tarefas-CTI-LogicDeck-156ea6c71d488346b0b8810561041ff1?source=copy_link"
   },
   {
+    "id": "99",
+    "categoria": "FREELANCE",
+    "titulo": "Loja Jottave7",
+    "descricao": "Jottave7 - Loja On-Line | Vestuário",
+    "status": "Pendente",
+    "tags": ["Loja", "Freelance", "E-commerce"],
+    "url": "/lojaJottave7/index.html"
+  },
+  {
     "id": "100",
     "categoria": "PRODUTIVIDADE",
     "titulo": "Dashboard Pessoal",
