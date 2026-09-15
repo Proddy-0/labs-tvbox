@@ -5,7 +5,11 @@
     "titulo": "Loja E-commerce",
     "descricao": "Plataforma de comércio eletrônico com catálogo de produtos.",
     "status": "Dev",
-    "tags": ["HTML/CSS", "PHP", "SQL"],
+    "tags": [
+      "HTML/CSS",
+      "PHP",
+      "SQL"
+    ],
     "url": "/ecommerce/front/index.html"
   },
   {
@@ -14,7 +18,10 @@
     "titulo": "Ficha Técnica E-commerce",
     "descricao": "Documento com as especificações técnicas do projeto.",
     "status": "Finalizado",
-    "tags": ["DOCX", "PDF"],
+    "tags": [
+      "DOCX",
+      "PDF"
+    ],
     "url": "https://docs.google.com/document/d/1HBWF3PRafylc-43ha8ku8Q8LD60rzlI6/preview"
   },
   {
@@ -23,7 +30,12 @@
     "titulo": "GitHub E-commerce",
     "descricao": "Repositório do projeto no GitHub.",
     "status": "Dev",
-    "tags": ["GIT", "HTML/CSS", "PHP", "SQL"],
+    "tags": [
+      "GIT",
+      "HTML/CSS",
+      "PHP",
+      "SQL"
+    ],
     "url": "https://github.com/Proddy-0/E-commerce"
   },
   {
@@ -32,17 +44,25 @@
     "titulo": "Tarefas E-commerce",
     "descricao": "Lista de tarefas do projeto no Notion.",
     "status": "Dev",
-    "tags": ["Notion", "Tarefas"],
+    "tags": [
+      "Notion",
+      "Tarefas"
+    ],
     "url": "https://app.notion.com/p/Tarefas-CTI-LogicDeck-156ea6c71d488346b0b8810561041ff1?source=copy_link"
   },
   {
     "id": "99",
     "categoria": "FREELANCE",
     "titulo": "Loja Jottave7",
-    "descricao": "Jottave7 - Loja On-Line | Vestuário",
-    "status": "Pendente",
-    "tags": ["Loja", "Freelance", "E-commerce"],
-    "url": "/lojaJottave7/index.html"
+    "descricao": "Demo da loja de vestuario Jottave7 (React + Tailwind) para apresentacao ao cliente.",
+    "status": "Dev",
+    "tags": [
+      "React",
+      "Tailwind",
+      "Vite",
+      "Freelance"
+    ],
+    "url": "/loja-jottave7/index.html"
   },
   {
     "id": "100",
@@ -50,7 +70,11 @@
     "titulo": "Dashboard Pessoal",
     "descricao": "Meu painel de produtividade com Kanban e Pomodoro.",
     "status": "Online",
-    "tags": ["Kanban", "Tools", "UI"],
+    "tags": [
+      "Kanban",
+      "Tools",
+      "UI"
+    ],
     "url": "/painel/index.html"
   }
 ]
