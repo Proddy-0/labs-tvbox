@@ -3,12 +3,21 @@ name: Deploy Automatico Labs
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-tvbox
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - name: Puxar atualizacoes na TV Box
+      - name: Sincronizar TV Box com origin/main
         run: |
+          set -euo pipefail
           cd /var/www/html
-          git pull origin main
+          git fetch origin main
+          git reset --hard origin/main
+          git clean -fd
+          git log -1 --oneline
