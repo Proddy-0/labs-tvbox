@@ -4,265 +4,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protótipo - Home Page</title>
-    <link rel="stylesheet" href="css/wireframe.css">
+    <title>LogicDeck - Cartas Colecionáveis dos Cursos</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body id="top">
 
-    <!-- Indicador do Protótipo -->
-    <div class="proto-page-header">
+    <header>
         <div class="container">
-            <h1><i class="fa-solid fa-layer-group"></i> PROTÓTIPO ESTRUTURAL (HOME PAGE WIREFRAME)</h1>
-        </div>
-    </div>
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <div>Logic<span>Deck</span></div>
+                </a>
 
-    <!-- HEADER FIXO EM UMA ÚNICA LINHA COMPACTA COM ÍCONES -->
-    <header class="proto-header-sticky">
-        <div class="container">
-            <div class="proto-header-row">
+                <form class="search-form" onsubmit="return false;">
+                    <input type="text" placeholder="Buscar baralho de Informática, Mecânica ou Eletrônica...">
+                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+                </form>
 
-                <!-- Logo -->
-                <div class="proto-box proto-logo-compact solid">
-                    <i class="fa-solid fa-bolt" style="color: var(--proto-accent); margin-right: 6px;"></i>
-                    <span>[ LOGO ]</span>
-                </div>
-
-                <!-- Busca Compacta -->
-                <div class="proto-box proto-search-compact">
-                    <i class="fa-solid fa-magnifying-glass" style="margin-right: 6px; flex-shrink: 0;"></i>
-                    <span>[ BUSCA ]</span>
-                </div>
-
-                <!-- Botões e Links com Ícones em 1 Única Linha -->
-                <nav class="proto-nav-group">
-                    <a href="#top" class="proto-box proto-btn-compact accent" title="Home">
-                        <i class="fa-solid fa-house" style="margin-right: 4px;"></i> [ Home ]
-                    </a>
-                    <a href="#produtos" class="proto-box proto-btn-compact" title="Produtos">
-                        <i class="fa-solid fa-store" style="margin-right: 4px;"></i> [ Produtos ]
-                    </a>
-                    <a href="#diferenciais" class="proto-box proto-btn-compact" title="Sobre Nós">
-                        <i class="fa-solid fa-circle-info" style="margin-right: 4px;"></i> [ Sobre ]
-                    </a>
-                    <a href="#video" class="proto-box proto-btn-compact" title="Contato">
-                        <i class="fa-solid fa-envelope" style="margin-right: 4px;"></i> [ Contato ]
-                    </a>
-                    <a href="#footer" class="proto-box proto-btn-compact" title="Desenvolvedores">
-                        <i class="fa-solid fa-code" style="margin-right: 4px;"></i> [ Devs ]
-                    </a>
-                    <a href="#top" class="proto-box proto-btn-compact accent" title="Carrinho de Compras">
-                        <i class="fa-solid fa-cart-shopping" style="margin-right: 4px;"></i> [ Carrinho (0) ]
+                <nav class="user-nav">
+                    <a href="login.html"><i class="fa-solid fa-user"></i> Login</a>
+                    <a href="cadastro.html"><i class="fa-solid fa-user-plus"></i> Cadastro</a>
+                    <a href="carrinho.html" class="cart-btn">
+                        <i class="fa-solid fa-cart-shopping"></i> Carrinho
+                        <span class="cart-badge" id="cart-count">0</span>
                     </a>
                 </nav>
-
             </div>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="sobre.html">Sobre Nós</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="desenvolvedores.html">Devs</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <main class="container">
+    <main>
 
-        <!-- Banner Principal (Hero Carrossel) -->
-        <section id="banner" class="proto-hero-section">
-            <div class="proto-box proto-hero-box accent">
-                <span class="proto-tag">[ SEÇÃO: BANNER PRINCIPAL / HERO CARROSSEL ]</span>
-                <h2 style="font-size: 1.1rem; margin: 0.5rem 0; text-align: center;">[ TÍTULO DA PROMOÇÃO PRINCIPAL /
-                    SLIDE HERO ]</h2>
-                <p style="color: var(--proto-text-muted); font-size: 0.85rem; text-align: center;">[ SUBTÍTULO COM
-                    DESCRIÇÃO DA OFERTA EM DESTAQUE ]</p>
+     <!-- Banner -->
+<section id="banner" class="hero-section container">
+    <div class="carousel-container">
 
-                <div style="margin-top: 0.75rem;">
-                    <div class="proto-box proto-btn-compact accent"
-                        style="padding: 0.6rem 1.5rem; height: auto; display: inline-flex;">
-                        <span><i class="fa-solid fa-arrow-right" style="margin-right: 6px;"></i> [ BOTÃO DE AÇÃO: Saiba
-                            Mais / Comprar ]</span>
-                    </div>
-                </div>
-
-                <div class="proto-hero-controls">
-                    <div class="proto-box proto-btn-compact"><i class="fa-solid fa-chevron-left"></i> [ Anterior ]</div>
-                    <div class="proto-box proto-btn-compact">[ Indicadores: • • • ]</div>
-                    <div class="proto-box proto-btn-compact">[ Próximo ] <i class="fa-solid fa-chevron-right"></i></div>
-                </div>
+        <div class="carousel-slide active" style="background: #1164B4;">
+            <div class="carousel-content">
+                <span class="hero-tag"><i class="fa-solid fa-microchip"></i> Curso de Informática</span>
+                <h2>Colecione o conhecimento da sua escola em cartas</h2>
+                <p>Baralhos exclusivos de Informática, Mecânica e Eletrônica, feitos por alunos para alunos.</p>
+                <a href="produtos.html" class="btn-hero">
+                    <i class="fa-solid fa-arrow-right"></i> Ver Coleção
+                </a>
             </div>
-        </section>
+        </div>
+
+        <div class="carousel-slide" style="background: #2f7fc1;">
+            <div class="carousel-content">
+                <span class="hero-tag"><i class="fa-solid fa-gears"></i> Curso de Mecânica</span>
+                <h2>Baralho Motores & Máquinas já disponível</h2>
+                <p>52 cartas ilustradas sobre motores, usinagem e processos mecânicos.</p>
+                <a href="produtos.html" class="btn-hero">
+                    <i class="fa-solid fa-arrow-right"></i> Conferir Baralho
+                </a>
+            </div>
+        </div>
+
+        <button type="button" class="carousel-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button type="button" class="carousel-btn next"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="carousel-indicators">
+            <span class="indicator-dot active"></span>
+            <span class="indicator-dot"></span>
+            <span class="indicator-dot"></span>
+        </div>
+    </div>
+</section>
+
+        <button type="button" class="carousel-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button type="button" class="carousel-btn next"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="carousel-indicators">
+            <span class="indicator-dot active"></span>
+            <span class="indicator-dot"></span>
+            <span class="indicator-dot"></span>
+        </div>
+    </div>
+</section>
 
         <!-- Produtos em Destaque -->
-        <section id="produtos">
-            <div class="proto-box proto-section-title">
-                <strong><i class="fa-solid fa-store"></i> [ SEÇÃO: PRODUTOS EM DESTAQUE - TÍTULO E SUBTÍTULO ]</strong>
+        <section id="produtos" class="products-section container">
+            <div class="section-header">
+                <h2 class="section-title">Cartas em Destaque</h2>
+                <p class="section-subtitle">Cada curso tem sua própria carta, com raridades e efeitos únicos.</p>
             </div>
 
-            <div class="proto-products-grid">
+            <div class="category-filters">
+                <button class="filter-chip active">Todos</button>
+            </div>
 
-                <!-- Card Produto 1 -->
-                <article class="proto-product-card">
-                    <span class="proto-tag" style="align-self: flex-start;">[ BADGE: Oferta ]</span>
-                    <div class="proto-box proto-img-area">
-                        <i class="fa-regular fa-image" style="font-size: 1.5rem; margin-right: 8px;"></i>
-                        <span>[ ÁREA DA IMAGEM DO PRODUTO 1 ]</span>
+            <div class="products-grid">
+
+                <article class="product-card">
+                    <div class="product-image-wrap">
+                        <i class="fa-solid fa-microchip" style="font-size: 3rem; color: var(--course-info); opacity: 0.5;"></i>
                     </div>
-                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ TÍTULO: Produto 1 ]</div>
-                    <div class="proto-box" style="padding: 0.5rem; font-size: 0.75rem; color: var(--proto-text-muted);">
-                        [ DESCRIÇÃO DO PRODUTO 1 ]</div>
-                    <div class="proto-box solid" style="padding: 0.5rem; color: var(--proto-accent);">[ PREÇO: R$ 100,00
-                        ]</div>
-                    <div class="proto-box proto-btn-compact accent" style="justify-content: center; height: 38px;">
-                        <i class="fa-solid fa-cart-plus" style="margin-right: 6px;"></i>
-                        <span>[ BOTÃO: Adicionar ]</span>
+                    <div class="product-details">
+                        <span class="product-course-tag" style="color: var(--course-info);">Informática</span>
+                        <h3>Cartas - Redes & Sistemas</h3>
+                        <p class="product-desc">cartas com conceitos de programação, redes e hardware.</p>
+                        <div class="product-bottom">
+                            <div class="price-container">
+                                <span class="price-current">R$ 15,00</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(this)">
+                                <i class="fa-solid fa-cart-plus"></i> Adicionar
+                            </button>
+                        </div>
                     </div>
                 </article>
 
-                <!-- Card Produto 2 -->
-                <article class="proto-product-card">
-                    <span class="proto-tag" style="align-self: flex-start;">[ BADGE: Novo ]</span>
-                    <div class="proto-box proto-img-area">
-                        <i class="fa-regular fa-image" style="font-size: 1.5rem; margin-right: 8px;"></i>
-                        <span>[ ÁREA DA IMAGEM DO PRODUTO 2 ]</span>
+                <article class="product-card">
+                    <div class="product-image-wrap">
+                        <i class="fa-solid fa-gears" style="font-size: 3rem; color: var(--course-mec); opacity: 0.5;"></i>
                     </div>
-                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ TÍTULO: Produto 2 ]</div>
-                    <div class="proto-box" style="padding: 0.5rem; font-size: 0.75rem; color: var(--proto-text-muted);">
-                        [ DESCRIÇÃO DO PRODUTO 2 ]</div>
-                    <div class="proto-box solid" style="padding: 0.5rem; color: var(--proto-accent);">[ PREÇO: R$ 200,00
-                        ]</div>
-                    <div class="proto-box proto-btn-compact accent" style="justify-content: center; height: 38px;">
-                        <i class="fa-solid fa-cart-plus" style="margin-right: 6px;"></i>
-                        <span>[ BOTÃO: Adicionar ]</span>
+                    <div class="product-details">
+                        <span class="product-course-tag" style="color: var(--course-mec);">Mecânica</span>
+                        <h3>Cartas - Motores & Máquinas</h3>
+                        <p class="product-desc"> cartas sobre o curso de motores e processos mecânicos.</p>
+                        <div class="product-bottom">
+                            <div class="price-container">
+                                <span class="price-current">R$ 15,00</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(this)">
+                                <i class="fa-solid fa-cart-plus"></i> Adicionar
+                            </button>
+                        </div>
                     </div>
                 </article>
 
-                <!-- Card Produto 3 -->
-                <article class="proto-product-card">
-                    <span class="proto-tag" style="align-self: flex-start;">[ BADGE: Desconto ]</span>
-                    <div class="proto-box proto-img-area">
-                        <i class="fa-regular fa-image" style="font-size: 1.5rem; margin-right: 8px;"></i>
-                        <span>[ ÁREA DA IMAGEM DO PRODUTO 3 ]</span>
+                <article class="product-card">
+                    <div class="product-image-wrap">
+                        <i class="fa-solid fa-bolt" style="font-size: 3rem; color: var(--course-eletro); opacity: 0.5;"></i>
                     </div>
-                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ TÍTULO: Produto 3 ]</div>
-                    <div class="proto-box" style="padding: 0.5rem; font-size: 0.75rem; color: var(--proto-text-muted);">
-                        [ DESCRIÇÃO DO PRODUTO 3 ]</div>
-                    <div class="proto-box solid" style="padding: 0.5rem; color: var(--proto-accent);">[ PREÇO: R$ 300,00
-                        ]</div>
-                    <div class="proto-box proto-btn-compact accent" style="justify-content: center; height: 38px;">
-                        <i class="fa-solid fa-cart-plus" style="margin-right: 6px;"></i>
-                        <span>[ BOTÃO: Adicionar ]</span>
+                    <div class="product-details">
+                        <span class="product-course-tag" style="color: var(--course-eletro);">Eletrônica</span>
+                        <h3>Cartas - Circuitos & Componentes</h3>
+                        <p class="product-desc"> cartas sobre circuitos, componentes e automação.</p>
+                        <div class="product-bottom">
+                            <div class="price-container">
+                                <span class="price-current">R$ 15,00</span>
+                            </div>
+                            <button class="btn-add-cart" onclick="addToCart(this)">
+                                <i class="fa-solid fa-cart-plus"></i> Adicionar
+                            </button>
+                        </div>
                     </div>
                 </article>
 
             </div>
         </section>
 
-        <!-- Diferenciais da Empresa -->
-        <section id="diferenciais">
-            <div class="proto-box proto-section-title">
-                <strong><i class="fa-solid fa-award"></i> [ SEÇÃO: DIFERENCIAIS / POR QUE COMPRAR CONOSCO? ]</strong>
+        <!-- Diferenciais -->
+        <section id="diferenciais" class="features-section container">
+            <div class="section-header">
+                <h2 class="section-title">Por que comprar na LogicDeck?</h2>
             </div>
 
-            <div class="proto-features-grid">
-                <div class="proto-box proto-feature-box">
-                    <i class="fa-solid fa-truck-fast" style="font-size: 1.4rem; color: var(--proto-accent);"></i>
-                    <strong>[ ÍCONE + TÍTULO: Entrega Rápida ]</strong>
-                    <span style="font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO 1 ]</span>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <h3>Compre na Escola</h3>
+                    <p>Receba seu baralho direto no dia da semana do colégio do CTI.</p>
                 </div>
-
-                <div class="proto-box proto-feature-box">
-                    <i class="fa-solid fa-shield-halved" style="font-size: 1.4rem; color: var(--proto-accent);"></i>
-                    <strong>[ ÍCONE + TÍTULO: Pagamento Seguro ]</strong>
-                    <span style="font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO 2 ]</span>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Pagamento Seguro</h3>
+                    <p>Pix ou dinheiro no CTI, com total segurança.</p>
                 </div>
-
-                <div class="proto-box proto-feature-box">
-                    <i class="fa-solid fa-award" style="font-size: 1.4rem; color: var(--proto-accent);"></i>
-                    <strong>[ ÍCONE + TÍTULO: Produtos Originais ]</strong>
-                    <span style="font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO 3 ]</span>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+                    <h3>Feito por Alunos</h3>
+                    <p>Conteúdo revisado pelos professores dos cursos técnicos.</p>
                 </div>
-
-                <div class="proto-box proto-feature-box">
-                    <i class="fa-solid fa-headset" style="font-size: 1.4rem; color: var(--proto-accent);"></i>
-                    <strong>[ ÍCONE + TÍTULO: Suporte 24/7 ]</strong>
-                    <span style="font-size: 0.75rem; color: var(--proto-text-muted);">[ DESCRIÇÃO 4 ]</span>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+                    <h3>Suporte Direto</h3>
+                    <p>Fale com a equipe de desenvolvedores pelo canal de contato.</p>
                 </div>
             </div>
         </section>
 
         <!-- Newsletter -->
-        <section style="margin-top: 2.5rem;">
-            <div class="proto-box solid" style="padding: 1.5rem; flex-direction: column; gap: 1rem;">
-                <span class="proto-tag">[ SEÇÃO: CAPTAÇÃO DE NEWSLETTER ]</span>
-                <strong>[ TÍTULO DA NEWSLETTER & SUBTÍTULO ]</strong>
-                <div style="display: flex; gap: 0.5rem; width: 100%; max-width: 500px; flex-wrap: wrap;">
-                    <div class="proto-box proto-search-compact" style="flex: 1 1 180px; max-width:100%;">
-                        <i class="fa-solid fa-envelope" style="margin-right:6px;"></i> [ INPUT: E-mail ]
-                    </div>
-                    <div class="proto-box proto-btn-compact accent">
-                        <span>[ BOTÃO: Inscrever-se ]</span>
-                    </div>
-                </div>
+        <section class="newsletter-section container">
+            <div class="newsletter-box">
+                <h2>Fique dentro dos lançamentos</h2>
+                <p>Inscreva-se e compre mais!</p>
+                <form class="newsletter-form" onsubmit="return false;">
+                    <input type="email" placeholder="Seu e-mail">
+                    <button type="submit">Inscrever-se</button>
+                </form>
             </div>
         </section>
 
     </main>
 
-    <!-- Rodapé -->
-    <footer id="footer" class="proto-footer">
+    <footer id="footer">
         <div class="container">
-            <div class="proto-footer-grid">
-
-                <!-- Coluna 1 -->
-                <div class="proto-footer-col">
-                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ LOGO NO RODAPÉ ]</div>
-                    <div class="proto-box" style="padding: 0.5rem; font-size: 0.75rem; color: var(--proto-text-muted);">
-                        [ RESUMO DA EMPRESA ]</div>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <div>Logic<span>Deck</span></div>
+                    </a>
+                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos, para tornar o aprendizado mais divertido.</p>
+                    <div class="social-links" style="margin-top: 1.25rem;">
+                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
                 </div>
 
-                <!-- Coluna 2 -->
-                <div class="proto-footer-col">
-                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ INSTITUCIONAL ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-chevron-right"
-                            style="margin-right:4px;"></i> [ Sobre Nós ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-chevron-right"
-                            style="margin-right:4px;"></i> [ Missão e Visão ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-chevron-right"
-                            style="margin-right:4px;"></i> [ Contato ]</div>
+                <div class="footer-column">
+                    <h3>Institucional</h3>
+                    <ul>
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="missao.html">Missão e Visão</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
                 </div>
 
-                <!-- Coluna 3 -->
-                <div class="proto-footer-col">
-                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ REDES SOCIAIS ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-brands fa-instagram"
-                            style="margin-right:4px;"></i> [ Instagram ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-brands fa-facebook"
-                            style="margin-right:4px;"></i> [ Facebook ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-brands fa-tiktok"
-                            style="margin-right:4px;"></i> [ TikTok ]</div>
+                <div class="footer-column">
+                    <h3>Cursos</h3>
+                    <ul>
+                        <li><a href="produtos.html">Informática</a></li>
+                        <li><a href="produtos.html">Mecânica</a></li>
+                        <li><a href="produtos.html">Eletrônica</a></li>
+                    </ul>
                 </div>
 
-                <!-- Coluna 4 -->
-                <div class="proto-footer-col">
-                    <div class="proto-box solid" style="padding: 0.5rem; font-weight: 700;">[ DESENVOLVEDORES ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-code"
-                            style="margin-right:4px;"></i> [ DEV 01 ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-code"
-                            style="margin-right:4px;"></i> [ DEV 02 ]</div>
-                    <div class="proto-box" style="padding: 0.3rem;"><i class="fa-solid fa-code"
-                            style="margin-right:4px;"></i> [ DEV 03 ]</div>
+                <div class="footer-column">
+                    <h3>Desenvolvedores</h3>
+                    <ul class="footer-devs">
+                        <li><i class="fa-solid fa-code"></i> Aysllan</li>
+                        <li><i class="fa-solid fa-code"></i> Lucca Rizzo dos Santos</li>
+                        <li><i class="fa-solid fa-code"></i> Samuel </li>
+                        <li><i class="fa-solid fa-code"></i> Lucas Kamiya</li>
+                        <li><i class="fa-solid fa-code"></i> Gabrieli </li>
+                        <li><i class="fa-solid fa-code"></i> Luiza </li>
+                    </ul>
                 </div>
-
             </div>
 
-            <div class="proto-box solid"
-                style="padding: 0.75rem; font-size: 0.75rem; color: var(--proto-text-muted); text-align: center;">
-                [ DIREITOS AUTORAIS / COPYRIGHT © 2026 - NOME DA EMPRESA ]
+            <div class="footer-bottom">
+                <p>&copy; 2026 LogicDeck. Todos os direitos reservados.</p>
+                <p>Projeto acadêmico de E-commerce</p>
             </div>
         </div>
     </footer>
 
-    <!-- BOTÃO FLUTUANTE DE ÂNCORA "VOLTAR AO TOPO" -->
-    <a href="#top" class="proto-scroll-top-btn" title="Voltar ao início da página">
-        <i class="fa-solid fa-arrow-up"></i>
-        <span>[ TOPO ]</span>
-    </a>
+ <script src="script.js"></script>
 
 </body>
 
