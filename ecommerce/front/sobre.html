@@ -4,57 +4,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nós - Em Manutenção | LogicDeck</title>
+    <title>Sobre Nós | LogicDeck</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+
     <header>
         <div class="container">
             <div class="header-top">
                 <a href="index.html" class="logo">
-                    <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
                     <div>Logic<span>Deck</span></div>
                 </a>
+
+                <form class="search-form" onsubmit="return false;">
+                    <input type="text" placeholder="Buscar baralho de Informática, Mecânica ou Eletrônica...">
+                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+                </form>
+
                 <nav class="user-nav">
-                    <ul>
-                        <li style="display:inline-block;">
-                            <a href="index.html"><i class="fa-solid fa-house"></i> Voltar à Home</a>
-                        </li>
-                    </ul>
+                    <a href="login.html"><i class="fa-solid fa-user"></i> Login</a>
+                    <a href="cadastro.html"><i class="fa-solid fa-user-plus"></i> Cadastro</a>
+                    <a href="carrinho.html" class="cart-btn">
+                        <i class="fa-solid fa-cart-shopping"></i> Carrinho
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </a>
                 </nav>
             </div>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="sobre.html" class="active">Sobre Nós</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="desenvolvedores.html">Devs</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <main class="container" style="padding: 5rem 1.5rem; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-        <div style="background: var(--bg-surface); padding: 3.5rem 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); text-align: center; max-width: 650px; box-shadow: var(--shadow-card); position: relative; overflow: hidden;">
-            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 2.2rem; box-shadow: var(--shadow-glow);">
-                <i class="fa-solid fa-screwdriver-wrench fa-spin-pulse" style="--fa-animation-duration: 3s;"></i>
+    <main>
+
+        <section class="about-hero container">
+            <h1>Conhecimento que cabe na palma da mão</h1>
+            <p>A LogicDeck nasceu dentro da própria escola, criada por alunos que queriam tornar o aprendizado dos cursos técnicos mais divertido — um baralho por vez.</p>
+        </section>
+
+        <section class="about-story container">
+            <div class="about-story-icon">
+                <i class="fa-solid fa-layer-group"></i>
             </div>
-            
-            <span style="display: inline-block; padding: 0.35rem 1rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-full); color: #f87171; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-triangle-exclamation"></i> Em Manutenção
-            </span>
-            
-            <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-main);">Página "Sobre Nós" em Manutenção</h2>
-            
-            <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
-                Estamos atualizando nossa história e informações institucionais. Em breve esta seção trará todos os detalhes sobre a LogicDeck!
-            </p>
-            
-            <a href="index.html" class="btn-hero" style="display: inline-flex; align-items: center; gap: 0.6rem;">
-                <i class="fa-solid fa-arrow-left"></i> Voltar para a Página Inicial
-            </a>
-        </div>
+            <div class="about-story-text">
+                <h2>Nossa História</h2>
+                <p>Tudo começou como um projeto de e-commerce da disciplina, mas rapidamente virou algo maior: um jeito diferente de estudar. Em vez de decorar apostilas, os alunos revisam conceitos jogando com cartas ilustradas.</p>
+                <p>Hoje a LogicDeck reúne baralhos dos cursos de Informática, Mecânica e Eletrônica, todos criados e revisados pelos próprios estudantes com apoio dos professores.</p>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="container stats-grid">
+                <div class="stat-card">
+                    <strong>3</strong>
+                    <span>Cursos representados</span>
+                </div>
+                <div class="stat-card">
+                    <strong>156</strong>
+                    <span>Cartas criadas</span>
+                </div>
+                <div class="stat-card">
+                    <strong>100%</strong>
+                    <span>Feito por alunos</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="courses-section container">
+            <div class="section-header">
+                <h2 class="section-title">Nossos Baralhos</h2>
+                <p class="section-subtitle">Um baralho para cada curso, com identidade e conteúdo próprios.</p>
+            </div>
+
+            <div class="courses-grid">
+                <div class="course-card">
+                    <i class="fa-solid fa-microchip" style="color: var(--course-info);"></i>
+                    <h3>Informática</h3>
+                    <p>Redes, programação e hardware em forma de carta.</p>
+                </div>
+                <div class="course-card">
+                    <i class="fa-solid fa-gears" style="color: var(--course-mec);"></i>
+                    <h3>Mecânica</h3>
+                    <p>Motores, usinagem e processos mecânicos.</p>
+                </div>
+                <div class="course-card">
+                    <i class="fa-solid fa-bolt" style="color: var(--course-eletro);"></i>
+                    <h3>Eletrônica</h3>
+                    <p>Circuitos, componentes e automação.</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer>
-        <div class="container footer-bottom" style="border:none; text-align: center; justify-content: center;">
-            <p>&copy; 2026 - LogicDeck. Todos os direitos reservados.</p>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <div>Logic<span>Deck</span></div>
+                    </a>
+                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos, para tornar o aprendizado mais divertido.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Institucional</h3>
+                    <ul>
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="missao.html">Missão e Visão</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Cursos</h3>
+                    <ul>
+                        <li><a href="produtos.html">Informática</a></li>
+                        <li><a href="produtos.html">Mecânica</a></li>
+                        <li><a href="produtos.html">Eletrônica</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Desenvolvedores</h3>
+                    <ul class="footer-devs">
+                        <li><i class="fa-solid fa-code"></i> Dev 01</li>
+                        <li><i class="fa-solid fa-code"></i> Dev 02</li>
+                        <li><i class="fa-solid fa-code"></i> Dev 03</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 LogicDeck. Todos os direitos reservados.</p>
+                <p>Projeto acadêmico de E-commerce</p>
+            </div>
         </div>
     </footer>
+
+    <script src="js/script.js"></script>
 </body>
 
 </html>
