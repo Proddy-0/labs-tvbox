@@ -47,6 +47,10 @@
             type="submit"
             value="Entrar"
         >
+        <br>
+    <a href="adicionarUsuario.php">
+        Criar conta
+    </a>
     </form>
 </body>
 </html>

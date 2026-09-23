@@ -1,6 +1,3 @@
-<?php
-    include "verificaAdm.php";
-?>
 <html>
 <body>
 <form
