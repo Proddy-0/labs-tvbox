@@ -7,6 +7,11 @@
     <title>Desenvolvedores | Deck Logic</title>
     <meta name="description" content="Equipe de alunos que desenvolveu a Deck Logic.">
     <meta name="theme-color" content="#14537D">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        // aplica o tema escolhido no botão antes de desenhar a página (evita piscar)
+        try { var tema = localStorage.getItem('decklogic_tema'); if (tema) document.documentElement.dataset.theme = tema; } catch (e) {}
+    </script>
     <link rel="icon" type="image/png" href="img/brand/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +20,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body id="top">
     <!-- Logo Deck Logic (SVG inline, reutilizado no header e no footer via <use>) -->
     <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -42,7 +47,7 @@
 
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-    <header class="site-header" id="top">
+    <header class="site-header">
         <div class="brand-bar" aria-hidden="true"></div>
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="Deck Logic — página inicial">
@@ -56,8 +61,9 @@
             </form>
 
             <nav class="user-nav" aria-label="Conta e carrinho">
-                <a href="login.html" class="user-link" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
-                <a href="cadastro.html" class="user-link user-link--signup"><span>Cadastre-se</span></a>
+                <button type="button" class="user-link theme-toggle" id="theme-toggle" aria-label="Ativar tema escuro"><i class="fa-solid fa-moon"></i></button>
+                <a href="login.html" class="user-link" data-auth="conta" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
+                <a href="cadastro.html" class="user-link user-link--signup" data-auth="sair"><span>Cadastre-se</span></a>
                 <a href="carrinho.html" class="cart-btn" aria-label="Carrinho">
                     <i class="fa-solid fa-cart-shopping"></i><span class="cart-label">Carrinho</span>
                     <span class="cart-badge" id="cart-count">0</span>
@@ -85,8 +91,8 @@
                     <li><a href="sobre.html"><i class="fa-solid fa-circle-info"></i>Sobre Nós</a></li>
                     <li><a href="contato.html"><i class="fa-solid fa-envelope"></i>Contato</a></li>
                     <li><a href="desenvolvedores.html" class="active" aria-current="page"><i class="fa-solid fa-code"></i>Devs</a></li>
-                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html"><i class="fa-regular fa-user"></i>Entrar</a></li>
-                    <li class="main-nav-extra"><a href="cadastro.html"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
+                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html" data-auth="conta"><i class="fa-regular fa-user"></i>Entrar</a></li>
+                    <li class="main-nav-extra"><a href="cadastro.html" data-auth="sair"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
                 </ul>
             </div>
         </nav>
@@ -106,8 +112,8 @@
             <article class="dev-card">
                 <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/mt30okbci5l4imyzs1zkb/imagem_2026-09-23_083446595.png?rlkey=pcdf5fy6xgijz29ts496tfajd&amp;st=l8343yo6&amp;raw=1" alt="Foto de Aysllan Magalhães" width="150" height="150" loading="lazy"></div>
                 <h2>Aysllan Magalhães</h2>
-                <span class="dev-role">Sistema · Interface · Banco de Dados</span>
-                <p>Responsável pelo desenvolvimento do sistema, design da interface e gestão do banco de dados.</p>
+                <ul class="dev-roles" aria-label="Funções"><li class="dev-tag tag-dev">Desenvolvimento</li><li class="dev-tag tag-front">Interface</li><li class="dev-tag tag-db">Banco de Dados</li></ul>
+                <p>Desenvolvimento do sistema, design da interface e organização do banco de dados.</p>
                 <div class="dev-socials">
                     <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Aysllan Magalhães"><i class="fa-brands fa-github"></i></a>
                 </div>
@@ -116,8 +122,8 @@
             <article class="dev-card">
                 <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/f4pdeemfqngxnodp9432b/WhatsApp-Image-2026-09-23-at-08.50.09.jpeg?rlkey=0npox6805tw8cvxbsb8qmtm4i&amp;st=x8hzruzi&amp;raw=1" alt="Foto de Gabrieli Vitória de Paula" width="150" height="150" loading="lazy"></div>
                 <h2>Gabrieli Vitória de Paula</h2>
-                <span class="dev-role">Marketing &amp; Front-end</span>
-                <p>Responsável pela estratégia de marketing e pela ajuda no front-end.</p>
+                <ul class="dev-roles" aria-label="Funções"><li class="dev-tag tag-mkt">Marketing</li><li class="dev-tag tag-front">Front-end</li></ul>
+                <p>Divulgação da marca e apoio nas telas do site.</p>
                 <div class="dev-socials">
                     <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Gabrieli Vitória de Paula"><i class="fa-brands fa-github"></i></a>
                 </div>
@@ -126,8 +132,8 @@
             <article class="dev-card">
                 <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/l6mg8bty4durujvi9gpwo/WhatsApp-Image-2026-09-23-at-08.49.55.jpeg?rlkey=a4leb97jwx9gff20kd7gxfqds&amp;st=gq2rysps&amp;raw=1" alt="Foto de Lucca Rizzo dos Santos" width="150" height="150" loading="lazy"></div>
                 <h2>Lucca Rizzo dos Santos</h2>
-                <span class="dev-role">Front-end &amp; Marketing</span>
-                <p>Responsável pelo layout e pela experiência visual do site, além do auxílio no marketing.</p>
+                <ul class="dev-roles" aria-label="Funções"><li class="dev-tag tag-front">Front-end</li><li class="dev-tag tag-mkt">Marketing</li></ul>
+                <p>Layout e parte visual do site, com apoio na divulgação.</p>
                 <div class="dev-socials">
                     <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Lucca Rizzo dos Santos"><i class="fa-brands fa-github"></i></a>
                 </div>
@@ -136,8 +142,8 @@
             <article class="dev-card">
                 <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/2w28ggvzoyf39xjubgvc6/imagem_2026-09-23_085301122.png?rlkey=sryjriyrw9069k3tvcu568mro&amp;st=uql1w4vb&amp;raw=1" alt="Foto de Lucas Kamiya do Nascimento" width="150" height="150" loading="lazy"></div>
                 <h2>Lucas Kamiya do Nascimento</h2>
-                <span class="dev-role">Back-end &amp; Banco de Dados</span>
-                <p>Responsável pelo desenvolvimento back-end e pelo gerenciamento do banco de dados.</p>
+                <ul class="dev-roles" aria-label="Funções"><li class="dev-tag tag-back">Back-end</li><li class="dev-tag tag-db">Banco de Dados</li></ul>
+                <p>Programação em PHP e consultas ao banco de dados.</p>
                 <div class="dev-socials">
                     <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Lucas Kamiya do Nascimento"><i class="fa-brands fa-github"></i></a>
                 </div>
@@ -146,8 +152,8 @@
             <article class="dev-card">
                 <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/m8c8hk8qwg12j2u1ehh5g/imagem_2026-09-23_084538226.png?rlkey=nzwmsbu7i1k24acgcz0kd8mj5&amp;st=xip2jmdm&amp;raw=1" alt="Foto de Luiza de Mattos Bianco Vilani" width="150" height="150" loading="lazy"></div>
                 <h2>Luiza de Mattos Bianco Vilani</h2>
-                <span class="dev-role">Banco de Dados &amp; Marketing</span>
-                <p>Responsável pelo banco de dados e pela estratégia de marketing.</p>
+                <ul class="dev-roles" aria-label="Funções"><li class="dev-tag tag-db">Banco de Dados</li><li class="dev-tag tag-mkt">Marketing</li></ul>
+                <p>Modelagem do banco de dados e divulgação da marca.</p>
                 <div class="dev-socials">
                     <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Luiza de Mattos Bianco Vilani"><i class="fa-brands fa-github"></i></a>
                 </div>
@@ -156,8 +162,8 @@
             <article class="dev-card">
                 <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/on48fjork3sv8i4vco4qv/imagem_2026-09-23_085400221.png?rlkey=8t6ve1t4pnjy40ebczro5a7jr&amp;st=hr7dbsnc&amp;raw=1" alt="Foto de Samuel Eduardo Ribeiro Kempner de Paula" width="150" height="150" loading="lazy"></div>
                 <h2>Samuel Eduardo Ribeiro Kempner de Paula</h2>
-                <span class="dev-role">Back-end &amp; Banco de Dados</span>
-                <p>Responsável pelo desenvolvimento back-end e pelo gerenciamento do banco de dados.</p>
+                <ul class="dev-roles" aria-label="Funções"><li class="dev-tag tag-back">Back-end</li><li class="dev-tag tag-db">Banco de Dados</li></ul>
+                <p>Programação em PHP e estrutura do banco de dados.</p>
                 <div class="dev-socials">
                     <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Samuel Eduardo Ribeiro Kempner de Paula"><i class="fa-brands fa-github"></i></a>
                 </div>

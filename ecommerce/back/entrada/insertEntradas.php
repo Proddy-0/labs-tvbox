@@ -1,4 +1,5 @@
 <?php
+    include "../usuarios/verificaAdm.php";
     include "../util.php";
     $conn = conecta();
     $fk_produto =$_POST['fk_produto'];

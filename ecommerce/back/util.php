@@ -57,10 +57,18 @@ function salvaUpload($id, $paramCaminho, $paramFiles, $paramCampo)
 {
     if (isset($paramFiles[$paramCampo])) {
         // obtem a extensão do arquivo
-        $ext = pathinfo(
+        $ext = strtolower(pathinfo(
             $paramFiles[$paramCampo]['name'],
             PATHINFO_EXTENSION
-        );
+        ));
+        // só aceita imagem: sem isso daria pra subir um .php e executar no servidor
+        if (!in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+            echo "Formato de imagem não permitido.";
+            return;
+        }
+        if (!is_dir($paramCaminho)) {
+            mkdir($paramCaminho, 0755, true);
+        }
         $arquivoImagem = "$paramCaminho/$id.$ext";
         try {
             if (move_uploaded_file(

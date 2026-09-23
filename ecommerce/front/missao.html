@@ -7,6 +7,11 @@
     <title>Missão, Visão e Valores | Deck Logic</title>
     <meta name="description" content="Missão, visão e valores da Deck Logic.">
     <meta name="theme-color" content="#14537D">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        // aplica o tema escolhido no botão antes de desenhar a página (evita piscar)
+        try { var tema = localStorage.getItem('decklogic_tema'); if (tema) document.documentElement.dataset.theme = tema; } catch (e) {}
+    </script>
     <link rel="icon" type="image/png" href="img/brand/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +20,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body id="top">
     <!-- Logo Deck Logic (SVG inline, reutilizado no header e no footer via <use>) -->
     <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -42,7 +47,7 @@
 
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-    <header class="site-header" id="top">
+    <header class="site-header">
         <div class="brand-bar" aria-hidden="true"></div>
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="Deck Logic — página inicial">
@@ -56,8 +61,9 @@
             </form>
 
             <nav class="user-nav" aria-label="Conta e carrinho">
-                <a href="login.html" class="user-link" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
-                <a href="cadastro.html" class="user-link user-link--signup"><span>Cadastre-se</span></a>
+                <button type="button" class="user-link theme-toggle" id="theme-toggle" aria-label="Ativar tema escuro"><i class="fa-solid fa-moon"></i></button>
+                <a href="login.html" class="user-link" data-auth="conta" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
+                <a href="cadastro.html" class="user-link user-link--signup" data-auth="sair"><span>Cadastre-se</span></a>
                 <a href="carrinho.html" class="cart-btn" aria-label="Carrinho">
                     <i class="fa-solid fa-cart-shopping"></i><span class="cart-label">Carrinho</span>
                     <span class="cart-badge" id="cart-count">0</span>
@@ -85,8 +91,8 @@
                     <li><a href="sobre.html"><i class="fa-solid fa-circle-info"></i>Sobre Nós</a></li>
                     <li><a href="contato.html"><i class="fa-solid fa-envelope"></i>Contato</a></li>
                     <li><a href="desenvolvedores.html"><i class="fa-solid fa-code"></i>Devs</a></li>
-                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html"><i class="fa-regular fa-user"></i>Entrar</a></li>
-                    <li class="main-nav-extra"><a href="cadastro.html"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
+                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html" data-auth="conta"><i class="fa-regular fa-user"></i>Entrar</a></li>
+                    <li class="main-nav-extra"><a href="cadastro.html" data-auth="sair"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
                 </ul>
             </div>
         </nav>

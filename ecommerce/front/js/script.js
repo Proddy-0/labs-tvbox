@@ -12,10 +12,18 @@ function formatPrice(value) {
 }
 
 function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
+
+// Caminhos: páginas do front ficam em front/, as do painel em back/<pasta>/.
+// O <body data-front="..."> diz onde está o front a partir da página atual.
+const FRONT_BASE = document.body ? (document.body.dataset.front || '') : '';
+const BACK_BASE = FRONT_BASE + '../back/';
 
 function showToast(message) {
     const container = document.getElementById('toast-container');
@@ -97,15 +105,18 @@ function addToCart(button) {
         cart.push({ ...product, qty: 1 });
     }
     saveCart(cart);
-
-    button.classList.add('is-added');
-    setTimeout(() => button.classList.remove('is-added'), 1200);
+    syncProductSteppers();
     showToast(`${product.name} adicionada ao carrinho`);
 }
 
+// Tira do carrinho perguntando antes (usado pela lixeira e pelo "-" quando a quantidade é 1)
 function removeFromCart(id) {
-    saveCart(getCart().filter(item => item.id !== id));
+    const item = getCart().find(i => i.id === id);
+    if (item && !confirm(`"${item.name}" vai sair do carrinho. Deseja remover?`)) return;
+    saveCart(getCart().filter(i => i.id !== id));
+    if (item) showToast(`${item.name} removida do carrinho`);
     renderCartPage();
+    syncProductSteppers();
 }
 
 function changeQty(id, delta) {
@@ -113,13 +124,51 @@ function changeQty(id, delta) {
     const item = cart.find(i => i.id === id);
     if (!item) return;
 
-    item.qty += delta;
-    if (item.qty <= 0) {
+    if (item.qty + delta <= 0) {
         removeFromCart(id);
         return;
     }
+    item.qty += delta;
     saveCart(cart);
     renderCartPage();
+    syncProductSteppers();
+}
+
+// Nos cards de produto: depois do 1º "Adicionar", o botão vira [- qtd +].
+// Com 1 unidade o "-" vira lixeira.
+function initProductSteppers() {
+    document.querySelectorAll('.btn-add-cart[data-id]').forEach(btn => {
+        const stepper = document.createElement('div');
+        stepper.className = 'qty-stepper';
+        stepper.dataset.id = btn.dataset.id;
+        stepper.hidden = true;
+        stepper.innerHTML = `
+            <button type="button" class="qty-dec"></button>
+            <span class="qty-value" aria-live="polite">0</span>
+            <button type="button" class="qty-inc" aria-label="Adicionar mais uma"><i class="fa-solid fa-plus"></i></button>
+        `;
+        stepper.querySelector('.qty-dec').addEventListener('click', () => changeQty(btn.dataset.id, -1));
+        stepper.querySelector('.qty-inc').addEventListener('click', () => addToCart(btn));
+        btn.after(stepper);
+    });
+    syncProductSteppers();
+}
+
+function syncProductSteppers() {
+    const cart = getCart();
+    document.querySelectorAll('.qty-stepper').forEach(stepper => {
+        const btn = stepper.previousElementSibling;
+        const item = cart.find(i => i.id === stepper.dataset.id);
+        const qty = item ? item.qty : 0;
+        btn.hidden = qty > 0;
+        stepper.hidden = qty === 0;
+        stepper.querySelector('.qty-value').textContent = qty;
+        const dec = stepper.querySelector('.qty-dec');
+        const remover = qty === 1;
+        dec.classList.toggle('is-remove', remover);
+        dec.innerHTML = `<i class="fa-solid ${remover ? 'fa-trash' : 'fa-minus'}"></i>`;
+        dec.setAttribute('aria-label', remover ? 'Remover do carrinho' : 'Diminuir quantidade');
+    });
 }
 
 function renderCartPage() {
@@ -152,9 +201,11 @@ function renderCartPage() {
                 <h3>${escapeHtml(item.name)}</h3>
             </div>
             <div class="cart-qty">
-                <button type="button" onclick="changeQty('${item.id}', -1)" aria-label="Diminuir quantidade">-</button>
+                ${item.qty === 1
+                    ? `<button type="button" class="is-remove" onclick="changeQty('${item.id}', -1)" aria-label="Remover do carrinho"><i class="fa-solid fa-trash"></i></button>`
+                    : `<button type="button" onclick="changeQty('${item.id}', -1)" aria-label="Diminuir quantidade"><i class="fa-solid fa-minus"></i></button>`}
                 <span>${item.qty}</span>
-                <button type="button" onclick="changeQty('${item.id}', 1)" aria-label="Aumentar quantidade">+</button>
+                <button type="button" onclick="changeQty('${item.id}', 1)" aria-label="Aumentar quantidade"><i class="fa-solid fa-plus"></i></button>
             </div>
             <div class="cart-item-price">${formatPrice(item.price * item.qty)}</div>
             <button type="button" class="cart-remove" onclick="removeFromCart('${item.id}')" aria-label="Remover ${escapeHtml(item.name)}">
@@ -182,8 +233,8 @@ function renderCartPage() {
                     <span>Total</span>
                     <span>${formatPrice(subtotal)}</span>
                 </div>
-                <button type="button" class="btn btn-primary btn-block" onclick="alert('Checkout ainda não implementado — funcionalidade futura!')">
-                    Finalizar compra
+                <button type="button" class="btn btn-primary btn-block" onclick="finalizarEncomenda()">
+                    Finalizar encomenda
                 </button>
             </aside>
         </div>
@@ -292,16 +343,19 @@ function initProductFilters() {
     apply();
 }
 
-// ---- Login ----
+// ---- Login (o form faz POST direto pro back/usuarios/login.php) ----
 function initLogin() {
     const form = document.getElementById('loginForm');
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // Integração futura com o back-end (PHP)
-        alert('Login enviado! (integração com back-end ainda pendente)');
-    });
+    const params = new URLSearchParams(window.location.search);
+    const mostrar = (id) => { const el = document.getElementById(id); if (el) el.hidden = false; };
+    if (params.has('erro')) mostrar('login-erro');
+    if (params.has('cadastro')) mostrar('login-cadastro');
+    if (params.get('next') === 'carrinho') mostrar('login-precisa');
+
+    const next = document.getElementById('login-next');
+    if (next && params.get('next')) next.value = params.get('next');
 }
 
 // ---- Mostrar/ocultar senha ----
@@ -319,42 +373,187 @@ function initPasswordToggles() {
     });
 }
 
-// ---- Cadastro ----
+// ---- Cadastro (valida no navegador e envia pro back/usuarios/insertUsuario.php) ----
 function handleCadastro(event) {
-    event.preventDefault();
-
-    const nome = document.getElementById('cad-nome');
     const senha = document.getElementById('cad-senha');
     const confirmar = document.getElementById('cad-confirmar');
     const erro = document.getElementById('cad-erro');
 
-    if (senha.value.length < 6) {
-        erro.textContent = 'A senha precisa ter pelo menos 6 caracteres.';
+    let msg = '';
+    if (senha.value.length < 6) msg = 'A senha precisa ter pelo menos 6 caracteres.';
+    else if (senha.value !== confirmar.value) msg = 'As senhas não coincidem.';
+
+    if (msg) {
+        event.preventDefault();
+        erro.textContent = msg;
         erro.classList.add('show');
         return false;
     }
-
-    if (senha.value !== confirmar.value) {
-        erro.textContent = 'As senhas não coincidem.';
-        erro.classList.add('show');
-        return false;
-    }
-
     erro.classList.remove('show');
+    return true;
+}
 
-    // Sem backend ainda: só mostra a confirmação visual
-    document.getElementById('cadastro-form-wrap').innerHTML = `
-        <div class="auth-success">
+function initCadastro() {
+    const params = new URLSearchParams(window.location.search);
+    const aviso = document.getElementById('cad-email-existe');
+    if (aviso && params.get('erro') === 'email') aviso.hidden = false;
+
+    // Máscara (14) 99999-9999
+    const tel = document.getElementById('cad-telefone');
+    if (!tel) return;
+    tel.addEventListener('input', () => {
+        const d = tel.value.replace(/\D/g, '').slice(0, 11);
+        let v = d;
+        if (d.length > 2) v = `(${d.slice(0, 2)}) ${d.slice(2)}`;
+        if (d.length > 7) v = `(${d.slice(0, 2)}) ${d.slice(2, d.length - 4)}-${d.slice(-4)}`;
+        tel.value = v;
+    });
+}
+
+// ---- Sessão: troca "Entrar/Cadastre-se" por "nome/Sair" quando logado ----
+function setLinkText(link, text) {
+    const span = link.querySelector('span');
+    if (span) {
+        span.textContent = text;
+    } else {
+        const icon = link.querySelector('i');
+        link.textContent = text;
+        if (icon) link.prepend(icon);
+    }
+}
+
+// Consulta o back uma vez. null = sem sessão; false = servidor sem PHP (ex.: Live Server, hospedagem estática)
+let backStatus;
+const sessaoPromise = (window.fetch
+    ? fetch(BACK_BASE + 'usuarios/sessao.php', { credentials: 'same-origin' })
+        .then(r => {
+            const json = (r.headers.get('content-type') || '').includes('application/json');
+            return r.ok && json ? r.json() : false;
+        })
+        .catch(() => false)
+    : Promise.resolve(false)
+).then(res => { backStatus = res; return res; });
+
+function initSessao() {
+    const contas = document.querySelectorAll('[data-auth="conta"]');
+    const sairs = document.querySelectorAll('[data-auth="sair"]');
+    sessaoPromise.then(sessao => {
+        if (!sessao || !sessao.logado) return;
+        const primeiroNome = sessao.nome.split(' ')[0];
+        const destino = sessao.admin ? 'painel/estoque.php' : 'compras/encomendas.php';
+        contas.forEach(a => {
+            a.href = BACK_BASE + destino;
+            a.setAttribute('aria-label', sessao.admin ? 'Painel administrativo' : 'Minhas encomendas');
+            setLinkText(a, sessao.admin ? 'Painel' : primeiroNome);
+        });
+        sairs.forEach(a => {
+            a.href = BACK_BASE + 'usuarios/logout.php';
+            setLinkText(a, 'Sair');
+        });
+    });
+}
+
+// Sem PHP no servidor o POST do formulário vira "HTTP ERROR 405": avisa em vez de quebrar
+const AVISO_SEM_PHP = 'Login, cadastro e encomendas precisam do servidor com PHP. ' +
+    'Abra o site pelo servidor PHP (veja o README) em vez do Live Server.';
+
+function semBack() {
+    return backStatus === false;
+}
+
+function mostrarAvisoSemBack(form) {
+    let aviso = form.parentElement.querySelector('.form-alert--sem-php');
+    if (!aviso) {
+        aviso = document.createElement('p');
+        aviso.className = 'form-alert form-alert--error form-alert--sem-php';
+        aviso.textContent = AVISO_SEM_PHP;
+        form.parentElement.insertBefore(aviso, form);
+    }
+}
+
+function initGuardaBack() {
+    document.querySelectorAll('form[action*="back/"]').forEach(form => {
+        form.addEventListener('submit', (e) => {
+            if (semBack()) {
+                e.preventDefault();
+                mostrarAvisoSemBack(form);
+            }
+        });
+    });
+}
+
+// ---- Tema claro/escuro (botão no header; sem escolha = segue o sistema) ----
+function temaAtual() {
+    const escolhido = document.documentElement.dataset.theme;
+    if (escolhido) return escolhido;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function initTema() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+
+    function atualizarBotao() {
+        const escuro = temaAtual() === 'dark';
+        btn.innerHTML = `<i class="fa-solid ${escuro ? 'fa-sun' : 'fa-moon'}"></i>`;
+        btn.setAttribute('aria-label', escuro ? 'Ativar tema claro' : 'Ativar tema escuro');
+        btn.title = btn.getAttribute('aria-label');
+    }
+
+    btn.addEventListener('click', () => {
+        const novo = temaAtual() === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = novo;
+        try { localStorage.setItem('decklogic_tema', novo); } catch (e) { /* ignora */ }
+        atualizarBotao();
+    });
+
+    if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        if (mq.addEventListener) mq.addEventListener('change', atualizarBotao);
+    }
+    atualizarBotao();
+}
+
+// ---- Encomenda: envia o carrinho pro back/compras/finalizar.php ----
+function finalizarEncomenda() {
+    const itens = getCart().filter(i => /^\d+$/.test(String(i.id)));
+    if (!itens.length) return;
+    if (semBack()) {
+        alert(AVISO_SEM_PHP);
+        return;
+    }
+
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = BACK_BASE + 'compras/finalizar.php';
+    itens.forEach(item => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = `itens[${item.id}]`;
+        input.value = item.qty;
+        form.appendChild(input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function initEncomendaOk() {
+    const container = document.getElementById('cart-page-container');
+    if (!container) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('encomenda') !== 'ok') return;
+
+    saveCart([]);
+    container.innerHTML = `
+        <div class="empty-cart">
             <i class="fa-solid fa-circle-check"></i>
-            <h1>Cadastro realizado!</h1>
-            <p>Bem-vindo(a), ${escapeHtml(nome.value)}! Agora você já pode fazer login.</p>
-            <a href="login.html" class="btn btn-primary">
-                <i class="fa-solid fa-arrow-right"></i> Ir para o login
+            <h2>Encomenda registrada!</h2>
+            <p>Retire suas cartas no CTI. Acompanhe o status em Minhas encomendas.</p>
+            <a href="${BACK_BASE}compras/encomendas.php" class="btn btn-primary">
+                <i class="fa-solid fa-box"></i> Minhas encomendas
             </a>
         </div>
     `;
-
-    return false;
 }
 
 // ---- Contato / Newsletter ----
@@ -382,9 +581,23 @@ document.addEventListener('DOMContentLoaded', () => {
     initNav();
     initCarousel();
     initProductFilters();
+    initProductSteppers();
     initLogin();
     initPasswordToggles();
+    initCadastro();
     initSimpleForms();
+    initSessao();
+    initGuardaBack();
+    initTema();
     updateCartBadge();
     renderCartPage();
+    initEncomendaOk();
+
+    // carrinho alterado em outra aba: atualiza contador, cards e página do carrinho
+    window.addEventListener('storage', (e) => {
+        if (e.key !== CART_KEY) return;
+        updateCartBadge();
+        syncProductSteppers();
+        renderCartPage();
+    });
 });

@@ -1,106 +1,75 @@
 <?php
     include "verificaAdm.php";
     include "../util.php";
+    $conn = conecta();
 
-    $conn = conecta();
-?>
-<html>
-<body>
-    <form action="" method="POST">
-        Nome:<br>
-        <input
-            type="text"
-            name="nome"
-            value="<?= isset($_POST['nome']) ? htmlspecialchars($_POST['nome']) : '' ?>"
-        >
-        <input type="submit" value="Filtrar">
-    </form>
-<?php
-    include "../util.php";
-    $conn = conecta();
-    if (isset($_POST['nome']) && $_POST['nome'] != "") { 
-        $varSQL = "
+    $filtro = trim($_POST['nome'] ?? '');
+    if ($filtro != "") {
+        $select = $conn->prepare("
             SELECT *
             FROM usuario
             WHERE nome ILIKE :paramNome
-            AND excluido = false
-            ORDER BY nome";
-        $select = $conn->prepare($varSQL);
-        $nomeFiltro = "%" . $_POST['nome'] . "%";
-        $select->bindParam(
-            ":paramNome",
-            $nomeFiltro);
-        $select->execute();
+              AND excluido = false
+            ORDER BY nome");
+        $select->execute([':paramNome' => "%$filtro%"]);
     } else {
-        $varSQL = "
+        $select = $conn->query("
             SELECT *
             FROM usuario
             WHERE excluido = false
-            ORDER BY nome";
-        $select = $conn->query($varSQL);
+            ORDER BY nome");
     }
-    echo "
-    <table border='1'>
-        <tr>
-            <td>Nome</td>
-            <td>Email</td>
-            <td>Telefone</td>
-            <td>Foto</td>
-            <td>Alterar</td>
-            <td>Excluir</td>
-        </tr>
-    ";
-    while ($linha = $select->fetch(PDO::FETCH_ASSOC)) {
-        $id = $linha['id_usuario'];
-        $nome = htmlspecialchars($linha['nome']);
-        $email = htmlspecialchars($linha['email']);
-        $telefone = htmlspecialchars($linha['telefone']);
-        // Procura a imagem pelo ID
-        $imagem = "";
-        $extensoes = ['jpg', 'jpeg', 'png', 'gif'];
-        foreach ($extensoes as $ext) {
-            $arquivoImagem = "imagens/usuarios/$id.$ext";
-            if (file_exists($arquivoImagem)) {
-                $imagem = $arquivoImagem;
-                break;
-            }
-        }
-        if ($imagem == "") {
-            $imagem = "imagens/semnome.jpg";
-        }
-        echo "
-        <tr>
-            <td>$nome</td>
-            <td>$email</td>
-            <td>$telefone</td>
-            <td>
-                <img
-                    src='$imagem'
-                    height='40'
-                >
-            </td>
-            <td>
-                <a href='alterar_usuario.php?id=$id'>
-                    Alterar
-                </a>
-            </td>
-            <td>
-                <a
-                    href='excluir_usuarios.php?id=$id'
-                    onclick=\"return confirm('Deseja excluir este usuário?')\">
-                    Excluir
-                </a>
-            </td>
-        </tr>
-        ";
-    }
-    echo "
-    </table>
-    <br>
-    <a href='adicionarUsuario.php'>
-        Adicionar usuário
-    </a>
-    ";
+    $usuarios = $select->fetchAll(PDO::FETCH_ASSOC);
+
+    $titulo = "Usuários";
+    $ativo = "usuarios";
+    include "../layout/topo.php";
 ?>
-</body>
-</html>
+    <main id="conteudo" class="container">
+        <section class="page-hero">
+            <span class="section-eyebrow">Painel administrativo</span>
+            <h1>Usuários</h1>
+            <p>Clientes e administradores cadastrados na loja.</p>
+        </section>
+
+        <?php include "../layout/painel-nav.php"; ?>
+
+        <section class="panel-card">
+            <div class="panel-card-head">
+                <form action="" method="post" class="inline-form">
+                    <label for="filtro-nome" class="sr-only">Filtrar por nome</label>
+                    <input type="text" id="filtro-nome" name="nome" class="form-control" placeholder="Filtrar por nome" value="<?= htmlspecialchars($filtro) ?>">
+                    <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+                </form>
+                <a href="adicionarUsuario.php" class="btn btn-outline btn-sm"><i class="fa-solid fa-user-plus"></i> Adicionar usuário</a>
+            </div>
+
+            <div class="table-wrap">
+                <table class="data-table data-table--stack">
+                    <thead>
+                        <tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Perfil</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($usuarios as $u) { $id = (int) $u['id_usuario']; ?>
+                        <tr>
+                            <td class="cell-title" data-label="Nome"><?= htmlspecialchars($u['nome']) ?></td>
+                            <td data-label="E-mail"><?= htmlspecialchars($u['email']) ?></td>
+                            <td data-label="Telefone"><?= htmlspecialchars($u['telefone'] ?? '') ?: '—' ?></td>
+                            <td data-label="Perfil"><?= $u['admin'] ? '<span class="status-pill status-entregue">Admin</span>' : 'Cliente' ?></td>
+                            <td class="cell-actions" data-label="">
+                                <a href="alterar_usuario.php?id=<?= $id ?>" class="btn btn-outline btn-sm">Alterar</a>
+                                <?php if ($id != $_SESSION['id_usuario']) { ?>
+                                <a href="excluir_usuarios.php?id=<?= $id ?>" class="btn btn-danger-outline btn-sm" onclick="return confirm('Deseja excluir este usuário?')">Excluir</a>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    <?php if (count($usuarios) == 0) { ?>
+                        <tr><td colspan="5" class="panel-empty">Nenhum usuário encontrado.</td></tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+<?php include "../layout/rodape.php"; ?>

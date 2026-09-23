@@ -22,6 +22,8 @@
    16. Página: Sobre Nós
    17. Página: Desenvolvedores
    18. Página: Missão
+   19. Área do cliente / painel admin
+   Tema escuro (prefers-color-scheme)
    ========================================================================== */
 
 /* ==========================================================================
@@ -64,6 +66,16 @@
     --border-strong: #C5CFDB;
 
     --danger: var(--mec);
+
+    /* Tokens semânticos de texto (trocam no tema escuro) */
+    --heading: var(--navy-dark);
+    --brand-text: var(--navy);
+    --info-ink: var(--info);
+    --mec-ink: var(--mec);
+    --eletro-text: var(--eletro-ink);
+    --link: var(--info);
+
+    color-scheme: light dark;
 
     /* Tipografia */
     --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -245,21 +257,21 @@ button {
 .is-info {
     --course: var(--info);
     --course-dark: var(--info-dark);
-    --course-ink: var(--info);
+    --course-ink: var(--info-ink);
     --course-soft: var(--info-soft);
 }
 
 .is-eletro {
     --course: var(--eletro);
     --course-dark: var(--eletro-ink);
-    --course-ink: var(--eletro-ink);
+    --course-ink: var(--eletro-text);
     --course-soft: var(--eletro-soft);
 }
 
 .is-mec {
     --course: var(--mec);
     --course-dark: var(--mec-dark);
-    --course-ink: var(--mec);
+    --course-ink: var(--mec-ink);
     --course-soft: var(--mec-soft);
 }
 
@@ -278,7 +290,7 @@ button {
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--navy);
+    color: var(--brand-text);
     margin-bottom: 0.4rem;
 }
 
@@ -286,7 +298,7 @@ button {
     font-size: clamp(1.5rem, 5vw, 2.2rem);
     font-weight: 800;
     letter-spacing: -0.5px;
-    color: var(--navy-dark);
+    color: var(--heading);
 }
 
 .section-subtitle {
@@ -304,7 +316,7 @@ button {
     font-size: clamp(1.7rem, 6vw, 2.6rem);
     font-weight: 800;
     letter-spacing: -0.5px;
-    color: var(--navy-dark);
+    color: var(--heading);
     margin-bottom: 0.6rem;
 }
 
@@ -324,7 +336,7 @@ button {
     top: 0;
     z-index: 1000;
     /* fundo sólido: backdrop-filter aqui prenderia o menu lateral (position: fixed) dentro do header */
-    background: #fff;
+    background: var(--bg-surface);
     box-shadow: 0 1px 0 var(--border-color);
 }
 
@@ -346,7 +358,7 @@ button {
     display: inline-flex;
     align-items: center;
     justify-self: start;
-    color: var(--navy);
+    color: var(--brand-text);
     border-radius: var(--radius-sm);
 }
 
@@ -371,7 +383,7 @@ button {
     justify-content: center;
     gap: 5px;
     border-radius: var(--radius-sm);
-    color: var(--navy);
+    color: var(--brand-text);
 }
 
 .nav-toggle:hover {
@@ -412,7 +424,7 @@ button {
 
 .search-form input:focus {
     outline: none;
-    background: #fff;
+    background: var(--bg-surface);
     border-color: var(--info);
     box-shadow: 0 0 0 4px rgba(29, 81, 193, 0.14);
 }
@@ -455,7 +467,7 @@ button {
     border-radius: var(--radius-full);
     font-weight: 600;
     font-size: 0.92rem;
-    color: var(--navy-dark);
+    color: var(--heading);
 }
 
 .user-link i,
@@ -483,6 +495,14 @@ button {
     background: var(--info);
 }
 
+/* Botão de tema (claro/escuro) no header */
+.theme-toggle {
+    color: var(--brand-text);
+}
+
+.theme-toggle:hover {
+    background: var(--bg-muted);
+}
 .cart-badge {
     position: absolute;
     top: -4px;
@@ -497,7 +517,7 @@ button {
     font-weight: 800;
     line-height: 20px;
     text-align: center;
-    border: 2px solid #fff;
+    border: 2px solid var(--bg-surface);
 }
 
 /* ==========================================================================
@@ -514,7 +534,7 @@ button {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    background: #fff;
+    background: var(--bg-surface);
     box-shadow: -12px 0 40px rgba(10, 42, 64, 0.25);
     transform: translateX(100%);
     visibility: hidden;
@@ -542,7 +562,7 @@ button {
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--navy);
+    color: var(--brand-text);
 }
 
 .nav-close {
@@ -552,7 +572,7 @@ button {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    color: var(--navy);
+    color: var(--brand-text);
     font-size: 1.3rem;
 }
 
@@ -603,7 +623,7 @@ body.nav-open {
 .main-nav a i {
     width: 20px;
     text-align: center;
-    color: var(--navy);
+    color: var(--brand-text);
 }
 
 .main-nav a:hover {
@@ -611,7 +631,7 @@ body.nav-open {
 }
 
 .main-nav a.active {
-    color: var(--info);
+    color: var(--link);
     background: var(--info-soft);
 }
 
@@ -664,7 +684,7 @@ body.nav-open {
 
 .btn-outline {
     border-color: currentColor;
-    color: var(--navy);
+    color: var(--brand-text);
     background: transparent;
 }
 
@@ -880,7 +900,7 @@ body.nav-open {
 
 .filter-chip:hover {
     border-color: var(--navy);
-    color: var(--navy-dark);
+    color: var(--heading);
 }
 
 .filter-chip.active {
@@ -1004,7 +1024,7 @@ body.nav-open {
 .price-current {
     font-size: 1.3rem;
     font-weight: 800;
-    color: var(--navy-dark);
+    color: var(--heading);
 }
 
 .btn-add-cart {
@@ -1029,6 +1049,56 @@ body.nav-open {
     background: #1F8A4C;
 }
 
+/* Seletor de quantidade que substitui o "Adicionar" depois do 1º clique */
+.qty-stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem;
+    border-radius: var(--radius-full);
+    background: var(--info-soft);
+    border: 1px solid var(--info);
+}
+
+.qty-stepper[hidden] {
+    display: none;
+}
+
+.qty-stepper button {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--info);
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.qty-stepper button:hover {
+    background: var(--info-dark);
+}
+
+.qty-stepper button.is-remove {
+    background: transparent;
+    color: var(--mec-ink);
+}
+
+.qty-stepper button.is-remove:hover {
+    background: var(--mec-soft);
+}
+
+.qty-stepper .qty-value {
+    min-width: 2.2ch;
+    text-align: center;
+    font-weight: 800;
+    color: var(--heading);
+}
+
+.btn-add-cart[hidden] {
+    display: none;
+}
 .products-empty {
     padding: 2.5rem 1.25rem;
     border: 1px dashed var(--border-strong);
@@ -1347,7 +1417,7 @@ body.nav-open {
 
 .search-result-info a,
 .products-empty a {
-    color: var(--info);
+    color: var(--link);
     font-weight: 700;
     text-decoration: underline;
 }
@@ -1442,6 +1512,16 @@ body.nav-open {
     color: #fff;
 }
 
+.cart-qty button.is-remove {
+    background: transparent;
+    color: var(--mec-ink);
+}
+
+.cart-qty button.is-remove:hover {
+    background: var(--mec-soft);
+    color: var(--mec-ink);
+}
+
 .cart-qty span {
     min-width: 2ch;
     text-align: center;
@@ -1451,7 +1531,7 @@ body.nav-open {
 .cart-item-price {
     grid-area: price;
     font-weight: 800;
-    color: var(--navy-dark);
+    color: var(--heading);
     text-align: right;
 }
 
@@ -1505,7 +1585,8 @@ body.nav-open {
     border-radius: var(--radius-lg);
 }
 
-.empty-cart i {
+.empty-cart > i {
+    display: block;
     font-size: 2.5rem;
     color: var(--text-dim);
     margin-bottom: 1rem;
@@ -1567,14 +1648,14 @@ body.nav-open {
     margin-bottom: 1rem;
     border-radius: var(--radius-md);
     background: var(--info-soft);
-    color: var(--info);
+    color: var(--link);
     font-size: 1.4rem;
 }
 
 .auth-header h1 {
     font-size: 1.6rem;
     font-weight: 800;
-    color: var(--navy-dark);
+    color: var(--heading);
     margin-bottom: 0.35rem;
 }
 
@@ -1662,7 +1743,7 @@ textarea.form-control {
 
 .form-link-row a,
 .auth-footer-link a {
-    color: var(--info);
+    color: var(--link);
     font-weight: 700;
     font-size: 0.9rem;
 }
@@ -1737,7 +1818,7 @@ textarea.form-control {
 }
 
 .info-card a:hover {
-    color: var(--info);
+    color: var(--link);
 }
 
 /* ==========================================================================
@@ -1765,7 +1846,7 @@ textarea.form-control {
 .about-story-text h2 {
     font-size: 1.6rem;
     font-weight: 800;
-    color: var(--navy-dark);
+    color: var(--heading);
     margin-bottom: 0.8rem;
 }
 
@@ -1790,7 +1871,7 @@ textarea.form-control {
     font-family: var(--font-mono);
     font-size: 2.2rem;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--brand-text);
 }
 
 .stat-card span {
@@ -1809,7 +1890,7 @@ textarea.form-control {
     border-radius: var(--radius-lg);
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
-    color: var(--navy);
+    color: var(--brand-text);
 }
 
 .brand-explain-logo .logo-svg {
@@ -1936,13 +2017,37 @@ textarea.form-control {
     margin-bottom: 0.8rem;
     border-radius: var(--radius-full);
     background: var(--info-soft);
-    color: var(--info);
+    color: var(--link);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
 }
 
+.dev-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.9rem;
+}
+
+.dev-tag {
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    background: var(--bg-muted);
+    color: var(--brand-text);
+}
+
+.dev-tag.tag-front { background: var(--info-soft); color: var(--info-ink); }
+.dev-tag.tag-back { background: var(--mec-soft); color: var(--mec-ink); }
+.dev-tag.tag-db { background: var(--eletro-soft); color: var(--eletro-text); }
+.dev-tag.tag-dev { background: var(--bg-muted); color: var(--heading); }
+.dev-tag.tag-mkt { background: var(--bg-muted); color: var(--brand-text); }
 .dev-card p {
     color: var(--text-muted);
     font-size: 0.92rem;
@@ -2034,7 +2139,7 @@ textarea.form-control {
 .status-card h1 {
     font-size: 1.8rem;
     font-weight: 800;
-    color: var(--navy-dark);
+    color: var(--heading);
     margin-bottom: 0.75rem;
 }
 
@@ -2042,6 +2147,501 @@ textarea.form-control {
     color: var(--text-muted);
     margin-bottom: 1.5rem;
 }
+
+/* ---- Indicadores de campo obrigatório / opcional ---- */
+.req {
+    color: var(--mec-ink);
+    font-weight: 800;
+}
+
+.opt {
+    color: var(--text-dim);
+    font-weight: 500;
+    font-size: 0.82rem;
+}
+
+.form-legend {
+    margin-bottom: 1rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.form-alert {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.form-alert[hidden] {
+    display: none;
+}
+
+.form-alert a {
+    text-decoration: underline;
+}
+
+.form-alert--error { background: var(--mec-soft); color: var(--mec-ink); }
+.form-alert--ok { background: #E3F4EA; color: #1F7A45; }
+.form-alert--info { background: var(--info-soft); color: var(--info-ink); }
+
+/* ==========================================================================
+   19. ÁREA DO CLIENTE / PAINEL ADMIN (páginas PHP em back/)
+   ========================================================================== */
+.panel-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.panel-nav a {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 40px;
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.88rem;
+    white-space: nowrap;
+}
+
+.panel-nav a:hover {
+    color: var(--heading);
+    border-color: var(--navy);
+}
+
+.panel-nav a.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+}
+
+.panel-card {
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+}
+
+.panel-card h2 {
+    font-size: 1.1rem;
+    color: var(--heading);
+    margin-bottom: 1rem;
+}
+
+.panel-card-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.panel-card-head h2 {
+    margin-bottom: 0;
+}
+
+.panel-empty {
+    color: var(--text-muted);
+}
+
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.7rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.data-table th {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.data-table td.num,
+.data-table th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.data-table--compact {
+    min-width: 0;
+}
+
+.data-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.saldo-neg { color: var(--mec-ink); font-weight: 800; }
+.saldo-ok { color: var(--heading); font-weight: 800; }
+
+.status-pill {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.status-reservado { background: var(--eletro-soft); color: var(--eletro-text); }
+.status-entregue { background: #E3F4EA; color: #1F7A45; }
+.status-cancelado { background: var(--mec-soft); color: var(--mec-ink); }
+
+.inline-form {
+    display: inline-flex;
+    gap: 0.4rem;
+}
+
+.btn-sm {
+    min-height: 34px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+.btn-danger-outline {
+    border-color: var(--mec);
+    color: var(--mec-ink);
+    background: transparent;
+}
+
+.btn-danger-outline:hover {
+    background: var(--mec);
+    color: #fff;
+}
+
+.order-card {
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+}
+
+.order-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.order-head strong {
+    color: var(--heading);
+}
+
+.order-head span {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.order-items li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-top: 1px dashed var(--border-color);
+    font-size: 0.92rem;
+}
+
+.order-items li span:last-child {
+    white-space: nowrap;
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border-color);
+    font-weight: 800;
+    color: var(--heading);
+}
+.order-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.9rem;
+}
+
+/* Tabelas do painel: no celular cada linha vira um card vertical (rótulo à esquerda, valor à direita).
+   A partir de 768px volta a ser tabela. O rótulo vem do atributo data-label de cada <td>. */
+.data-table--stack {
+    min-width: 0;
+}
+
+.data-table--stack thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+
+.data-table--stack tr {
+    display: block;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table--stack tr:last-child {
+    border-bottom: 0;
+}
+
+.data-table--stack td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    border-bottom: 0;
+    text-align: right;
+}
+
+.data-table--stack td.num {
+    text-align: right;
+}
+
+.data-table--stack td::before {
+    content: attr(data-label);
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+}
+
+.data-table--stack td[data-label=""]::before {
+    content: none;
+}
+
+.data-table--stack td.cell-title {
+    font-weight: 700;
+    color: var(--heading);
+}
+
+.data-table--stack td.cell-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    padding-top: 0.6rem;
+}
+
+.table-thumb {
+    width: 36px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 4px;
+    background: var(--bg-muted);
+}
+
+@media (min-width: 768px) {
+    .data-table--stack thead {
+        position: static;
+        width: auto;
+        height: auto;
+        overflow: visible;
+        clip: auto;
+    }
+
+    .data-table--stack tr {
+        display: table-row;
+        padding: 0;
+    }
+
+    .data-table--stack td {
+        display: table-cell;
+        padding: 0.7rem 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+        text-align: left;
+    }
+
+    .data-table--stack tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .data-table--stack td::before {
+        content: none;
+    }
+
+    .data-table--stack td.cell-actions {
+        padding-top: 0.7rem;
+        white-space: nowrap;
+    }
+}
+
+/* Formulários do painel (produto, entrada, usuário) */
+.panel-form {
+    max-width: 640px;
+}
+
+.panel-form .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+}
+
+.form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.92rem;
+}
+
+.form-check input {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+    accent-color: var(--info);
+}
+
+.form-check input:disabled + span {
+    opacity: 0.7;
+}
+.current-image {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.current-image img {
+    width: 64px;
+    height: 88px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: var(--bg-muted);
+}
+
+/* ==========================================================================
+   TEMA ESCURO
+   Segue o tema do sistema. Declarar o tema escuro evita que o navegador do
+   celular "force" o dark invertendo as cores por conta própria.
+   ========================================================================== */
+/* Tema do sistema (quando o usuário não escolheu no botão) */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+            --bg-main: #0B1620;
+            --bg-surface: #132230;
+            --bg-muted: #1C2E3E;
+    
+            --text-main: #E6EDF5;
+            --text-muted: #A9BACB;
+            --text-dim: #7D8FA3;
+    
+            --border-color: #243748;
+            --border-strong: #34495D;
+    
+            --heading: #EAF1F8;
+            --brand-text: #8CBCE3;
+            --info-ink: #86A8F2;
+            --mec-ink: #F08A8A;
+            --eletro-text: #F2B64D;
+            --link: #86A8F2;
+    
+            --info-soft: #172A52;
+            --eletro-soft: #33260E;
+            --mec-soft: #3A1719;
+    
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+            --shadow-card: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+        }
+
+    :root:not([data-theme="light"]) .site-header {
+            box-shadow: 0 1px 0 var(--border-color);
+        }
+
+    :root:not([data-theme="light"]) .site-footer {
+            background: #07111A;
+        }
+
+
+    :root:not([data-theme="light"]) .form-alert--ok,
+    :root:not([data-theme="light"]) .status-entregue {
+            background: #12321F;
+            color: #7FD6A1;
+        }
+}
+
+/* Tema escolhido no botão (html[data-theme]) */
+:root[data-theme="dark"] {
+        --bg-main: #0B1620;
+        --bg-surface: #132230;
+        --bg-muted: #1C2E3E;
+
+        --text-main: #E6EDF5;
+        --text-muted: #A9BACB;
+        --text-dim: #7D8FA3;
+
+        --border-color: #243748;
+        --border-strong: #34495D;
+
+        --heading: #EAF1F8;
+        --brand-text: #8CBCE3;
+        --info-ink: #86A8F2;
+        --mec-ink: #F08A8A;
+        --eletro-text: #F2B64D;
+        --link: #86A8F2;
+
+        --info-soft: #172A52;
+        --eletro-soft: #33260E;
+        --mec-soft: #3A1719;
+
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+        --shadow-card: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+
+:root[data-theme="dark"] .site-header {
+        box-shadow: 0 1px 0 var(--border-color);
+    }
+
+:root[data-theme="dark"] .site-footer {
+        background: #07111A;
+    }
+
+
+:root[data-theme="dark"] .form-alert--ok,
+:root[data-theme="dark"] .status-entregue {
+        background: #12321F;
+        color: #7FD6A1;
+    }
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
 
 /* ==========================================================================
    BREAKPOINT 480px — celular grande

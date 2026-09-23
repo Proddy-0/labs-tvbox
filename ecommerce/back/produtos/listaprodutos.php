@@ -1,98 +1,84 @@
-<html>
-<body>
-    <form action="" method="POST">
-        Valor máximo:<br>
-        <input type="number"
-               name="valor"
-               step="0.01"
-               min="0">
-        <input type="submit" value="Filtrar">
-    </form>
-    <?php
+<?php
+    include "../usuarios/verificaAdm.php";
     include "../util.php";
     $conn = conecta();
-    if (
-        isset($_POST['valor']) && $_POST['valor'] != "")
-    {
-        $varSQL = "
+
+    $valorMax = $_POST['valor'] ?? '';
+    if ($valorMax != "") {
+        $select = $conn->prepare("
             SELECT *
             FROM produto
             WHERE valor_unitario <= :paramValor
               AND excluido = false
-            ORDER BY nome";
-        $select = $conn->prepare($varSQL);
-        $select->bindParam(
-            ":paramValor",
-            $_POST['valor']);
-        $select->execute();
+            ORDER BY nome");
+        $select->execute([':paramValor' => $valorMax]);
     } else {
-        $varSQL = "
+        $select = $conn->query("
             SELECT *
             FROM produto
             WHERE excluido = false
-            ORDER BY nome";
-        $select = $conn->query($varSQL);
+            ORDER BY nome");
     }
-    echo "
-        <table border='1'>
-            <tr>
-                <td>Id</td>
-                <td>Nome</td>
-                <td>Descrição</td>
-                <td>Valor</td>
-                <td>Foto</td>
-                <td>Alterar</td>
-                <td>Excluir</td>
-            </tr>";
-    while ($linha = $select->fetch(PDO::FETCH_ASSOC)) {
-        $id = $linha['id_produto'];
-        $nome = htmlspecialchars($linha['nome']);
-        $descricao = htmlspecialchars($linha['descricao']);
-        $valor = $linha['valor_unitario'];
-        $nomeArquivo = "";
-        $extensoes = [
-            'jpg','jpeg','png','gif'
-        ];
-        foreach ($extensoes as $ext) {
-            $arquivo = "imagens/produtos/$id.$ext";
+    $produtos = $select->fetchAll(PDO::FETCH_ASSOC);
+
+    // Imagem: primeiro a enviada pelo painel (imagens/produtos/<id>.ext), senão o caminho da coluna imagem (arquivo do front)
+    function imagemProduto($linha) {
+        foreach (['jpg', 'jpeg', 'png', 'gif', 'webp'] as $ext) {
+            $arquivo = "imagens/produtos/{$linha['id_produto']}.$ext";
             if (file_exists($arquivo)) {
-                $nomeArquivo = $arquivo;
-                break;
+                return $arquivo;
             }
         }
-        if ($nomeArquivo != "") {
-            $foto = "<img src='$nomeArquivo' height='40'>";
-        } else {
-            $foto = "Sem imagem";
-        }
-        echo "
-            <tr>
-                <td>$id</td>
-                <td>$nome</td>
-                <td>$descricao</td>
-                <td>R$ " .
-                    number_format($valor,2,',','.')
-                . "</td>
-                <td>$foto</td>
-                <td>
-                    <a href='Alterarprodutos.php?id=$id'>
-                        Alterar
-                    </a>
-                </td>
-                <td>
-                    <a href='Excluirprodutos.php?id=$id'
-                        onclick=\"return confirm('Deseja excluir este produto?')\">
-                        Excluir
-                    </a>
-                </td>
-            </tr>";
+        return $linha['imagem'] ? "../../front/" . $linha['imagem'] : "";
     }
-    echo "
-        </table>
-        <br>
-        <a href='Adicionarprodutos.php'>
-            Adicionar produto
-        </a>";
-    ?>
-</body>
-</html>
+
+    $titulo = "Produtos";
+    $ativo = "produtos";
+    include "../layout/topo.php";
+?>
+    <main id="conteudo" class="container">
+        <section class="page-hero">
+            <span class="section-eyebrow">Painel administrativo</span>
+            <h1>Produtos</h1>
+            <p>Cartas à venda na loja.</p>
+        </section>
+
+        <?php include "../layout/painel-nav.php"; ?>
+
+        <section class="panel-card">
+            <div class="panel-card-head">
+                <form action="" method="post" class="inline-form">
+                    <label for="filtro-valor" class="sr-only">Valor máximo</label>
+                    <input type="number" id="filtro-valor" name="valor" step="0.01" min="0" class="form-control" placeholder="Valor máximo" value="<?= htmlspecialchars($valorMax) ?>">
+                    <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+                </form>
+                <a href="Adicionarprodutos.php" class="btn btn-outline btn-sm"><i class="fa-solid fa-plus"></i> Adicionar produto</a>
+            </div>
+
+            <div class="table-wrap">
+                <table class="data-table data-table--stack">
+                    <thead>
+                        <tr><th>Foto</th><th>Nome</th><th>Descrição</th><th class="num">Valor</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($produtos as $p) { $id = (int) $p['id_produto']; $img = imagemProduto($p); ?>
+                        <tr>
+                            <td data-label="Foto"><?= $img ? '<img class="table-thumb" src="' . htmlspecialchars($img) . '" alt="">' : '—' ?></td>
+                            <td class="cell-title" data-label="Nome"><?= htmlspecialchars($p['nome'] ?? '') ?></td>
+                            <td data-label="Descrição"><?= htmlspecialchars($p['descricao']) ?></td>
+                            <td class="num" data-label="Valor">R$ <?= number_format($p['valor_unitario'], 2, ',', '.') ?></td>
+                            <td class="cell-actions" data-label="">
+                                <a href="Alterarprodutos.php?id=<?= $id ?>" class="btn btn-outline btn-sm">Alterar</a>
+                                <a href="Excluirprodutos.php?id=<?= $id ?>" class="btn btn-danger-outline btn-sm" onclick="return confirm('Deseja excluir este produto?')">Excluir</a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    <?php if (count($produtos) == 0) { ?>
+                        <tr><td colspan="5" class="panel-empty" data-label="">Nenhum produto encontrado.</td></tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+<?php include "../layout/rodape.php"; ?>

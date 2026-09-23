@@ -7,6 +7,11 @@
     <title>Cadastro | Deck Logic</title>
     <meta name="description" content="Crie sua conta para comprar as cartas do seu curso.">
     <meta name="theme-color" content="#14537D">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        // aplica o tema escolhido no botão antes de desenhar a página (evita piscar)
+        try { var tema = localStorage.getItem('decklogic_tema'); if (tema) document.documentElement.dataset.theme = tema; } catch (e) {}
+    </script>
     <link rel="icon" type="image/png" href="img/brand/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +20,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body id="top">
     <!-- Logo Deck Logic (SVG inline, reutilizado no header e no footer via <use>) -->
     <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -42,7 +47,7 @@
 
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-    <header class="site-header" id="top">
+    <header class="site-header">
         <div class="brand-bar" aria-hidden="true"></div>
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="Deck Logic — página inicial">
@@ -56,8 +61,9 @@
             </form>
 
             <nav class="user-nav" aria-label="Conta e carrinho">
-                <a href="login.html" class="user-link" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
-                <a href="cadastro.html" class="user-link user-link--signup"><span>Cadastre-se</span></a>
+                <button type="button" class="user-link theme-toggle" id="theme-toggle" aria-label="Ativar tema escuro"><i class="fa-solid fa-moon"></i></button>
+                <a href="login.html" class="user-link" data-auth="conta" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
+                <a href="cadastro.html" class="user-link user-link--signup" data-auth="sair"><span>Cadastre-se</span></a>
                 <a href="carrinho.html" class="cart-btn" aria-label="Carrinho">
                     <i class="fa-solid fa-cart-shopping"></i><span class="cart-label">Carrinho</span>
                     <span class="cart-badge" id="cart-count">0</span>
@@ -85,8 +91,8 @@
                     <li><a href="sobre.html"><i class="fa-solid fa-circle-info"></i>Sobre Nós</a></li>
                     <li><a href="contato.html"><i class="fa-solid fa-envelope"></i>Contato</a></li>
                     <li><a href="desenvolvedores.html"><i class="fa-solid fa-code"></i>Devs</a></li>
-                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html"><i class="fa-regular fa-user"></i>Entrar</a></li>
-                    <li class="main-nav-extra"><a href="cadastro.html"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
+                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html" data-auth="conta"><i class="fa-regular fa-user"></i>Entrar</a></li>
+                    <li class="main-nav-extra"><a href="cadastro.html" data-auth="sair"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
                 </ul>
             </div>
         </nav>
@@ -95,43 +101,43 @@
     <main id="conteudo">
 
         <section class="auth-section container">
-            <div class="auth-card" id="cadastro-form-wrap">
+            <div class="auth-card">
                 <header class="auth-header">
                     <div class="auth-icon"><i class="fa-solid fa-user-plus"></i></div>
                     <h1>Criar conta</h1>
-                    <p>Cadastre-se para comprar as cartas do seu curso.</p>
+                    <p>Cadastre-se para encomendar as cartas.</p>
                 </header>
 
-                <form onsubmit="return handleCadastro(event)">
+                <p class="form-alert form-alert--error" id="cad-email-existe" hidden>Este e-mail já está cadastrado. <a href="login.html">Entrar</a></p>
+
+                <p class="form-legend"><span class="req" aria-hidden="true">*</span> campo obrigatório</p>
+
+                <form action="../back/usuarios/insertUsuario.php" method="post" onsubmit="return handleCadastro(event)">
+                    <input type="hidden" name="origem" value="site">
                     <div class="form-group">
-                        <label for="cad-nome">Nome completo</label>
-                        <input type="text" id="cad-nome" name="nome" class="form-control" placeholder="Seu nome" autocomplete="name" required>
+                        <label for="cad-nome">Nome completo <span class="req" aria-hidden="true">*</span></label>
+                        <input type="text" id="cad-nome" name="nome" class="form-control" placeholder="Seu nome" maxlength="80" autocomplete="name" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="cad-email">E-mail</label>
-                        <input type="email" id="cad-email" name="email" class="form-control" placeholder="seuemail@escola.com" autocomplete="email" required>
+                        <label for="cad-email">E-mail <span class="req" aria-hidden="true">*</span></label>
+                        <input type="email" id="cad-email" name="email" class="form-control" placeholder="seuemail@exemplo.com" maxlength="100" autocomplete="email" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="cad-curso">Curso</label>
-                        <select id="cad-curso" name="curso" class="form-control" required>
-                            <option value="">Selecione seu curso</option>
-                            <option value="informatica">Informática</option>
-                            <option value="mecanica">Mecânica</option>
-                            <option value="eletronica">Eletrônica</option>
-                        </select>
+                        <label for="cad-telefone">Telefone <span class="opt">(opcional)</span></label>
+                        <input type="tel" id="cad-telefone" name="telefone" class="form-control" placeholder="(14) 99999-9999" maxlength="15" autocomplete="tel" inputmode="tel">
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="cad-senha">Senha</label>
+                            <label for="cad-senha">Senha <span class="req" aria-hidden="true">*</span></label>
                             <input type="password" id="cad-senha" name="senha" class="form-control" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="cad-confirmar">Confirmar senha</label>
-                            <input type="password" id="cad-confirmar" class="form-control" placeholder="Repita a senha" autocomplete="new-password" required>
+                            <label for="cad-confirmar">Confirmar senha <span class="req" aria-hidden="true">*</span></label>
+                            <input type="password" id="cad-confirmar" name="confirmaSenha" class="form-control" placeholder="Repita a senha" autocomplete="new-password" required>
                         </div>
                     </div>
                     <span class="form-error" id="cad-erro" role="alert"></span>

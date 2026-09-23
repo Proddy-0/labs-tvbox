@@ -1,77 +1,62 @@
-<html>
-<body>
-    <h2>Entradas de estoque</h2>
-    <?php
+<?php
+    include "../usuarios/verificaAdm.php";
     include "../util.php";
     $conn = conecta();
-    $varSQL = "
+    $entradas = $conn->query("
         SELECT
             entrada.id_entrada,
             entrada.quantidade,
             entrada.custo_unitario,
             entrada.obs,
             entrada.data_entrada,
-            entrada.fk_produto,
-            produto.descricao
+            produto.nome
         FROM entrada
-        INNER JOIN produto
-            ON produto.id_produto =
-               entrada.fk_produto
-        ORDER BY entrada.data_entrada DESC
-    ";
-    $select = $conn->query($varSQL);
-    echo "
-        <table border='1'>
-            <tr>
-                <td>ID</td>
-                <td>Produto</td>
-                <td>Quantidade</td>
-                <td>Custo unitário</td>
-                <td>Observação</td>
-                <td>Data</td>
-                <td>Alterar</td>
-                <td>Excluir</td>
-            </tr>";
-    while ($linha =$select->fetch(PDO::FETCH_ASSOC))
-    {
-        $id =$linha['id_entrada'];
-        $produto = htmlspecialchars($linha['descricao']);
-        $quantidade = $linha['quantidade'];
-        $custo = $linha['custo_unitario'];
-        $obs = htmlspecialchars($linha['obs'] ?? '');
-        $data = date( 'd/m/Y H:i', strtotime($linha['data_entrada']) );
-        echo "
-            <tr>
-                <td>$id</td>
-                <td>$produto</td>
-                <td>$quantidade</td>
-                <td>R$ " .
-                    number_format(
-                        $custo,2,',','.')
-                . "</td>
-                <td>$obs</td>
-                <td>$data</td>
-                <td>
-                    <a href='alterarEntradas.php?id=$id'>
-                        Alterar
-                    </a>
-                </td>
-                <td>
-                    <a
-                        href='excluirEntradas.php?id=$id'
-                        onclick=\"return confirm('Deseja excluir esta entrada?')\">
-                        Excluir
-                    </a>
-                </td>
-            </tr>
-        ";
-    }
-    echo "
-        </table>
-        <br>
-        <a href='adicionarEntradas.php'>
-            Adicionar entrada
-        </a>";
-    ?>
-</body>
-</html>
+        INNER JOIN produto ON produto.id_produto = entrada.fk_produto
+        ORDER BY entrada.data_entrada DESC")->fetchAll(PDO::FETCH_ASSOC);
+
+    $titulo = "Entradas de estoque";
+    $ativo = "entradas";
+    include "../layout/topo.php";
+?>
+    <main id="conteudo" class="container">
+        <section class="page-hero">
+            <span class="section-eyebrow">Painel administrativo</span>
+            <h1>Entradas de estoque</h1>
+            <p>Cada lote de cartas que chegou ao estoque.</p>
+        </section>
+
+        <?php include "../layout/painel-nav.php"; ?>
+
+        <section class="panel-card">
+            <div class="panel-card-head">
+                <h2>Histórico</h2>
+                <a href="adicionarEntradas.php" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Registrar entrada</a>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table data-table--stack">
+                    <thead>
+                        <tr><th>Produto</th><th class="num">Quantidade</th><th class="num">Custo unit.</th><th>Observação</th><th>Data</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($entradas as $e) { $id = (int) $e['id_entrada']; ?>
+                        <tr>
+                            <td class="cell-title" data-label="Produto"><?= htmlspecialchars($e['nome'] ?? '') ?></td>
+                            <td class="num" data-label="Quantidade"><?= (int) $e['quantidade'] ?></td>
+                            <td class="num" data-label="Custo unit.">R$ <?= number_format($e['custo_unitario'], 2, ',', '.') ?></td>
+                            <td data-label="Observação"><?= htmlspecialchars($e['obs'] ?? '') ?: '—' ?></td>
+                            <td data-label="Data"><?= date('d/m/Y H:i', strtotime($e['data_entrada'])) ?></td>
+                            <td class="cell-actions" data-label="">
+                                <a href="alterarEntradas.php?id=<?= $id ?>" class="btn btn-outline btn-sm">Alterar</a>
+                                <a href="excluirEntradas.php?id=<?= $id ?>" class="btn btn-danger-outline btn-sm" onclick="return confirm('Deseja excluir esta entrada?')">Excluir</a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    <?php if (count($entradas) == 0) { ?>
+                        <tr><td colspan="6" class="panel-empty" data-label="">Nenhuma entrada registrada. Registre o estoque inicial de cada carta.</td></tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+<?php include "../layout/rodape.php"; ?>
