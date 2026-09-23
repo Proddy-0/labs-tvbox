@@ -1,3 +1,9 @@
+<?php
+    include "verificaAdm.php";
+    include "../util.php";
+
+    $conn = conecta();
+?>
 <html>
 <body>
     <form action="" method="POST">

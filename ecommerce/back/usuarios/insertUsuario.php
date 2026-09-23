@@ -3,7 +3,7 @@
     $conn = conecta();
     $nome = $_POST['nome'];
     $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $senha = password_hash($_POST["senha"], PASSWORD_DEFAULT);
     $telefone = $_POST['telefone'];
     // Verifica se o email já existe
     $varSQL = "

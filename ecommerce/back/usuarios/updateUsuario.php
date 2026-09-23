@@ -1,12 +1,13 @@
 <?php
     include "../util.php";
+    include "verificaAdm.php";
     $conn = conecta();
     $id = $_POST['id_usuario'];
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $telefone = $_POST['telefone'];
     $varSQL = "
-        UPDATE usuarios
+        UPDATE usuario
         SET
             nome = :nome,
             email = :email,

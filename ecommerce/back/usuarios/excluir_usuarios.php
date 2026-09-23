@@ -1,5 +1,6 @@
 <?php
     include "../util.php";
+    include "verificaAdm.php";
     $conn = conecta();
     $id = $_GET['id'];
     $varSQL = "
