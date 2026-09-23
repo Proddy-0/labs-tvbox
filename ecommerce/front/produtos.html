@@ -4,170 +4,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos | LogicDeck</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Produtos | Deck Logic</title>
+    <meta name="description" content="Catálogo de cartas colecionáveis dos cursos de Informática, Mecânica e Eletrônica.">
+    <meta name="theme-color" content="#14537D">
+    <link rel="icon" type="image/png" href="img/brand/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <div class="header-top">
-                   <a href="index.html" class="logo">
-    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="LogicDeck" style="height: 40px; width: auto;">
-    <div>Logic<span>Deck</span></div>
-</a>
-                <nav class="user-nav">
-                    <ul>
-                        <li style="display:inline-block;">
-                            <a href="index.html"><i class="fa-solid fa-house"></i> Voltar à Home</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+    <!-- Logo Deck Logic (SVG inline, reutilizado no header e no footer via <use>) -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="grad-cursos" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
+                <stop offset="0" stop-color="#EB9F1C" />
+                <stop offset="0.5" stop-color="#1D51C1" />
+                <stop offset="1" stop-color="#BA1313" />
+            </linearGradient>
+            <symbol id="logo-mark" viewBox="0 0 600 521">
+                <polygon points="155,12 445,12 591,260 445,509 155,509 9,260" fill="none" stroke="currentColor" stroke-width="18" stroke-linejoin="round" />
+                <polygon points="163,27 437,27 574,260 437,494 163,494 26,260" fill="none" stroke="url(#grad-cursos)" stroke-width="6" stroke-dasharray="3 3" />
+                <line x1="108" y1="262" x2="510" y2="262" stroke="url(#grad-cursos)" stroke-width="14" stroke-dasharray="2 2" />
+                <circle cx="108" cy="262" r="38" fill="#EB9F1C" />
+                <circle cx="310" cy="262" r="38" fill="#1D51C1" />
+                <circle cx="510" cy="262" r="38" fill="#BA1313" />
+            </symbol>
+            <symbol id="logo-full" viewBox="0 0 1212 521">
+                <use href="#logo-mark" width="600" height="521" />
+                <text x="640" y="195" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Deck</text>
+                <text x="640" y="420" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Logic</text>
+            </symbol>
+        </defs>
+    </svg>
+
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="site-header" id="top">
+        <div class="brand-bar" aria-hidden="true"></div>
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Deck Logic — página inicial">
+                <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
+            </a>
+
+            <form class="search-form" action="produtos.html" method="get" role="search">
+                <label for="busca" class="sr-only">Buscar cartas</label>
+                <input type="search" id="busca" name="q" placeholder="Buscar cartas de Informática, Mecânica ou Eletrônica">
+                <button type="submit" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+
+            <nav class="user-nav" aria-label="Conta e carrinho">
+                <a href="login.html" class="user-link" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
+                <a href="cadastro.html" class="user-link user-link--signup"><span>Cadastre-se</span></a>
+                <a href="carrinho.html" class="cart-btn" aria-label="Carrinho">
+                    <i class="fa-solid fa-cart-shopping"></i><span class="cart-label">Carrinho</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
+            </nav>
+
+            <button class="nav-toggle" type="button" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
         </div>
+
+        <div class="nav-backdrop" id="nav-backdrop"></div>
+
+        <nav class="main-nav" id="menu-principal" aria-label="Menu principal">
+            <div class="main-nav-head">
+                <span class="main-nav-title">Menu</span>
+                <button class="nav-close" type="button" aria-label="Fechar menu"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i>Home</a></li>
+                    <li><a href="produtos.html" class="active" aria-current="page"><i class="fa-solid fa-layer-group"></i>Produtos</a></li>
+                    <li><a href="sobre.html"><i class="fa-solid fa-circle-info"></i>Sobre Nós</a></li>
+                    <li><a href="contato.html"><i class="fa-solid fa-envelope"></i>Contato</a></li>
+                    <li><a href="desenvolvedores.html"><i class="fa-solid fa-code"></i>Devs</a></li>
+                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html"><i class="fa-regular fa-user"></i>Entrar</a></li>
+                    <li class="main-nav-extra"><a href="cadastro.html"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
-    <main class="container" style="padding: 3.5rem 1.5rem; flex-grow: 1;">
+    <main id="conteudo">
 
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <h1 style="font-size: 2.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.75rem;">Nosso Catálogo</h1>
-            <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto;">
-                Cartas colecionáveis exclusivas dos cursos de Informática, Mecânica e Eletrônica
-            </p>
-        </div>
+        <section class="page-hero container">
+            <span class="section-eyebrow">Catálogo</span>
+            <h1>Nossas cartas</h1>
+            <p>Cartas colecionáveis exclusivas dos cursos de Informática, Mecânica e Eletrônica.</p>
+        </section>
 
-        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;">
-            <button class="btn-filter" style="padding: 0.6rem 1.4rem; border-radius: var(--radius-full); border: 1px solid var(--accent); background: var(--accent); color: #fff; font-weight: 600; cursor: pointer;">Todos</button>
-            <button class="btn-filter" style="padding: 0.6rem 1.4rem; border-radius: var(--radius-full); border: 1px solid var(--border-color); background: transparent; color: var(--text-main); font-weight: 600; cursor: pointer;">Informática</button>
-            <button class="btn-filter" style="padding: 0.6rem 1.4rem; border-radius: var(--radius-full); border: 1px solid var(--border-color); background: transparent; color: var(--text-main); font-weight: 600; cursor: pointer;">Mecânica</button>
-            <button class="btn-filter" style="padding: 0.6rem 1.4rem; border-radius: var(--radius-full); border: 1px solid var(--border-color); background: transparent; color: var(--text-main); font-weight: 600; cursor: pointer;">Eletrônica</button>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.75rem;">
-
-            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
-                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
-                    <i class="fa-solid fa-microchip"></i>
-                </div>
-                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
-                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Informática</span>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
-                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
+        <section class="container" aria-label="Vitrine de produtos">
+            <div class="category-filters" role="group" aria-label="Filtrar por curso">
+                <button type="button" class="filter-chip active" data-filter="todos" aria-pressed="true">Todos</button>
+                <button type="button" class="filter-chip is-info" data-filter="informatica" aria-pressed="false"><span class="dot"></span>Informática</button>
+                <button type="button" class="filter-chip is-mec" data-filter="mecanica" aria-pressed="false"><span class="dot"></span>Mecânica</button>
+                <button type="button" class="filter-chip is-eletro" data-filter="eletronica" aria-pressed="false"><span class="dot"></span>Eletrônica</button>
             </div>
 
-            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
-                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
-                    <i class="fa-solid fa-gears"></i>
-                </div>
-                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
-                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Mecânica</span>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
-                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
+            <p class="search-result-info" id="search-result-info" hidden></p>
+
+            <div class="products-grid" data-products>
+
+                <article class="product-card is-info" data-category="informatica">
+                    <div class="product-image-wrap">
+                        <span class="product-badge">Novo</span>
+                        <img src="img/cards/informatica.png" alt="Carta azul do curso de Informática" width="159" height="273">
                     </div>
-                </div>
+                    <div class="product-details">
+                        <span class="product-course-tag">Informática</span>
+                        <h3>Cartas — Redes &amp; Sistemas</h3>
+                        <p class="product-desc">Cartas com conceitos de programação, redes e hardware.</p>
+                        <div class="product-bottom">
+                            <span class="price-current">R$ 15,00</span>
+                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
+                                data-id="informatica" data-name="Cartas — Redes &amp; Sistemas" data-course="Informática"
+                                data-course-class="is-info" data-price="15" data-img="img/cards/informatica.png">
+                                <i class="fa-solid fa-cart-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card is-mec" data-category="mecanica">
+                    <div class="product-image-wrap">
+                        <img src="img/cards/mecanica.png" alt="Carta vermelha do curso de Mecânica" width="160" height="273">
+                    </div>
+                    <div class="product-details">
+                        <span class="product-course-tag">Mecânica</span>
+                        <h3>Cartas — Motores &amp; Máquinas</h3>
+                        <p class="product-desc">Cartas sobre motores, usinagem e processos mecânicos.</p>
+                        <div class="product-bottom">
+                            <span class="price-current">R$ 15,00</span>
+                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
+                                data-id="mecanica" data-name="Cartas — Motores &amp; Máquinas" data-course="Mecânica"
+                                data-course-class="is-mec" data-price="15" data-img="img/cards/mecanica.png">
+                                <i class="fa-solid fa-cart-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card is-eletro" data-category="eletronica">
+                    <div class="product-image-wrap">
+                        <img src="img/cards/eletronica.png" alt="Carta amarela do curso de Eletrônica" width="160" height="273">
+                    </div>
+                    <div class="product-details">
+                        <span class="product-course-tag">Eletrônica</span>
+                        <h3>Cartas — Circuitos &amp; Componentes</h3>
+                        <p class="product-desc">Cartas sobre circuitos, componentes e automação.</p>
+                        <div class="product-bottom">
+                            <span class="price-current">R$ 15,00</span>
+                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
+                                data-id="eletronica" data-name="Cartas — Circuitos &amp; Componentes" data-course="Eletrônica"
+                                data-course-class="is-eletro" data-price="15" data-img="img/cards/eletronica.png">
+                                <i class="fa-solid fa-cart-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
             </div>
 
-            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
-                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
-                    <i class="fa-solid fa-bolt-lightning"></i>
-                </div>
-                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
-                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Eletrônica</span>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
-                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
+            <div class="products-empty" id="products-empty" hidden>
+                <strong>Nenhuma carta encontrada</strong>
+                Tente outro termo ou <a href="produtos.html">veja o catálogo completo</a>.
             </div>
+        </section>
 
-            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
-                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
-                    <i class="fa-solid fa-microchip"></i>
-                </div>
-                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
-                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Informática</span>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
-                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
-                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
-                    <i class="fa-solid fa-gears"></i>
-                </div>
-                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
-                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Mecânica</span>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
-                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
-                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
-                    <i class="fa-solid fa-bolt-lightning"></i>
-                </div>
-                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
-                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Eletrônica</span>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
-                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
     </main>
 
-    <footer>
-        <div class="container footer-bottom" style="border:none; text-align: center; justify-content: center;">
-            <p>&copy; 2026 - LogicDeck. Todos os direitos reservados.</p>
+    <footer class="site-footer">
+        <div class="brand-bar" aria-hidden="true"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <section class="footer-brand" aria-label="Sobre a Deck Logic">
+                    <a href="index.html" class="logo logo--footer" aria-label="Deck Logic — página inicial">
+                        <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
+                    </a>
+                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos do CTI para tornar o aprendizado mais divertido.</p>
+                    <ul class="social-links">
+                        <li><a href="#" class="social-icon" aria-label="Instagram da Deck Logic"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="#" class="social-icon" aria-label="TikTok da Deck Logic"><i class="fa-brands fa-tiktok"></i></a></li>
+                    </ul>
+                </section>
+
+                <nav class="footer-column" aria-label="Navegação do rodapé">
+                    <h2>Navegação</h2>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="produtos.html">Produtos</a></li>
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="desenvolvedores.html">Devs</a></li>
+                    </ul>
+                </nav>
+
+                <section class="footer-column">
+                    <h2>Institucional</h2>
+                    <ul>
+                        <li><a href="missao.html">Missão, Visão e Valores</a></li>
+                        <li><a href="login.html">Entrar</a></li>
+                        <li><a href="cadastro.html">Cadastre-se</a></li>
+                        <li><a href="carrinho.html">Carrinho</a></li>
+                    </ul>
+                </section>
+
+                <section class="footer-column">
+                    <h2>Desenvolvedores</h2>
+                    <!-- TODO: trocar "--" pelo número de chamada de cada integrante -->
+                    <ul class="footer-devs">
+                        <li><span class="dev-num">--</span>Aysllan Magalhães</li>
+                        <li><span class="dev-num">--</span>Gabrieli Vitória de Paula</li>
+                        <li><span class="dev-num">--</span>Lucca Rizzo dos Santos</li>
+                        <li><span class="dev-num">--</span>Lucas Kamiya do Nascimento</li>
+                        <li><span class="dev-num">--</span>Luiza de Mattos Bianco Vilani</li>
+                        <li><span class="dev-num">--</span>Samuel Eduardo Ribeiro Kempner de Paula</li>
+                    </ul>
+                </section>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Deck Logic · Projeto acadêmico de e-commerce — CTI Bauru</p>
+                <a href="#top" class="back-to-top"><i class="fa-solid fa-arrow-up"></i> Voltar ao topo</a>
+            </div>
         </div>
     </footer>
 
-    <script>
-        const filterButtons = document.querySelectorAll('.btn-filter');
-        const cards = document.querySelectorAll('.product-card');
-
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterButtons.forEach(b => {
-                    b.style.background = 'transparent';
-                    b.style.color = 'var(--text-main)';
-                    b.style.borderColor = 'var(--border-color)';
-                });
-                btn.style.background = 'var(--accent)';
-                btn.style.color = '#fff';
-                btn.style.borderColor = 'var(--accent)';
-
-                const category = btn.textContent.trim();
-                cards.forEach(card => {
-                    const cardCategory = card.querySelector('span').textContent.trim();
-                    card.style.display = (category === 'Todos' || category === cardCategory) ? 'flex' : 'none';
-                });
-            });
-        });
-    </script>
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

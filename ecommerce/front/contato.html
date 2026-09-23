@@ -4,60 +4,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato | LogicDeck</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Contato | Deck Logic</title>
+    <meta name="description" content="Fale com a equipe Deck Logic.">
+    <meta name="theme-color" content="#14537D">
+    <link rel="icon" type="image/png" href="img/brand/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <div class="header-top">
-                     <a href="index.html" class="logo">
-    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="LogicDeck" style="height: 40px; width: auto;">
-    <div>Logic<span>Deck</span></div>
-</a>
-                <nav class="user-nav">
-                    <ul>
-                        <li style="display:inline-block;">
-                            <a href="index.html"><i class="fa-solid fa-house"></i> Voltar à Home</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+    <!-- Logo Deck Logic (SVG inline, reutilizado no header e no footer via <use>) -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="grad-cursos" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
+                <stop offset="0" stop-color="#EB9F1C" />
+                <stop offset="0.5" stop-color="#1D51C1" />
+                <stop offset="1" stop-color="#BA1313" />
+            </linearGradient>
+            <symbol id="logo-mark" viewBox="0 0 600 521">
+                <polygon points="155,12 445,12 591,260 445,509 155,509 9,260" fill="none" stroke="currentColor" stroke-width="18" stroke-linejoin="round" />
+                <polygon points="163,27 437,27 574,260 437,494 163,494 26,260" fill="none" stroke="url(#grad-cursos)" stroke-width="6" stroke-dasharray="3 3" />
+                <line x1="108" y1="262" x2="510" y2="262" stroke="url(#grad-cursos)" stroke-width="14" stroke-dasharray="2 2" />
+                <circle cx="108" cy="262" r="38" fill="#EB9F1C" />
+                <circle cx="310" cy="262" r="38" fill="#1D51C1" />
+                <circle cx="510" cy="262" r="38" fill="#BA1313" />
+            </symbol>
+            <symbol id="logo-full" viewBox="0 0 1212 521">
+                <use href="#logo-mark" width="600" height="521" />
+                <text x="640" y="195" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Deck</text>
+                <text x="640" y="420" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Logic</text>
+            </symbol>
+        </defs>
+    </svg>
+
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="site-header" id="top">
+        <div class="brand-bar" aria-hidden="true"></div>
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Deck Logic — página inicial">
+                <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
+            </a>
+
+            <form class="search-form" action="produtos.html" method="get" role="search">
+                <label for="busca" class="sr-only">Buscar cartas</label>
+                <input type="search" id="busca" name="q" placeholder="Buscar cartas de Informática, Mecânica ou Eletrônica">
+                <button type="submit" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+
+            <nav class="user-nav" aria-label="Conta e carrinho">
+                <a href="login.html" class="user-link" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
+                <a href="cadastro.html" class="user-link user-link--signup"><span>Cadastre-se</span></a>
+                <a href="carrinho.html" class="cart-btn" aria-label="Carrinho">
+                    <i class="fa-solid fa-cart-shopping"></i><span class="cart-label">Carrinho</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
+            </nav>
+
+            <button class="nav-toggle" type="button" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
         </div>
+
+        <div class="nav-backdrop" id="nav-backdrop"></div>
+
+        <nav class="main-nav" id="menu-principal" aria-label="Menu principal">
+            <div class="main-nav-head">
+                <span class="main-nav-title">Menu</span>
+                <button class="nav-close" type="button" aria-label="Fechar menu"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i>Home</a></li>
+                    <li><a href="produtos.html"><i class="fa-solid fa-layer-group"></i>Produtos</a></li>
+                    <li><a href="sobre.html"><i class="fa-solid fa-circle-info"></i>Sobre Nós</a></li>
+                    <li><a href="contato.html" class="active" aria-current="page"><i class="fa-solid fa-envelope"></i>Contato</a></li>
+                    <li><a href="desenvolvedores.html"><i class="fa-solid fa-code"></i>Devs</a></li>
+                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html"><i class="fa-regular fa-user"></i>Entrar</a></li>
+                    <li class="main-nav-extra"><a href="cadastro.html"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
-    <main class="container" style="padding: 4rem 1.5rem; flex-grow: 1;">
+    <main id="conteudo">
 
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <h1 style="font-size: 2.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.75rem;">Fale Conosco</h1>
-            <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto;">
-                Dúvidas, sugestões ou problemas com seu pedido? Preencha o formulário abaixo.
-            </p>
-        </div>
+        <section class="page-hero container">
+            <span class="section-eyebrow">Contato</span>
+            <h1>Fale conosco</h1>
+            <p>Dúvidas, sugestões ou problemas com seu pedido? Preencha o formulário abaixo.</p>
+        </section>
 
-        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2.5rem; max-width: 1000px; margin: 0 auto; align-items: start;">
-
-            <div style="background: var(--bg-surface); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+        <section class="container contact-layout">
+            <div class="form-card">
                 <form action="#" method="post" id="contatoForm">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
-                        <div style="text-align: left;">
-                            <label for="nome" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">Nome</label>
-                            <input type="text" id="nome" name="nome" required placeholder="Seu nome"
-                                style="width: 100%; padding: 0.85rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" class="form-control" placeholder="Seu nome" autocomplete="name" required>
                         </div>
-                        <div style="text-align: left;">
-                            <label for="email" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">E-mail</label>
-                            <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com"
-                                style="width: 100%; padding: 0.85rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;">
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="seuemail@exemplo.com" autocomplete="email" required>
                         </div>
                     </div>
 
-                    <div style="margin-bottom: 1.25rem; text-align: left;">
-                        <label for="assunto" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">Assunto</label>
-                        <select id="assunto" name="assunto" required
-                            style="width: 100%; padding: 0.85rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;">
+                    <div class="form-group">
+                        <label for="assunto">Assunto</label>
+                        <select id="assunto" name="assunto" class="form-control" required>
                             <option value="">Selecione um assunto</option>
                             <option value="duvida">Dúvida sobre produto</option>
                             <option value="pedido">Problema com o pedido</option>
@@ -65,46 +124,103 @@
                         </select>
                     </div>
 
-                    <div style="margin-bottom: 1.75rem; text-align: left;">
-                        <label for="mensagem" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">Mensagem</label>
-                        <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Escreva sua mensagem aqui..."
-                            style="width: 100%; padding: 0.85rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box; resize: vertical;"></textarea>
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea id="mensagem" name="mensagem" class="form-control" rows="5" placeholder="Escreva sua mensagem aqui..." required></textarea>
                     </div>
 
-                    <button type="submit" class="btn-hero" style="width: 100%; justify-content: center; display: flex; align-items: center; gap: 0.6rem;">
-                        <i class="fa-solid fa-paper-plane"></i> Enviar Mensagem
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fa-solid fa-paper-plane"></i> Enviar mensagem
                     </button>
                 </form>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-
-                <div style="background: var(--bg-surface); padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); display: flex; align-items: center; gap: 1rem;">
-                    <div style="width: 48px; height: 48px; flex-shrink: 0; background: rgba(139, 92, 246, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.2rem;">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
+            <aside class="contact-info">
+                <div class="info-card is-info">
+                    <div class="feature-icon"><i class="fa-solid fa-envelope"></i></div>
                     <div>
-                        <h4 style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 0.2rem;">E-mail</h4>
-                        <p style="color: var(--text-muted); font-size: 0.85rem;">dergeg@iejfiej.com</p>
+                        <h2>E-mail</h2>
+                        <p>dergeg@iejfiej.com</p>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div class="info-card is-eletro">
+                    <div class="feature-icon"><i class="fa-brands fa-instagram"></i></div>
+                    <div>
+                        <h2>Instagram</h2>
+                        <a href="#">Siga a Deck Logic</a>
+                    </div>
+                </div>
+                <div class="info-card is-mec">
+                    <div class="feature-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <h2>Retirada</h2>
+                        <p>CTI — Colégio Técnico Industrial, Bauru/SP</p>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
     </main>
 
-    <footer>
-        <div class="container footer-bottom" style="border:none; text-align: center; justify-content: center;">
-            <p>&copy; 2026 - LogicDeck. Todos os direitos reservados.</p>
+    <footer class="site-footer">
+        <div class="brand-bar" aria-hidden="true"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <section class="footer-brand" aria-label="Sobre a Deck Logic">
+                    <a href="index.html" class="logo logo--footer" aria-label="Deck Logic — página inicial">
+                        <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
+                    </a>
+                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos do CTI para tornar o aprendizado mais divertido.</p>
+                    <ul class="social-links">
+                        <li><a href="#" class="social-icon" aria-label="Instagram da Deck Logic"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="#" class="social-icon" aria-label="TikTok da Deck Logic"><i class="fa-brands fa-tiktok"></i></a></li>
+                    </ul>
+                </section>
+
+                <nav class="footer-column" aria-label="Navegação do rodapé">
+                    <h2>Navegação</h2>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="produtos.html">Produtos</a></li>
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="desenvolvedores.html">Devs</a></li>
+                    </ul>
+                </nav>
+
+                <section class="footer-column">
+                    <h2>Institucional</h2>
+                    <ul>
+                        <li><a href="missao.html">Missão, Visão e Valores</a></li>
+                        <li><a href="login.html">Entrar</a></li>
+                        <li><a href="cadastro.html">Cadastre-se</a></li>
+                        <li><a href="carrinho.html">Carrinho</a></li>
+                    </ul>
+                </section>
+
+                <section class="footer-column">
+                    <h2>Desenvolvedores</h2>
+                    <!-- TODO: trocar "--" pelo número de chamada de cada integrante -->
+                    <ul class="footer-devs">
+                        <li><span class="dev-num">--</span>Aysllan Magalhães</li>
+                        <li><span class="dev-num">--</span>Gabrieli Vitória de Paula</li>
+                        <li><span class="dev-num">--</span>Lucca Rizzo dos Santos</li>
+                        <li><span class="dev-num">--</span>Lucas Kamiya do Nascimento</li>
+                        <li><span class="dev-num">--</span>Luiza de Mattos Bianco Vilani</li>
+                        <li><span class="dev-num">--</span>Samuel Eduardo Ribeiro Kempner de Paula</li>
+                    </ul>
+                </section>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Deck Logic · Projeto acadêmico de e-commerce — CTI Bauru</p>
+                <a href="#top" class="back-to-top"><i class="fa-solid fa-arrow-up"></i> Voltar ao topo</a>
+            </div>
         </div>
     </footer>
 
-    <script>
-        document.getElementById('contatoForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            alert('Mensagem enviada! (integração com back-end ainda pendente)');
-            this.reset();
-        });
-    </script>
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

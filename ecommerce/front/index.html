@@ -4,160 +4,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogicDeck - Cartas Colecionáveis dos Cursos</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Deck Logic — Cartas colecionáveis dos cursos técnicos</title>
+    <meta name="description" content="Cartas colecionáveis de Informática, Mecânica e Eletrônica feitas por alunos do CTI.">
+    <meta name="theme-color" content="#14537D">
+    <link rel="icon" type="image/png" href="img/brand/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body id="top">
+<body>
+    <!-- Logo Deck Logic (SVG inline, reutilizado no header e no footer via <use>) -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="grad-cursos" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
+                <stop offset="0" stop-color="#EB9F1C" />
+                <stop offset="0.5" stop-color="#1D51C1" />
+                <stop offset="1" stop-color="#BA1313" />
+            </linearGradient>
+            <symbol id="logo-mark" viewBox="0 0 600 521">
+                <polygon points="155,12 445,12 591,260 445,509 155,509 9,260" fill="none" stroke="currentColor" stroke-width="18" stroke-linejoin="round" />
+                <polygon points="163,27 437,27 574,260 437,494 163,494 26,260" fill="none" stroke="url(#grad-cursos)" stroke-width="6" stroke-dasharray="3 3" />
+                <line x1="108" y1="262" x2="510" y2="262" stroke="url(#grad-cursos)" stroke-width="14" stroke-dasharray="2 2" />
+                <circle cx="108" cy="262" r="38" fill="#EB9F1C" />
+                <circle cx="310" cy="262" r="38" fill="#1D51C1" />
+                <circle cx="510" cy="262" r="38" fill="#BA1313" />
+            </symbol>
+            <symbol id="logo-full" viewBox="0 0 1212 521">
+                <use href="#logo-mark" width="600" height="521" />
+                <text x="640" y="195" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Deck</text>
+                <text x="640" y="420" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Logic</text>
+            </symbol>
+        </defs>
+    </svg>
 
-    <header>
-        <div class="container">
-            <div class="header-top">
-                <a href="index.html" class="logo">
-    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="LogicDeck" style="height: 40px; width: auto;">
-    <div>Logic<span>Deck</span></div>
-</a>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-                <form class="search-form" onsubmit="return false;">
-                    <input type="text" placeholder="Buscar baralho de Informática, Mecânica ou Eletrônica...">
-                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
-                </form>
+    <header class="site-header" id="top">
+        <div class="brand-bar" aria-hidden="true"></div>
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Deck Logic — página inicial">
+                <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
+            </a>
 
-                <nav class="user-nav">
-                    <a href="login.html"><i class="fa-solid fa-user"></i> Login</a>
-                    <a href="cadastro.html"><i class="fa-solid fa-user-plus"></i> Cadastro</a>
-                    <a href="carrinho.html" class="cart-btn">
-                        <i class="fa-solid fa-cart-shopping"></i> Carrinho
-                        <span class="cart-badge" id="cart-count">0</span>
-                    </a>
-                </nav>
-            </div>
+            <form class="search-form" action="produtos.html" method="get" role="search">
+                <label for="busca" class="sr-only">Buscar cartas</label>
+                <input type="search" id="busca" name="q" placeholder="Buscar cartas de Informática, Mecânica ou Eletrônica">
+                <button type="submit" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
 
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="produtos.html">Produtos</a></li>
-                    <li><a href="sobre.html">Sobre Nós</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                    <li><a href="desenvolvedores.html">Devs</a></li>
-                </ul>
+            <nav class="user-nav" aria-label="Conta e carrinho">
+                <a href="login.html" class="user-link" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
+                <a href="cadastro.html" class="user-link user-link--signup"><span>Cadastre-se</span></a>
+                <a href="carrinho.html" class="cart-btn" aria-label="Carrinho">
+                    <i class="fa-solid fa-cart-shopping"></i><span class="cart-label">Carrinho</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
             </nav>
+
+            <button class="nav-toggle" type="button" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
         </div>
+
+        <div class="nav-backdrop" id="nav-backdrop"></div>
+
+        <nav class="main-nav" id="menu-principal" aria-label="Menu principal">
+            <div class="main-nav-head">
+                <span class="main-nav-title">Menu</span>
+                <button class="nav-close" type="button" aria-label="Fechar menu"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html" class="active" aria-current="page"><i class="fa-solid fa-house"></i>Home</a></li>
+                    <li><a href="produtos.html"><i class="fa-solid fa-layer-group"></i>Produtos</a></li>
+                    <li><a href="sobre.html"><i class="fa-solid fa-circle-info"></i>Sobre Nós</a></li>
+                    <li><a href="contato.html"><i class="fa-solid fa-envelope"></i>Contato</a></li>
+                    <li><a href="desenvolvedores.html"><i class="fa-solid fa-code"></i>Devs</a></li>
+                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html"><i class="fa-regular fa-user"></i>Entrar</a></li>
+                    <li class="main-nav-extra"><a href="cadastro.html"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
-    <main>
+    <main id="conteudo">
 
-     <!-- Banner -->
-<section id="banner" class="hero-section container">
-    <div class="carousel-container">
+        <!-- Banner / carrossel -->
+        <section class="hero-section container" aria-label="Destaques">
+            <div class="carousel">
+                <div class="carousel-track">
 
-        <div class="carousel-slide active" style="background: #1164B4;">
-            <div class="carousel-content">
-                <span class="hero-tag"><i class="fa-solid fa-microchip"></i> Curso de Informática</span>
-                <h2>Colecione o conhecimento da sua escola em cartas</h2>
-                <p>Baralhos exclusivos de Informática, Mecânica e Eletrônica, feitos por alunos para alunos.</p>
-                <a href="produtos.html" class="btn-hero">
-                    <i class="fa-solid fa-arrow-right"></i> Ver Coleção
-                </a>
+                    <article class="carousel-slide is-brand active">
+                        <div class="carousel-content">
+                            <span class="hero-tag"><i class="fa-solid fa-layer-group"></i> Coleção 2026</span>
+                            <h2>Colecione o conhecimento da sua escola em cartas</h2>
+                            <p>Cartas exclusivas de Informática, Mecânica e Eletrônica, feitas por alunos para alunos.</p>
+                            <a href="produtos.html" class="btn btn-accent"><i class="fa-solid fa-arrow-right"></i> Ver coleção</a>
+                        </div>
+                        <div class="carousel-media carousel-media--wide">
+                            <img src="img/cards/colecao.png" alt="As três cartas da coleção: Eletrônica, Informática e Mecânica" width="517" height="273">
+                        </div>
+                    </article>
+
+                    <article class="carousel-slide is-info">
+                        <div class="carousel-content">
+                            <span class="hero-tag"><i class="fa-solid fa-microchip"></i> Curso de Informática</span>
+                            <h2>Redes, código e hardware na palma da mão</h2>
+                            <p>Cartas com conceitos de programação, redes e sistemas.</p>
+                            <a href="produtos.html?q=informatica" class="btn btn-light"><i class="fa-solid fa-arrow-right"></i> Conferir cartas</a>
+                        </div>
+                        <div class="carousel-media carousel-media--single">
+                            <img src="img/cards/informatica.png" alt="Carta do curso de Informática" width="159" height="273">
+                        </div>
+                    </article>
+
+                    <article class="carousel-slide is-mec">
+                        <div class="carousel-content">
+                            <span class="hero-tag"><i class="fa-solid fa-gears"></i> Curso de Mecânica</span>
+                            <h2>Motores &amp; Máquinas já disponível</h2>
+                            <p>Cartas ilustradas sobre motores, usinagem e processos mecânicos.</p>
+                            <a href="produtos.html?q=mecanica" class="btn btn-light"><i class="fa-solid fa-arrow-right"></i> Conferir cartas</a>
+                        </div>
+                        <div class="carousel-media carousel-media--single">
+                            <img src="img/cards/mecanica.png" alt="Carta do curso de Mecânica" width="160" height="273">
+                        </div>
+                    </article>
+
+                    <article class="carousel-slide is-eletro">
+                        <div class="carousel-content">
+                            <span class="hero-tag"><i class="fa-solid fa-bolt"></i> Curso de Eletrônica</span>
+                            <h2>Circuitos e componentes que viram jogo</h2>
+                            <p>Cartas sobre eletrônica analógica, digital e automação.</p>
+                            <a href="produtos.html?q=eletronica" class="btn btn-light"><i class="fa-solid fa-arrow-right"></i> Conferir cartas</a>
+                        </div>
+                        <div class="carousel-media carousel-media--single">
+                            <img src="img/cards/eletronica.png" alt="Carta do curso de Eletrônica" width="160" height="273">
+                        </div>
+                    </article>
+
+                </div>
+
+                <button type="button" class="carousel-btn prev" aria-label="Slide anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                <button type="button" class="carousel-btn next" aria-label="Próximo slide"><i class="fa-solid fa-chevron-right"></i></button>
+                <div class="carousel-indicators">
+                    <button type="button" class="indicator-dot active" aria-label="Slide 1"></button>
+                    <button type="button" class="indicator-dot" aria-label="Slide 2"></button>
+                    <button type="button" class="indicator-dot" aria-label="Slide 3"></button>
+                    <button type="button" class="indicator-dot" aria-label="Slide 4"></button>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="carousel-slide" style="background: #2f7fc1;">
-            <div class="carousel-content">
-                <span class="hero-tag"><i class="fa-solid fa-gears"></i> Curso de Mecânica</span>
-                <h2>Baralho Motores & Máquinas já disponível</h2>
-                <p>52 cartas ilustradas sobre motores, usinagem e processos mecânicos.</p>
-                <a href="produtos.html" class="btn-hero">
-                    <i class="fa-solid fa-arrow-right"></i> Conferir Baralho
-                </a>
-            </div>
-        </div>
-
-        <button type="button" class="carousel-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
-        <button type="button" class="carousel-btn next"><i class="fa-solid fa-chevron-right"></i></button>
-        <div class="carousel-indicators">
-            <span class="indicator-dot active"></span>
-            <span class="indicator-dot"></span>
-            <span class="indicator-dot"></span>
-        </div>
-    </div>
-</section>
-
-        <button type="button" class="carousel-btn prev"><i class="fa-solid fa-chevron-left"></i></button>
-        <button type="button" class="carousel-btn next"><i class="fa-solid fa-chevron-right"></i></button>
-        <div class="carousel-indicators">
-            <span class="indicator-dot active"></span>
-            <span class="indicator-dot"></span>
-            <span class="indicator-dot"></span>
-        </div>
-    </div>
-</section>
-
-        <!-- Produtos em Destaque -->
-        <section id="produtos" class="products-section container">
-            <div class="section-header">
-                <h2 class="section-title">Cartas em Destaque</h2>
-                <p class="section-subtitle">Cada curso tem sua própria carta, com raridades e efeitos únicos.</p>
-            </div>
-
-            <div class="category-filters">
-                <button class="filter-chip active">Todos</button>
-            </div>
+        <!-- Produtos em destaque -->
+        <section class="section container" aria-labelledby="titulo-destaques">
+            <header class="section-header">
+                <span class="section-eyebrow">Cartas em destaque</span>
+                <h2 class="section-title" id="titulo-destaques">Uma carta para cada curso</h2>
+                <p class="section-subtitle">Cada curso tem sua própria carta, com cor, raridade e conteúdo únicos.</p>
+            </header>
 
             <div class="products-grid">
 
-                <article class="product-card">
+                <article class="product-card is-info">
                     <div class="product-image-wrap">
-                        <i class="fa-solid fa-microchip" style="font-size: 3rem; color: var(--course-info); opacity: 0.5;"></i>
+                        <span class="product-badge">Novo</span>
+                        <img src="img/cards/informatica.png" alt="Carta azul do curso de Informática" width="159" height="273" loading="lazy">
                     </div>
                     <div class="product-details">
-                        <span class="product-course-tag" style="color: var(--course-info);">Informática</span>
-                        <h3>Cartas - Redes & Sistemas</h3>
-                        <p class="product-desc">cartas com conceitos de programação, redes e hardware.</p>
+                        <span class="product-course-tag">Informática</span>
+                        <h3>Cartas — Redes &amp; Sistemas</h3>
+                        <p class="product-desc">Cartas com conceitos de programação, redes e hardware.</p>
                         <div class="product-bottom">
-                            <div class="price-container">
-                                <span class="price-current">R$ 15,00</span>
-                            </div>
-                            <button class="btn-add-cart" onclick="addToCart(this)">
+                            <span class="price-current">R$ 15,00</span>
+                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
+                                data-id="informatica" data-name="Cartas — Redes &amp; Sistemas" data-course="Informática"
+                                data-course-class="is-info" data-price="15" data-img="img/cards/informatica.png">
                                 <i class="fa-solid fa-cart-plus"></i> Adicionar
                             </button>
                         </div>
                     </div>
                 </article>
 
-                <article class="product-card">
+                <article class="product-card is-mec">
                     <div class="product-image-wrap">
-                        <i class="fa-solid fa-gears" style="font-size: 3rem; color: var(--course-mec); opacity: 0.5;"></i>
+                        <img src="img/cards/mecanica.png" alt="Carta vermelha do curso de Mecânica" width="160" height="273" loading="lazy">
                     </div>
                     <div class="product-details">
-                        <span class="product-course-tag" style="color: var(--course-mec);">Mecânica</span>
-                        <h3>Cartas - Motores & Máquinas</h3>
-                        <p class="product-desc"> cartas sobre o curso de motores e processos mecânicos.</p>
+                        <span class="product-course-tag">Mecânica</span>
+                        <h3>Cartas — Motores &amp; Máquinas</h3>
+                        <p class="product-desc">Cartas sobre motores, usinagem e processos mecânicos.</p>
                         <div class="product-bottom">
-                            <div class="price-container">
-                                <span class="price-current">R$ 15,00</span>
-                            </div>
-                            <button class="btn-add-cart" onclick="addToCart(this)">
+                            <span class="price-current">R$ 15,00</span>
+                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
+                                data-id="mecanica" data-name="Cartas — Motores &amp; Máquinas" data-course="Mecânica"
+                                data-course-class="is-mec" data-price="15" data-img="img/cards/mecanica.png">
                                 <i class="fa-solid fa-cart-plus"></i> Adicionar
                             </button>
                         </div>
                     </div>
                 </article>
 
-                <article class="product-card">
+                <article class="product-card is-eletro">
                     <div class="product-image-wrap">
-                        <i class="fa-solid fa-bolt" style="font-size: 3rem; color: var(--course-eletro); opacity: 0.5;"></i>
+                        <img src="img/cards/eletronica.png" alt="Carta amarela do curso de Eletrônica" width="160" height="273" loading="lazy">
                     </div>
                     <div class="product-details">
-                        <span class="product-course-tag" style="color: var(--course-eletro);">Eletrônica</span>
-                        <h3>Cartas - Circuitos & Componentes</h3>
-                        <p class="product-desc"> cartas sobre circuitos, componentes e automação.</p>
+                        <span class="product-course-tag">Eletrônica</span>
+                        <h3>Cartas — Circuitos &amp; Componentes</h3>
+                        <p class="product-desc">Cartas sobre circuitos, componentes e automação.</p>
                         <div class="product-bottom">
-                            <div class="price-container">
-                                <span class="price-current">R$ 15,00</span>
-                            </div>
-                            <button class="btn-add-cart" onclick="addToCart(this)">
+                            <span class="price-current">R$ 15,00</span>
+                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
+                                data-id="eletronica" data-name="Cartas — Circuitos &amp; Componentes" data-course="Eletrônica"
+                                data-course-class="is-eletro" data-price="15" data-img="img/cards/eletronica.png">
                                 <i class="fa-solid fa-cart-plus"></i> Adicionar
                             </button>
                         </div>
@@ -168,106 +232,113 @@
         </section>
 
         <!-- Diferenciais -->
-        <section id="diferenciais" class="features-section container">
-            <div class="section-header">
-                <h2 class="section-title">Por que comprar na LogicDeck?</h2>
-            </div>
+        <section class="section container" aria-labelledby="titulo-diferenciais">
+            <header class="section-header">
+                <span class="section-eyebrow">Diferenciais</span>
+                <h2 class="section-title" id="titulo-diferenciais">Por que comprar na Deck Logic?</h2>
+            </header>
 
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                    <h3>Compre na Escola</h3>
-                    <p>Receba seu baralho direto no dia da semana do colégio do CTI.</p>
-                </div>
-                <div class="feature-card">
+                <article class="feature-card is-info">
+                    <div class="feature-icon"><i class="fa-solid fa-school"></i></div>
+                    <div>
+                        <h3>Retire na escola</h3>
+                        <p>Receba suas cartas direto no CTI, no dia combinado.</p>
+                    </div>
+                </article>
+                <article class="feature-card is-eletro">
                     <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h3>Pagamento Seguro</h3>
-                    <p>Pix ou dinheiro no CTI, com total segurança.</p>
-                </div>
-                <div class="feature-card">
+                    <div>
+                        <h3>Pagamento seguro</h3>
+                        <p>Pix ou dinheiro na retirada, sem complicação.</p>
+                    </div>
+                </article>
+                <article class="feature-card is-mec">
                     <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
-                    <h3>Feito por Alunos</h3>
-                    <p>Conteúdo revisado pelos professores dos cursos técnicos.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
-                    <h3>Suporte Direto</h3>
-                    <p>Fale com a equipe de desenvolvedores pelo canal de contato.</p>
-                </div>
+                    <div>
+                        <h3>Feito por alunos</h3>
+                        <p>Conteúdo revisado pelos professores dos cursos técnicos.</p>
+                    </div>
+                </article>
             </div>
         </section>
 
         <!-- Newsletter -->
-        <section class="newsletter-section container">
+        <section class="section container" aria-labelledby="titulo-newsletter">
             <div class="newsletter-box">
-                <h2>Fique dentro dos lançamentos</h2>
-                <p>Inscreva-se e compre mais!</p>
-                <form class="newsletter-form" onsubmit="return false;">
-                    <input type="email" placeholder="Seu e-mail">
-                    <button type="submit">Inscrever-se</button>
+                <div>
+                    <h2 id="titulo-newsletter">Fique por dentro dos lançamentos</h2>
+                    <p>Receba primeiro as novas cartas e edições limitadas.</p>
+                </div>
+                <form class="newsletter-form" id="newsletterForm">
+                    <label for="news-email" class="sr-only">Seu e-mail</label>
+                    <input type="email" id="news-email" placeholder="Seu e-mail" required>
+                    <button type="submit" class="btn btn-accent">Inscrever-se</button>
                 </form>
             </div>
         </section>
 
     </main>
 
-    <footer id="footer">
+    <footer class="site-footer">
+        <div class="brand-bar" aria-hidden="true"></div>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
-                        <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-                        <div>Logic<span>Deck</span></div>
+                <section class="footer-brand" aria-label="Sobre a Deck Logic">
+                    <a href="index.html" class="logo logo--footer" aria-label="Deck Logic — página inicial">
+                        <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
                     </a>
-                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos, para tornar o aprendizado mais divertido.</p>
-                    <div class="social-links" style="margin-top: 1.25rem;">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
-                    </div>
-                </div>
+                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos do CTI para tornar o aprendizado mais divertido.</p>
+                    <ul class="social-links">
+                        <li><a href="#" class="social-icon" aria-label="Instagram da Deck Logic"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="#" class="social-icon" aria-label="TikTok da Deck Logic"><i class="fa-brands fa-tiktok"></i></a></li>
+                    </ul>
+                </section>
 
-                <div class="footer-column">
-                    <h3>Institucional</h3>
+                <nav class="footer-column" aria-label="Navegação do rodapé">
+                    <h2>Navegação</h2>
                     <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="produtos.html">Produtos</a></li>
                         <li><a href="sobre.html">Sobre Nós</a></li>
-                        <li><a href="missao.html">Missão e Visão</a></li>
                         <li><a href="contato.html">Contato</a></li>
+                        <li><a href="desenvolvedores.html">Devs</a></li>
                     </ul>
-                </div>
+                </nav>
 
-                <div class="footer-column">
-                    <h3>Cursos</h3>
+                <section class="footer-column">
+                    <h2>Institucional</h2>
                     <ul>
-                        <li><a href="produtos.html">Informática</a></li>
-                        <li><a href="produtos.html">Mecânica</a></li>
-                        <li><a href="produtos.html">Eletrônica</a></li>
+                        <li><a href="missao.html">Missão, Visão e Valores</a></li>
+                        <li><a href="login.html">Entrar</a></li>
+                        <li><a href="cadastro.html">Cadastre-se</a></li>
+                        <li><a href="carrinho.html">Carrinho</a></li>
                     </ul>
-                </div>
+                </section>
 
-                <div class="footer-column">
-                    <h3>Desenvolvedores</h3>
+                <section class="footer-column">
+                    <h2>Desenvolvedores</h2>
+                    <!-- TODO: trocar "--" pelo número de chamada de cada integrante -->
                     <ul class="footer-devs">
-                        <li><i class="fa-solid fa-code"></i> Aysllan Magalhães</li>
-                        <li><i class="fa-solid fa-code"></i> Gabrieli Vitória de Paula</li>
-                        <li><i class="fa-solid fa-code"></i> Lucca Rizzo dos Santos</li>
-                        <li><i class="fa-solid fa-code"></i> Lucas Kamiya do Nascimento</li>
-                        <li><i class="fa-solid fa-code"></i> Luiza de Mattos Bianco Vilani </li>
-                        <li><i class="fa-solid fa-code"></i> Samuel Eduardo Ribeiro Kempner de Paula</li>
+                        <li><span class="dev-num">--</span>Aysllan Magalhães</li>
+                        <li><span class="dev-num">--</span>Gabrieli Vitória de Paula</li>
+                        <li><span class="dev-num">--</span>Lucca Rizzo dos Santos</li>
+                        <li><span class="dev-num">--</span>Lucas Kamiya do Nascimento</li>
+                        <li><span class="dev-num">--</span>Luiza de Mattos Bianco Vilani</li>
+                        <li><span class="dev-num">--</span>Samuel Eduardo Ribeiro Kempner de Paula</li>
                     </ul>
-                </div>
+                </section>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2026 LogicDeck. Todos os direitos reservados.</p>
-                <p>Projeto acadêmico de E-commerce</p>
+                <p>&copy; 2026 Deck Logic · Projeto acadêmico de e-commerce — CTI Bauru</p>
+                <a href="#top" class="back-to-top"><i class="fa-solid fa-arrow-up"></i> Voltar ao topo</a>
             </div>
         </div>
     </footer>
 
- <script src="script.js"></script>
- <a href="#"><i class="fa-solid fa-user"></i><span>Entrar</span></a>
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

@@ -4,68 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nós | LogicDeck</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Sobre Nós | Deck Logic</title>
+    <meta name="description" content="A história da Deck Logic e o significado da nossa marca.">
+    <meta name="theme-color" content="#14537D">
+    <link rel="icon" type="image/png" href="img/brand/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <!-- Logo Deck Logic (SVG inline, reutilizado no header e no footer via <use>) -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="grad-cursos" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
+                <stop offset="0" stop-color="#EB9F1C" />
+                <stop offset="0.5" stop-color="#1D51C1" />
+                <stop offset="1" stop-color="#BA1313" />
+            </linearGradient>
+            <symbol id="logo-mark" viewBox="0 0 600 521">
+                <polygon points="155,12 445,12 591,260 445,509 155,509 9,260" fill="none" stroke="currentColor" stroke-width="18" stroke-linejoin="round" />
+                <polygon points="163,27 437,27 574,260 437,494 163,494 26,260" fill="none" stroke="url(#grad-cursos)" stroke-width="6" stroke-dasharray="3 3" />
+                <line x1="108" y1="262" x2="510" y2="262" stroke="url(#grad-cursos)" stroke-width="14" stroke-dasharray="2 2" />
+                <circle cx="108" cy="262" r="38" fill="#EB9F1C" />
+                <circle cx="310" cy="262" r="38" fill="#1D51C1" />
+                <circle cx="510" cy="262" r="38" fill="#BA1313" />
+            </symbol>
+            <symbol id="logo-full" viewBox="0 0 1212 521">
+                <use href="#logo-mark" width="600" height="521" />
+                <text x="640" y="195" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Deck</text>
+                <text x="640" y="420" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Logic</text>
+            </symbol>
+        </defs>
+    </svg>
 
-    <header>
-        <div class="container">
-            <div class="header-top">
-                   <a href="index.html" class="logo">
-    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="LogicDeck" style="height: 40px; width: auto;">
-    <div>Logic<span>Deck</span></div>
-</a>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-                <form class="search-form" onsubmit="return false;">
-                    <input type="text" placeholder="Buscar baralho de Informática, Mecânica ou Eletrônica...">
-                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
-                </form>
+    <header class="site-header" id="top">
+        <div class="brand-bar" aria-hidden="true"></div>
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Deck Logic — página inicial">
+                <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
+            </a>
 
-                <nav class="user-nav">
-                    <a href="login.html"><i class="fa-solid fa-user"></i> Login</a>
-                    <a href="cadastro.html"><i class="fa-solid fa-user-plus"></i> Cadastro</a>
-                    <a href="carrinho.html" class="cart-btn">
-                        <i class="fa-solid fa-cart-shopping"></i> Carrinho
-                        <span class="cart-badge" id="cart-count">0</span>
-                    </a>
-                </nav>
-            </div>
+            <form class="search-form" action="produtos.html" method="get" role="search">
+                <label for="busca" class="sr-only">Buscar cartas</label>
+                <input type="search" id="busca" name="q" placeholder="Buscar cartas de Informática, Mecânica ou Eletrônica">
+                <button type="submit" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
 
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="produtos.html">Produtos</a></li>
-                    <li><a href="sobre.html" class="active">Sobre Nós</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                    <li><a href="desenvolvedores.html">Devs</a></li>
-                </ul>
+            <nav class="user-nav" aria-label="Conta e carrinho">
+                <a href="login.html" class="user-link" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
+                <a href="cadastro.html" class="user-link user-link--signup"><span>Cadastre-se</span></a>
+                <a href="carrinho.html" class="cart-btn" aria-label="Carrinho">
+                    <i class="fa-solid fa-cart-shopping"></i><span class="cart-label">Carrinho</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
             </nav>
+
+            <button class="nav-toggle" type="button" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
         </div>
+
+        <div class="nav-backdrop" id="nav-backdrop"></div>
+
+        <nav class="main-nav" id="menu-principal" aria-label="Menu principal">
+            <div class="main-nav-head">
+                <span class="main-nav-title">Menu</span>
+                <button class="nav-close" type="button" aria-label="Fechar menu"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i>Home</a></li>
+                    <li><a href="produtos.html"><i class="fa-solid fa-layer-group"></i>Produtos</a></li>
+                    <li><a href="sobre.html" class="active" aria-current="page"><i class="fa-solid fa-circle-info"></i>Sobre Nós</a></li>
+                    <li><a href="contato.html"><i class="fa-solid fa-envelope"></i>Contato</a></li>
+                    <li><a href="desenvolvedores.html"><i class="fa-solid fa-code"></i>Devs</a></li>
+                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html"><i class="fa-regular fa-user"></i>Entrar</a></li>
+                    <li class="main-nav-extra"><a href="cadastro.html"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
-    <main>
+    <main id="conteudo">
 
-        <section class="about-hero container">
+        <section class="page-hero container">
+            <span class="section-eyebrow">Sobre nós</span>
             <h1>Conhecimento que cabe na palma da mão</h1>
-            <p>A LogicDeck foi criada por alunos que queriam tornar o aprendizado dos cursos técnicos mais divertido — uma carta por vez.</p>
+            <p>A Deck Logic foi criada por alunos que queriam tornar o aprendizado dos cursos técnicos mais divertido — uma carta por vez.</p>
         </section>
 
-        <section class="about-story container">
-            <div class="about-story-icon">
-    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="Alunos criando os baralhos da LogicDeck">
-</div>
-            <div class="about-story-text">
-                <h2>Nossa História</h2>
-                <p>A LogicDeck é o nosso projeto anual, criado para unir os três cursos técnicos da escola — Informática, Mecânica e Eletrônica — em uma única experiência. Em vez de mais um trabalho tradicional, pensamos em algo divertido: transformar o conteúdo de cada curso em baralhos de cartas, com ilustrações e desafios que tornam o aprendizado mais leve.
-
-Mais do que revisar matéria, a ideia é mostrar na prática como é estudar em cada curso e despertar a curiosidade de quem ainda não escolheu o seu caminho. Cada baralho carrega um pouco da rotina, dos projetos e das possibilidades de cada área — um convite pra quem está pensando em entrar em Informática, Mecânica ou Eletrônica.</p>
+        <section class="section container">
+            <div class="about-story">
+                <figure class="about-story-media">
+                    <img src="img/cards/colecao.png" alt="As três cartas da Deck Logic: Eletrônica, Informática e Mecânica" width="517" height="273">
+                </figure>
+                <div class="about-story-text">
+                    <h2>Nossa história</h2>
+                    <p>A Deck Logic é o nosso projeto anual, criado para unir os três cursos técnicos da escola — Informática, Mecânica e Eletrônica — em uma única experiência. Em vez de mais um trabalho tradicional, pensamos em algo divertido: transformar o conteúdo de cada curso em cartas, com ilustrações e desafios que tornam o aprendizado mais leve.</p>
+                    <p>Mais do que revisar matéria, a ideia é mostrar na prática como é estudar em cada curso e despertar a curiosidade de quem ainda não escolheu o seu caminho. Cada carta carrega um pouco da rotina, dos projetos e das possibilidades de cada área.</p>
+                </div>
             </div>
         </section>
 
-        <section class="stats-section">
+        <section class="section stats-section">
             <div class="container stats-grid">
                 <div class="stat-card">
                     <strong>3</strong>
@@ -82,82 +130,111 @@ Mais do que revisar matéria, a ideia é mostrar na prática como é estudar em 
             </div>
         </section>
 
-        <section class="courses-section container">
-            <div class="section-header">
-                <h2 class="section-title">Nossas Cartas</h2>
-                <p class="section-subtitle">Cartas para cada curso, com identidade e conteúdo próprios.</p>
+        <section class="section container" aria-labelledby="titulo-marca">
+            <div class="brand-explain">
+                <div class="brand-explain-logo">
+                    <svg class="logo-svg" role="img" aria-label="Logo Deck Logic"><use href="#logo-full" /></svg>
+                </div>
+                <div class="brand-explain-text">
+                    <span class="section-eyebrow">Identidade visual</span>
+                    <h2 class="section-title" id="titulo-marca">O que a nossa logo significa</h2>
+                    <p>O hexágono representa a estrutura: a forma mais eficiente da natureza e da engenharia. Dentro dele, três pontos ligados por uma única linha — cada ponto é um curso, e a linha é o conhecimento que conecta os três.</p>
+                    <p>Cada curso tem sua cor, usada nas cartas e em todo o site:</p>
+                    <div class="palette">
+                        <span class="swatch is-info"><span><strong>Informática</strong>#1D51C1</span></span>
+                        <span class="swatch is-eletro"><span><strong>Eletrônica</strong>#EB9F1C</span></span>
+                        <span class="swatch is-mec"><span><strong>Mecânica</strong>#BA1313</span></span>
+                        <span class="swatch"><span><strong>Marca</strong>#14537D</span></span>
+                    </div>
+                </div>
             </div>
+        </section>
+
+        <section class="section container" aria-labelledby="titulo-cursos">
+            <header class="section-header">
+                <h2 class="section-title" id="titulo-cursos">Nossas cartas</h2>
+                <p class="section-subtitle">Cartas para cada curso, com identidade e conteúdo próprios.</p>
+            </header>
 
             <div class="courses-grid">
-                <div class="course-card">
-                    <i class="fa-solid fa-microchip" style="color: var(--course-info);"></i>
+                <article class="course-card is-info">
+                    <i class="fa-solid fa-microchip"></i>
                     <h3>Informática</h3>
                     <p>Redes, programação e hardware em forma de carta.</p>
-                </div>
-                <div class="course-card">
-                    <i class="fa-solid fa-gears" style="color: var(--course-mec);"></i>
+                </article>
+                <article class="course-card is-mec">
+                    <i class="fa-solid fa-gears"></i>
                     <h3>Mecânica</h3>
                     <p>Motores, usinagem e processos mecânicos.</p>
-                </div>
-                <div class="course-card">
-                    <i class="fa-solid fa-bolt" style="color: var(--course-eletro);"></i>
+                </article>
+                <article class="course-card is-eletro">
+                    <i class="fa-solid fa-bolt"></i>
                     <h3>Eletrônica</h3>
                     <p>Circuitos, componentes e automação.</p>
-                </div>
+                </article>
             </div>
         </section>
 
     </main>
 
-    <footer>
+    <footer class="site-footer">
+        <div class="brand-bar" aria-hidden="true"></div>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
-                        <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-                        <div>Logic<span>Deck</span></div>
+                <section class="footer-brand" aria-label="Sobre a Deck Logic">
+                    <a href="index.html" class="logo logo--footer" aria-label="Deck Logic — página inicial">
+                        <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
                     </a>
-                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos, para tornar o aprendizado mais divertido.</p>
-                </div>
+                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos do CTI para tornar o aprendizado mais divertido.</p>
+                    <ul class="social-links">
+                        <li><a href="#" class="social-icon" aria-label="Instagram da Deck Logic"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="#" class="social-icon" aria-label="TikTok da Deck Logic"><i class="fa-brands fa-tiktok"></i></a></li>
+                    </ul>
+                </section>
 
-                <div class="footer-column">
-                    <h3>Institucional</h3>
+                <nav class="footer-column" aria-label="Navegação do rodapé">
+                    <h2>Navegação</h2>
                     <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="produtos.html">Produtos</a></li>
                         <li><a href="sobre.html">Sobre Nós</a></li>
-                        <li><a href="missao.html">Missão e Visão</a></li>
                         <li><a href="contato.html">Contato</a></li>
+                        <li><a href="desenvolvedores.html">Devs</a></li>
                     </ul>
-                </div>
+                </nav>
 
-                <div class="footer-column">
-                    <h3>Cursos</h3>
+                <section class="footer-column">
+                    <h2>Institucional</h2>
                     <ul>
-                        <li><a href="produtos.html">Informática</a></li>
-                        <li><a href="produtos.html">Mecânica</a></li>
-                        <li><a href="produtos.html">Eletrônica</a></li>
+                        <li><a href="missao.html">Missão, Visão e Valores</a></li>
+                        <li><a href="login.html">Entrar</a></li>
+                        <li><a href="cadastro.html">Cadastre-se</a></li>
+                        <li><a href="carrinho.html">Carrinho</a></li>
                     </ul>
-                </div>
+                </section>
 
-                <div class="footer-column">
-                    <h3>Desenvolvedores</h3>
+                <section class="footer-column">
+                    <h2>Desenvolvedores</h2>
+                    <!-- TODO: trocar "--" pelo número de chamada de cada integrante -->
                     <ul class="footer-devs">
-                         <li><i class="fa-solid fa-code"></i> Aysllan Magalhães</li>
-                        <li><i class="fa-solid fa-code"></i> Gabrieli Vitória de Paula</li>
-                        <li><i class="fa-solid fa-code"></i> Lucca Rizzo dos Santos</li>
-                        <li><i class="fa-solid fa-code"></i> Lucas Kamiya do Nascimento</li>
-                        <li><i class="fa-solid fa-code"></i> Luiza de Mattos Bianco Vilani </li>
-                        <li><i class="fa-solid fa-code"></i> Samuel Eduardo Ribeiro Kempner de Paula</li>
+                        <li><span class="dev-num">--</span>Aysllan Magalhães</li>
+                        <li><span class="dev-num">--</span>Gabrieli Vitória de Paula</li>
+                        <li><span class="dev-num">--</span>Lucca Rizzo dos Santos</li>
+                        <li><span class="dev-num">--</span>Lucas Kamiya do Nascimento</li>
+                        <li><span class="dev-num">--</span>Luiza de Mattos Bianco Vilani</li>
+                        <li><span class="dev-num">--</span>Samuel Eduardo Ribeiro Kempner de Paula</li>
                     </ul>
-                </div>
+                </section>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2026 LogicDeck. Todos os direitos reservados.</p>
-                <p>Projeto acadêmico de E-commerce</p>
+                <p>&copy; 2026 Deck Logic · Projeto acadêmico de e-commerce — CTI Bauru</p>
+                <a href="#top" class="back-to-top"><i class="fa-solid fa-arrow-up"></i> Voltar ao topo</a>
             </div>
         </div>
     </footer>
 
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
     <script src="js/script.js"></script>
 </body>
 

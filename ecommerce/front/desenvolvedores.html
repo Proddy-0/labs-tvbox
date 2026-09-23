@@ -4,181 +4,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desenvolvedores | LogicDeck</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Desenvolvedores | Deck Logic</title>
+    <meta name="description" content="Equipe de alunos que desenvolveu a Deck Logic.">
+    <meta name="theme-color" content="#14537D">
+    <link rel="icon" type="image/png" href="img/brand/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <!-- Logo Deck Logic (SVG inline, reutilizado no header e no footer via <use>) -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="grad-cursos" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
+                <stop offset="0" stop-color="#EB9F1C" />
+                <stop offset="0.5" stop-color="#1D51C1" />
+                <stop offset="1" stop-color="#BA1313" />
+            </linearGradient>
+            <symbol id="logo-mark" viewBox="0 0 600 521">
+                <polygon points="155,12 445,12 591,260 445,509 155,509 9,260" fill="none" stroke="currentColor" stroke-width="18" stroke-linejoin="round" />
+                <polygon points="163,27 437,27 574,260 437,494 163,494 26,260" fill="none" stroke="url(#grad-cursos)" stroke-width="6" stroke-dasharray="3 3" />
+                <line x1="108" y1="262" x2="510" y2="262" stroke="url(#grad-cursos)" stroke-width="14" stroke-dasharray="2 2" />
+                <circle cx="108" cy="262" r="38" fill="#EB9F1C" />
+                <circle cx="310" cy="262" r="38" fill="#1D51C1" />
+                <circle cx="510" cy="262" r="38" fill="#BA1313" />
+            </symbol>
+            <symbol id="logo-full" viewBox="0 0 1212 521">
+                <use href="#logo-mark" width="600" height="521" />
+                <text x="640" y="195" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Deck</text>
+                <text x="640" y="420" fill="currentColor" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="185" font-weight="500">Logic</text>
+            </symbol>
+        </defs>
+    </svg>
 
-    <header>
-        <div class="container">
-            <div class="header-top">
-                 <a href="index.html" class="logo">
-    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="LogicDeck" style="height: 40px; width: auto;">
-    <div>Logic<span>Deck</span></div>
-</a>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-                <form class="search-form" onsubmit="return false;">
-                    <input type="text" placeholder="Buscar baralho de Informática, Mecânica ou Eletrônica...">
-                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
-                </form>
+    <header class="site-header" id="top">
+        <div class="brand-bar" aria-hidden="true"></div>
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Deck Logic — página inicial">
+                <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
+            </a>
 
-                <nav class="user-nav">
-                    <a href="login.html"><i class="fa-solid fa-user"></i> Login</a>
-                    <a href="cadastro.html"><i class="fa-solid fa-user-plus"></i> Cadastro</a>
-                    <a href="carrinho.html" class="cart-btn">
-                        <i class="fa-solid fa-cart-shopping"></i> Carrinho
-                        <span class="cart-badge" id="cart-count">0</span>
-                    </a>
-                </nav>
-            </div>
+            <form class="search-form" action="produtos.html" method="get" role="search">
+                <label for="busca" class="sr-only">Buscar cartas</label>
+                <input type="search" id="busca" name="q" placeholder="Buscar cartas de Informática, Mecânica ou Eletrônica">
+                <button type="submit" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
 
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="produtos.html">Produtos</a></li>
-                    <li><a href="sobre.html">Sobre Nós</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                    <li><a href="desenvolvedores.html" class="active">Devs</a></li>
-                </ul>
+            <nav class="user-nav" aria-label="Conta e carrinho">
+                <a href="login.html" class="user-link" aria-label="Entrar"><i class="fa-regular fa-user"></i><span>Entrar</span></a>
+                <a href="cadastro.html" class="user-link user-link--signup"><span>Cadastre-se</span></a>
+                <a href="carrinho.html" class="cart-btn" aria-label="Carrinho">
+                    <i class="fa-solid fa-cart-shopping"></i><span class="cart-label">Carrinho</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </a>
             </nav>
+
+            <button class="nav-toggle" type="button" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
         </div>
+
+        <div class="nav-backdrop" id="nav-backdrop"></div>
+
+        <nav class="main-nav" id="menu-principal" aria-label="Menu principal">
+            <div class="main-nav-head">
+                <span class="main-nav-title">Menu</span>
+                <button class="nav-close" type="button" aria-label="Fechar menu"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-house"></i>Home</a></li>
+                    <li><a href="produtos.html"><i class="fa-solid fa-layer-group"></i>Produtos</a></li>
+                    <li><a href="sobre.html"><i class="fa-solid fa-circle-info"></i>Sobre Nós</a></li>
+                    <li><a href="contato.html"><i class="fa-solid fa-envelope"></i>Contato</a></li>
+                    <li><a href="desenvolvedores.html" class="active" aria-current="page"><i class="fa-solid fa-code"></i>Devs</a></li>
+                    <li class="main-nav-extra main-nav-extra--first"><a href="login.html"><i class="fa-regular fa-user"></i>Entrar</a></li>
+                    <li class="main-nav-extra"><a href="cadastro.html"><i class="fa-solid fa-user-plus"></i>Cadastre-se</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
-    <main>
+    <main id="conteudo">
 
-        <section class="devs-hero container">
-            <h1>Quem fez a LogicDeck acontecer</h1>
-            <p>Um projeto acadêmico de e-commerce, do front ao back, feito por alunos.</p>
+        <section class="page-hero container">
+            <span class="section-eyebrow">Equipe</span>
+            <h1>Quem fez a Deck Logic acontecer</h1>
+            <p>Um projeto acadêmico de e-commerce, do front ao back, feito por alunos do CTI.</p>
         </section>
 
-        <section class="devs-grid container">
+        <section class="container devs-grid" aria-label="Integrantes">
 
             <!-- Troque função, descrição e links pelos dados reais de cada integrante -->
-            <div class="dev-card">
-                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/mt30okbci5l4imyzs1zkb/imagem_2026-09-23_083446595.png?rlkey=pcdf5fy6xgijz29ts496tfajd&st=l8343yo6&raw=1" alt="Aysllan Magalhães"></div>
-                <h3>Aysllan Magalhães</h3>
-                <span class="dev-role">Desenvolvimento de Sistema - Design interface - Banco de Dados</span>
+            <article class="dev-card">
+                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/mt30okbci5l4imyzs1zkb/imagem_2026-09-23_083446595.png?rlkey=pcdf5fy6xgijz29ts496tfajd&amp;st=l8343yo6&amp;raw=1" alt="Foto de Aysllan Magalhães" width="150" height="150" loading="lazy"></div>
+                <h2>Aysllan Magalhães</h2>
+                <span class="dev-role">Sistema · Interface · Banco de Dados</span>
                 <p>Responsável pelo desenvolvimento do sistema, design da interface e gestão do banco de dados.</p>
                 <div class="dev-socials">
-                    <a href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Aysllan Magalhães"><i class="fa-brands fa-github"></i></a>
                 </div>
-            </div>
+            </article>
 
-            <div class="dev-card">
-                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/f4pdeemfqngxnodp9432b/WhatsApp-Image-2026-09-23-at-08.50.09.jpeg?rlkey=0npox6805tw8cvxbsb8qmtm4i&st=x8hzruzi&raw=1" alt="Gabrieli Vitória de Paula"></div>
-                <h3>Gabrieli Vitória de Paula</h3>
-                <span class="dev-role">Marketing & Front-end</span>
-                <p>Responsável pela estratégia de marketing e pela ajuda front-end.</p>
+            <article class="dev-card">
+                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/f4pdeemfqngxnodp9432b/WhatsApp-Image-2026-09-23-at-08.50.09.jpeg?rlkey=0npox6805tw8cvxbsb8qmtm4i&amp;st=x8hzruzi&amp;raw=1" alt="Foto de Gabrieli Vitória de Paula" width="150" height="150" loading="lazy"></div>
+                <h2>Gabrieli Vitória de Paula</h2>
+                <span class="dev-role">Marketing &amp; Front-end</span>
+                <p>Responsável pela estratégia de marketing e pela ajuda no front-end.</p>
                 <div class="dev-socials">
-                    <a href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Gabrieli Vitória de Paula"><i class="fa-brands fa-github"></i></a>
                 </div>
-            </div>
+            </article>
 
-            <div class="dev-card">
-                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/l6mg8bty4durujvi9gpwo/WhatsApp-Image-2026-09-23-at-08.49.55.jpeg?rlkey=a4leb97jwx9gff20kd7gxfqds&st=gq2rysps&raw=1" alt="Lucca Rizzo dos Santos"></div>
-                <h3>Lucca Rizzo dos Santos</h3>
-                <span class="dev-role">Front-end & Marketing</span>
+            <article class="dev-card">
+                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/l6mg8bty4durujvi9gpwo/WhatsApp-Image-2026-09-23-at-08.49.55.jpeg?rlkey=a4leb97jwx9gff20kd7gxfqds&amp;st=gq2rysps&amp;raw=1" alt="Foto de Lucca Rizzo dos Santos" width="150" height="150" loading="lazy"></div>
+                <h2>Lucca Rizzo dos Santos</h2>
+                <span class="dev-role">Front-end &amp; Marketing</span>
                 <p>Responsável pelo layout e pela experiência visual do site, além do auxílio no marketing.</p>
                 <div class="dev-socials">
-                    <a href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Lucca Rizzo dos Santos"><i class="fa-brands fa-github"></i></a>
                 </div>
-            </div>
+            </article>
 
-            <div class="dev-card">
-                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/2w28ggvzoyf39xjubgvc6/imagem_2026-09-23_085301122.png?rlkey=sryjriyrw9069k3tvcu568mro&st=uql1w4vb&raw=1" alt="Lucas Kamiya do Nascimento"></div>
-                <h3>Lucas Kamiya do Nascimento</h3>
-                <span class="dev-role">Back-End & Banco de Dados</span>
+            <article class="dev-card">
+                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/2w28ggvzoyf39xjubgvc6/imagem_2026-09-23_085301122.png?rlkey=sryjriyrw9069k3tvcu568mro&amp;st=uql1w4vb&amp;raw=1" alt="Foto de Lucas Kamiya do Nascimento" width="150" height="150" loading="lazy"></div>
+                <h2>Lucas Kamiya do Nascimento</h2>
+                <span class="dev-role">Back-end &amp; Banco de Dados</span>
                 <p>Responsável pelo desenvolvimento back-end e pelo gerenciamento do banco de dados.</p>
                 <div class="dev-socials">
-                    <a href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Lucas Kamiya do Nascimento"><i class="fa-brands fa-github"></i></a>
                 </div>
-            </div>
+            </article>
 
-            <div class="dev-card">
-                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/m8c8hk8qwg12j2u1ehh5g/imagem_2026-09-23_084538226.png?rlkey=nzwmsbu7i1k24acgcz0kd8mj5&st=xip2jmdm&raw=1" alt="Luiza de Mattos Bianco Vilani"></div>
-                <h3>Luiza de Mattos Bianco Vilani</h3>
-                <span class="dev-role">Banco de Dados & Marketing</span>
+            <article class="dev-card">
+                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/m8c8hk8qwg12j2u1ehh5g/imagem_2026-09-23_084538226.png?rlkey=nzwmsbu7i1k24acgcz0kd8mj5&amp;st=xip2jmdm&amp;raw=1" alt="Foto de Luiza de Mattos Bianco Vilani" width="150" height="150" loading="lazy"></div>
+                <h2>Luiza de Mattos Bianco Vilani</h2>
+                <span class="dev-role">Banco de Dados &amp; Marketing</span>
                 <p>Responsável pelo banco de dados e pela estratégia de marketing.</p>
                 <div class="dev-socials">
-                    <a href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Luiza de Mattos Bianco Vilani"><i class="fa-brands fa-github"></i></a>
                 </div>
-            </div>
+            </article>
 
-            <div class="dev-card">
-                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/on48fjork3sv8i4vco4qv/imagem_2026-09-23_085400221.png?rlkey=8t6ve1t4pnjy40ebczro5a7jr&st=hr7dbsnc&raw=1" alt="Samuel Eduardo Ribeiro Kempner de Paula"></div>
-                <h3>Samuel Eduardo Ribeiro Kempner de Paula</h3>
-                <span class="dev-role">Back-End & Banco de Dados</span>
+            <article class="dev-card">
+                <div class="dev-avatar"><img src="https://www.dropbox.com/scl/fi/on48fjork3sv8i4vco4qv/imagem_2026-09-23_085400221.png?rlkey=8t6ve1t4pnjy40ebczro5a7jr&amp;st=hr7dbsnc&amp;raw=1" alt="Foto de Samuel Eduardo Ribeiro Kempner de Paula" width="150" height="150" loading="lazy"></div>
+                <h2>Samuel Eduardo Ribeiro Kempner de Paula</h2>
+                <span class="dev-role">Back-end &amp; Banco de Dados</span>
                 <p>Responsável pelo desenvolvimento back-end e pelo gerenciamento do banco de dados.</p>
                 <div class="dev-socials">
-                    <a href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="GitHub de Samuel Eduardo Ribeiro Kempner de Paula"><i class="fa-brands fa-github"></i></a>
                 </div>
-            </div>
+            </article>
 
         </section>
 
-        <section class="tech-stack-section container">
-            <h2 class="section-title">Tecnologias Usadas</h2>
+        <section class="section container" aria-labelledby="titulo-tech">
+            <header class="section-header">
+                <h2 class="section-title" id="titulo-tech">Tecnologias usadas</h2>
+            </header>
             <div class="tech-stack-list">
                 <span class="tech-chip"><i class="fa-brands fa-html5"></i> HTML5</span>
                 <span class="tech-chip"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
                 <span class="tech-chip"><i class="fa-brands fa-js"></i> JavaScript</span>
-                <span class="tech-chip"><i class="fa-brands fa-git-alt"></i> Git & GitHub</span>
+                <span class="tech-chip"><i class="fa-brands fa-php"></i> PHP</span>
+                <span class="tech-chip"><i class="fa-solid fa-database"></i> PostgreSQL</span>
+                <span class="tech-chip"><i class="fa-brands fa-git-alt"></i> Git &amp; GitHub</span>
             </div>
         </section>
 
     </main>
 
-    <footer>
+    <footer class="site-footer">
+        <div class="brand-bar" aria-hidden="true"></div>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
-                        <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-                        <div>Logic<span>Deck</span></div>
+                <section class="footer-brand" aria-label="Sobre a Deck Logic">
+                    <a href="index.html" class="logo logo--footer" aria-label="Deck Logic — página inicial">
+                        <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
                     </a>
-                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos, para tornar o aprendizado mais divertido.</p>
-                </div>
+                    <p>Cartas colecionáveis criadas por alunos dos cursos técnicos do CTI para tornar o aprendizado mais divertido.</p>
+                    <ul class="social-links">
+                        <li><a href="#" class="social-icon" aria-label="Instagram da Deck Logic"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="#" class="social-icon" aria-label="TikTok da Deck Logic"><i class="fa-brands fa-tiktok"></i></a></li>
+                    </ul>
+                </section>
 
-                <div class="footer-column">
-                    <h3>Institucional</h3>
+                <nav class="footer-column" aria-label="Navegação do rodapé">
+                    <h2>Navegação</h2>
                     <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="produtos.html">Produtos</a></li>
                         <li><a href="sobre.html">Sobre Nós</a></li>
-                        <li><a href="missao.html">Missão e Visão</a></li>
                         <li><a href="contato.html">Contato</a></li>
+                        <li><a href="desenvolvedores.html">Devs</a></li>
                     </ul>
-                </div>
+                </nav>
 
-                <div class="footer-column">
-                    <h3>Cursos</h3>
+                <section class="footer-column">
+                    <h2>Institucional</h2>
                     <ul>
-                        <li><a href="produtos.html">Informática</a></li>
-                        <li><a href="produtos.html">Mecânica</a></li>
-                        <li><a href="produtos.html">Eletrônica</a></li>
+                        <li><a href="missao.html">Missão, Visão e Valores</a></li>
+                        <li><a href="login.html">Entrar</a></li>
+                        <li><a href="cadastro.html">Cadastre-se</a></li>
+                        <li><a href="carrinho.html">Carrinho</a></li>
                     </ul>
-                </div>
+                </section>
 
-                <div class="footer-column">
-                    <h3>Desenvolvedores</h3>
+                <section class="footer-column">
+                    <h2>Desenvolvedores</h2>
+                    <!-- TODO: trocar "--" pelo número de chamada de cada integrante -->
                     <ul class="footer-devs">
-                        <li><i class="fa-solid fa-code"></i> Aysllan Magalhães</li>
-                        <li><i class="fa-solid fa-code"></i> Gabrieli Vitória de Paula</li>
-                        <li><i class="fa-solid fa-code"></i> Lucca Rizzo dos Santos</li>
-                        <li><i class="fa-solid fa-code"></i> Lucas Kamiya do Nascimento</li>
-                        <li><i class="fa-solid fa-code"></i> Luiza de Mattos Bianco Vilani</li>
-                        <li><i class="fa-solid fa-code"></i> Samuel Eduardo Ribeiro Kempner de Paula</li>
+                        <li><span class="dev-num">--</span>Aysllan Magalhães</li>
+                        <li><span class="dev-num">--</span>Gabrieli Vitória de Paula</li>
+                        <li><span class="dev-num">--</span>Lucca Rizzo dos Santos</li>
+                        <li><span class="dev-num">--</span>Lucas Kamiya do Nascimento</li>
+                        <li><span class="dev-num">--</span>Luiza de Mattos Bianco Vilani</li>
+                        <li><span class="dev-num">--</span>Samuel Eduardo Ribeiro Kempner de Paula</li>
                     </ul>
-                </div>
+                </section>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2026 LogicDeck. Todos os direitos reservados.</p>
-                <p>Projeto acadêmico de E-commerce</p>
+                <p>&copy; 2026 Deck Logic · Projeto acadêmico de e-commerce — CTI Bauru</p>
+                <a href="#top" class="back-to-top"><i class="fa-solid fa-arrow-up"></i> Voltar ao topo</a>
             </div>
         </div>
     </footer>
 
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
     <script src="js/script.js"></script>
 </body>
 
