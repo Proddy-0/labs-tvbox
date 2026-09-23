@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos - Em Manutenção | LogicDeck</title>
+    <title>Produtos | LogicDeck</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -13,10 +13,10 @@
     <header>
         <div class="container">
             <div class="header-top">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
-                    <div>Logic<span>Deck</span></div>
-                </a>
+                   <a href="index.html" class="logo">
+    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="LogicDeck" style="height: 40px; width: auto;">
+    <div>Logic<span>Deck</span></div>
+</a>
                 <nav class="user-nav">
                     <ul>
                         <li style="display:inline-block;">
@@ -28,25 +28,114 @@
         </div>
     </header>
 
-    <main class="container" style="padding: 5rem 1.5rem; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-        <div style="background: var(--bg-surface); padding: 3.5rem 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); text-align: center; max-width: 650px; box-shadow: var(--shadow-card); position: relative; overflow: hidden;">
-            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 2.2rem; box-shadow: var(--shadow-glow);">
-                <i class="fa-solid fa-screwdriver-wrench fa-spin-pulse" style="--fa-animation-duration: 3s;"></i>
-            </div>
-            
-            <span style="display: inline-block; padding: 0.35rem 1rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-full); color: #f87171; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-triangle-exclamation"></i> Em Manutenção
-            </span>
-            
-            <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-main);">Catálogo de Produtos em Manutenção</h2>
-            
-            <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
-                Estamos catalogando novos produtos e ofertas exclusivas! Esta página estará totalmente funcional em breve. Aproveite as ofertas disponíveis na nossa página inicial.
+    <main class="container" style="padding: 3.5rem 1.5rem; flex-grow: 1;">
+
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-size: 2.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.75rem;">Nosso Catálogo</h1>
+            <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto;">
+                Cartas colecionáveis exclusivas dos cursos de Informática, Mecânica e Eletrônica
             </p>
-            
-            <a href="index.html" class="btn-hero" style="display: inline-flex; align-items: center; gap: 0.6rem;">
-                <i class="fa-solid fa-arrow-left"></i> Voltar para a Página Inicial
-            </a>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;">
+            <button class="btn-filter" style="padding: 0.6rem 1.4rem; border-radius: var(--radius-full); border: 1px solid var(--accent); background: var(--accent); color: #fff; font-weight: 600; cursor: pointer;">Todos</button>
+            <button class="btn-filter" style="padding: 0.6rem 1.4rem; border-radius: var(--radius-full); border: 1px solid var(--border-color); background: transparent; color: var(--text-main); font-weight: 600; cursor: pointer;">Informática</button>
+            <button class="btn-filter" style="padding: 0.6rem 1.4rem; border-radius: var(--radius-full); border: 1px solid var(--border-color); background: transparent; color: var(--text-main); font-weight: 600; cursor: pointer;">Mecânica</button>
+            <button class="btn-filter" style="padding: 0.6rem 1.4rem; border-radius: var(--radius-full); border: 1px solid var(--border-color); background: transparent; color: var(--text-main); font-weight: 600; cursor: pointer;">Eletrônica</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.75rem;">
+
+            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
+                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
+                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Informática</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
+                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
+                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
+                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
+                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Mecânica</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
+                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
+                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
+                    <i class="fa-solid fa-bolt-lightning"></i>
+                </div>
+                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
+                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Eletrônica</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
+                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
+                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
+                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Informática</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
+                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
+                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
+                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
+                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Mecânica</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
+                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
+                <div style="height: 180px; background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--accent);">
+                    <i class="fa-solid fa-bolt-lightning"></i>
+                </div>
+                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1;">
+                    <span style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem;">Eletrônica</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">Carta </h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; flex-grow: 1; margin-bottom: 1rem;"></p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">R$ 15</span>
+                        <button class="btn-hero" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -55,6 +144,30 @@
             <p>&copy; 2026 - LogicDeck. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <script>
+        const filterButtons = document.querySelectorAll('.btn-filter');
+        const cards = document.querySelectorAll('.product-card');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => {
+                    b.style.background = 'transparent';
+                    b.style.color = 'var(--text-main)';
+                    b.style.borderColor = 'var(--border-color)';
+                });
+                btn.style.background = 'var(--accent)';
+                btn.style.color = '#fff';
+                btn.style.borderColor = 'var(--accent)';
+
+                const category = btn.textContent.trim();
+                cards.forEach(card => {
+                    const cardCategory = card.querySelector('span').textContent.trim();
+                    card.style.display = (category === 'Todos' || category === cardCategory) ? 'flex' : 'none';
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

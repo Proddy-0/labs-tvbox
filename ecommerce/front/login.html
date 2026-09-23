@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Em Manutenção | Lumina Tech Store</title>
+    <title>Login | LogicDeck</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -13,10 +13,10 @@
     <header>
         <div class="container">
             <div class="header-top">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
-                    <div>Lumina<span>Tech</span></div>
-                </a>
+                     <a href="index.html" class="logo">
+    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="LogicDeck" style="height: 40px; width: auto;">
+    <div>Logic<span>Deck</span></div>
+</a>
                 <nav class="user-nav">
                     <ul>
                         <li style="display:inline-block;">
@@ -29,24 +29,52 @@
     </header>
 
     <main class="container" style="padding: 5rem 1.5rem; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-        <div style="background: var(--bg-surface); padding: 3.5rem 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); text-align: center; max-width: 650px; box-shadow: var(--shadow-card); position: relative; overflow: hidden;">
-            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 2.2rem; box-shadow: var(--shadow-glow);">
-                <i class="fa-solid fa-screwdriver-wrench fa-spin-pulse" style="--fa-animation-duration: 3s;"></i>
+        <div style="background: var(--bg-surface); padding: 3rem 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); max-width: 440px; width: 100%; box-shadow: var(--shadow-card); position: relative;">
+
+            <div style="width: 70px; height: 70px; margin: 0 auto 1.5rem; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.8rem; box-shadow: var(--shadow-glow);">
+                <i class="fa-solid fa-user"></i>
             </div>
-            
-            <span style="display: inline-block; padding: 0.35rem 1rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-full); color: #f87171; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-triangle-exclamation"></i> Em Manutenção
-            </span>
-            
-            <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-main);">Área de Login em Manutenção</h2>
-            
-            <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
-                O sistema de autenticação de usuários está em atualização para garantir maior segurança às suas informações.
+
+            <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main); text-align: center;">Entrar na sua conta</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; text-align: center;">
+                Acesse para acompanhar seus pedidos e sua coleção
             </p>
-            
-            <a href="index.html" class="btn-hero" style="display: inline-flex; align-items: center; gap: 0.6rem;">
-                <i class="fa-solid fa-arrow-left"></i> Voltar para a Página Inicial
-            </a>
+
+            <form action="#" method="post" id="loginForm">
+                <div style="margin-bottom: 1.25rem; text-align: left;">
+                    <label for="email" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">E-mail</label>
+                    <div style="position: relative;">
+                        <i class="fa-solid fa-envelope" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com"
+                            style="width: 100%; padding: 0.85rem 1rem 0.85rem 2.6rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 0.75rem; text-align: left;">
+                    <label for="senha" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">Senha</label>
+                    <div style="position: relative;">
+                        <i class="fa-solid fa-lock" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="password" id="senha" name="senha" required placeholder="Digite sua senha"
+                            style="width: 100%; padding: 0.85rem 1rem 0.85rem 2.6rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;">
+                        <button type="button" id="togglePassword" aria-label="Mostrar senha"
+                            style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer;">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-bottom: 1.75rem;">
+                    <a href="#" style="color: var(--accent); font-size: 0.85rem; font-weight: 600;">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" class="btn-hero" style="width: 100%; justify-content: center; display: flex; align-items: center; gap: 0.6rem;">
+                    <i class="fa-solid fa-right-to-bracket"></i> Entrar
+                </button>
+            </form>
+
+            <p style="margin-top: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                Ainda não tem conta? <a href="cadastro.html" style="color: var(--accent); font-weight: 700;">Cadastre-se</a>
+            </p>
         </div>
     </main>
 
@@ -55,6 +83,23 @@
             <p>&copy; 2026 - Lumina Tech Store. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const senha = document.getElementById('senha');
+            const icon = this.querySelector('i');
+            const isPassword = senha.type === 'password';
+            senha.type = isPassword ? 'text' : 'password';
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Aqui entra a integração futura com o back-end de autenticação
+            alert('Login enviado! (integração com back-end ainda pendente)');
+        });
+    </script>
 </body>
 
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato - Em Manutenção | LogicDeck</title>
+    <title>Contato | LogicDeck</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -13,10 +13,10 @@
     <header>
         <div class="container">
             <div class="header-top">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
-                    <div>Logic<span>Deck</span></div>
-                </a>
+                     <a href="index.html" class="logo">
+    <img src="https://www.dropbox.com/scl/fi/shnp5xk8jj5y73xjae56d/imagem_2026-09-23_094559662.png?rlkey=5o48pzml6rfqbvz28eb4smpcr&st=fedodi1j&raw=1" alt="LogicDeck" style="height: 40px; width: auto;">
+    <div>Logic<span>Deck</span></div>
+</a>
                 <nav class="user-nav">
                     <ul>
                         <li style="display:inline-block;">
@@ -28,25 +28,67 @@
         </div>
     </header>
 
-    <main class="container" style="padding: 5rem 1.5rem; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-        <div style="background: var(--bg-surface); padding: 3.5rem 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); text-align: center; max-width: 650px; box-shadow: var(--shadow-card); position: relative; overflow: hidden;">
-            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 2.2rem; box-shadow: var(--shadow-glow);">
-                <i class="fa-solid fa-screwdriver-wrench fa-spin-pulse" style="--fa-animation-duration: 3s;"></i>
-            </div>
-            
-            <span style="display: inline-block; padding: 0.35rem 1rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: var(--radius-full); color: #f87171; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-triangle-exclamation"></i> Em Manutenção
-            </span>
-            
-            <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-main);">Canal de Contato em Manutenção</h2>
-            
-            <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
-                Nosso formulário de atendimento está passando por atualizações para te atender ainda melhor. Utilize os links da Home Page para navegar.
+    <main class="container" style="padding: 4rem 1.5rem; flex-grow: 1;">
+
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-size: 2.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.75rem;">Fale Conosco</h1>
+            <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto;">
+                Dúvidas, sugestões ou problemas com seu pedido? Preencha o formulário abaixo.
             </p>
-            
-            <a href="index.html" class="btn-hero" style="display: inline-flex; align-items: center; gap: 0.6rem;">
-                <i class="fa-solid fa-arrow-left"></i> Voltar para a Página Inicial
-            </a>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2.5rem; max-width: 1000px; margin: 0 auto; align-items: start;">
+
+            <div style="background: var(--bg-surface); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+                <form action="#" method="post" id="contatoForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+                        <div style="text-align: left;">
+                            <label for="nome" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">Nome</label>
+                            <input type="text" id="nome" name="nome" required placeholder="Seu nome"
+                                style="width: 100%; padding: 0.85rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;">
+                        </div>
+                        <div style="text-align: left;">
+                            <label for="email" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">E-mail</label>
+                            <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com"
+                                style="width: 100%; padding: 0.85rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1.25rem; text-align: left;">
+                        <label for="assunto" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">Assunto</label>
+                        <select id="assunto" name="assunto" required
+                            style="width: 100%; padding: 0.85rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;">
+                            <option value="">Selecione um assunto</option>
+                            <option value="duvida">Dúvida sobre produto</option>
+                            <option value="pedido">Problema com o pedido</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.75rem; text-align: left;">
+                        <label for="mensagem" style="display:block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-main); font-size: 0.9rem;">Mensagem</label>
+                        <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Escreva sua mensagem aqui..."
+                            style="width: 100%; padding: 0.85rem 1rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box; resize: vertical;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-hero" style="width: 100%; justify-content: center; display: flex; align-items: center; gap: 0.6rem;">
+                        <i class="fa-solid fa-paper-plane"></i> Enviar Mensagem
+                    </button>
+                </form>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+
+                <div style="background: var(--bg-surface); padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 48px; height: 48px; flex-shrink: 0; background: rgba(139, 92, 246, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.2rem;">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 0.2rem;">E-mail</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">dergeg@iejfiej.com</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -55,6 +97,14 @@
             <p>&copy; 2026 - LogicDeck. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('contatoForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Mensagem enviada! (integração com back-end ainda pendente)');
+            this.reset();
+        });
+    </script>
 </body>
 
 </html>
