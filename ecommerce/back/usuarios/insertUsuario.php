@@ -68,7 +68,15 @@
                 $_FILES,
                 'imagem');
         }
-        header($doSite ? "Location: ../../front/login.html?cadastro=1" : "Location: usuarios.php");
+        if ($doSite) {
+            // loga o usuário automaticamente após o cadastro pelo site   
+            session_regenerate_id(true);
+            $_SESSION['id_usuario'] = $id;
+            $_SESSION['nome'] = $nome;
+            $_SESSION['admin'] = $ehAdmin;
+        }
+        header($doSite ? "Location: ../../front/index.html" : "Location: usuarios.php");
         exit;
+        
     }
 ?>
