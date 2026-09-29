@@ -440,8 +440,7 @@ function initSessao() {
     sessaoPromise.then(sessao => {
         if (!sessao || !sessao.logado) return;
         const primeiroNome = sessao.nome.split(' ')[0];
-        const destino = sessao.admin ? 'painel/estoque.php' : 'compras/encomendas.php';
-        contas.forEach(a => {
+        const destino = sessao.admin ? 'painel/estoque.php' : 'usuarios/perfil.php';        contas.forEach(a => {
             a.href = BACK_BASE + destino;
             a.setAttribute('aria-label', sessao.admin ? 'Painel administrativo' : 'Minhas encomendas');
             setLinkText(a, sessao.admin ? 'Painel' : primeiroNome);
