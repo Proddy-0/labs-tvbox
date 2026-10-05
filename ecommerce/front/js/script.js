@@ -241,6 +241,84 @@ function renderCartPage() {
     `;
 }
 
+// ---- Perfil do usuário logado (front/perfil.html) ----
+function renderPerfilPage() {
+    const container = document.getElementById('perfil-page-container');
+    if (!container) return;
+
+    fetch(BACK_BASE + 'usuarios/dadosUsuario.php', { credentials: 'same-origin' })
+        .then(r => {
+            if (r.status === 401) {
+                window.location.href = 'login.html';
+                return null;
+            }
+            return r.json();
+        })
+        .then(usuario => {
+            if (!usuario) return;
+            container.innerHTML = `
+                <form class="form-card" id="perfilForm" style="max-width:520px; width:100%;">
+                    <div class="form-group">
+                        <label for="perfil-nome">Nome</label>
+                        <input type="text" id="perfil-nome" name="nome" class="form-control" value="${escapeHtml(usuario.nome)}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="perfil-email">E-mail</label>
+                        <input type="email" id="perfil-email" name="email" class="form-control" value="${escapeHtml(usuario.email)}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="perfil-telefone">Telefone</label>
+                        <input type="text" id="perfil-telefone" name="telefone" class="form-control" value="${escapeHtml(usuario.telefone || '')}">
+                    </div>
+                    ${usuario.curso ? `
+                    <div class="form-group">
+                        <label>Curso</label>
+                        <input type="text" class="form-control" value="${escapeHtml(usuario.curso)}" disabled>
+                    </div>` : ''}
+                    <div class="form-group">
+                        <label>Perfil</label>
+                        <input type="text" class="form-control" value="${usuario.admin ? 'Administrador' : 'Cliente'}" disabled>
+                    </div>
+                    <p class="form-error" id="perfil-msg"></p>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar alterações
+                    </button>
+                </form>
+            `;
+
+            document.getElementById('perfilForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const msg = document.getElementById('perfil-msg');
+                msg.classList.remove('show');
+
+                const dados = new URLSearchParams(new FormData(e.target));
+
+                fetch(BACK_BASE + 'usuarios/atualizarPerfil.php', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: dados
+                })
+                    .then(r => r.json().then(data => ({ status: r.status, data })))
+                    .then(({ status, data }) => {
+                        if (status !== 200) {
+                            msg.textContent = data.erro || 'Não foi possível salvar.';
+                            msg.classList.add('show');
+                            return;
+                        }
+                        showToast('Perfil atualizado com sucesso!');
+                    })
+                    .catch(() => {
+                        msg.textContent = 'Erro ao conectar com o servidor.';
+                        msg.classList.add('show');
+                    });
+            });
+        })
+        .catch(() => {
+            container.innerHTML = `<p class="form-alert form-alert--error" style="display:block;">Não foi possível carregar seu perfil.</p>`;
+        });
+}
+
 // ---- Carrossel do banner ----
 function initCarousel() {
     const carousel = document.querySelector('.carousel');
@@ -440,9 +518,10 @@ function initSessao() {
     sessaoPromise.then(sessao => {
         if (!sessao || !sessao.logado) return;
         const primeiroNome = sessao.nome.split(' ')[0];
-        const destino = sessao.admin ? 'painel/estoque.php' : 'usuarios/perfil.php';        contas.forEach(a => {
-            a.href = BACK_BASE + destino;
-            a.setAttribute('aria-label', sessao.admin ? 'Painel administrativo' : 'Minhas encomendas');
+
+        contas.forEach(a => {
+            a.href = sessao.admin ? (BACK_BASE + 'painel/estoque.php') : (FRONT_BASE + 'perfil.html');
+            a.setAttribute('aria-label', sessao.admin ? 'Painel administrativo' : 'Meu perfil');
             setLinkText(a, sessao.admin ? 'Painel' : primeiroNome);
         });
         sairs.forEach(a => {
@@ -590,6 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTema();
     updateCartBadge();
     renderCartPage();
+    renderPerfilPage();
     initEncomendaOk();
 
     // carrinho alterado em outra aba: atualiza contador, cards e página do carrinho
