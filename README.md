@@ -15,13 +15,9 @@ O `labs-tvbox` funciona como ponto central para navegação dos repositórios `l
 ## 🔗 Ecossistema Labs (repositórios)
 
 - [labs-tvbox](https://github.com/Proddy-0/labs-tvbox) (hub atual)
-- [labs-book](https://github.com/Proddy-0/labs-book)
 - [labs-craft](https://github.com/Proddy-0/labs-craft)
 - [labs-tools](https://github.com/Proddy-0/labs-tools)
-- [labs-nexo](https://github.com/Proddy-0/labs-nexo)
-- [labs-wire](https://github.com/Proddy-0/labs-wire)
-- [labs-punch](https://github.com/Proddy-0/labs-punch)
-- [labs-vector](https://github.com/Proddy-0/labs-vector)
+- labs-book, labs-nexo, labs-wire, labs-punch, labs-vector: privados (Gitea do lab)
 
 ## ✅ Hub de gestão (GitHub Project: Proddyt Labs)
 
