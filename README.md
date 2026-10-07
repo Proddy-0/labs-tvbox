@@ -1,5 +1,7 @@
 # 🚀 Proddyt Labs Hub (labs-tvbox)
 
+> **English summary:** static hub of my homelab, served 24/7 by a repurposed Android TV box (rk322x running Armbian) with nginx and PHP-FPM. The same box is the lab's only internet edge: a Cloudflare Tunnel publishes the self-hosted services that run on the main server, reached over Tailscale. Live at [tvbox.proddyt.com](https://tvbox.proddyt.com).
+
 Este repositório/servidor é o hub principal do ecossistema **Proddyt Labs** e também o ambiente pessoal de projetos estáticos e dinâmicos, rodando 24/7 de forma econômica.
 
 ## 🧭 Sobre o projeto
