@@ -10,7 +10,6 @@ O `labs-tvbox` funciona como ponto central para navegação dos repositórios `l
 
 - **Hub (`labs-tvbox`):** Ativo
 - **Ecossistema `labs-*`:** Em organização e padronização de documentação
-  .
 
 ## 🔗 Ecossistema Labs (repositórios)
 
