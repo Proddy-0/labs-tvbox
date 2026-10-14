@@ -1,128 +1,73 @@
-# 🚀 Proddyt Labs Hub (labs-tvbox)
+# Proddyt Labs ~/tvbox
 
-> **English summary:** static hub of my homelab, served 24/7 by a repurposed Android TV box (rk322x running Armbian) with nginx and PHP-FPM. The same box is the lab's only internet edge: a Cloudflare Tunnel publishes the self-hosted services that run on the main server, reached over Tailscale. Live at [tvbox.proddyt.com](https://tvbox.proddyt.com).
+Hub do **Proddyt Labs**, servido 24/7 por uma TV box Android reaproveitada (RK322x, Armbian) com nginx + PHP-FPM. A mesma caixa é a borda de internet do lab: um Cloudflare Tunnel publica os serviços self-hosted que rodam no servidor principal (acessado via Tailscale).
 
-Este repositório/servidor é o hub principal do ecossistema **Proddyt Labs** e também o ambiente pessoal de projetos estáticos e dinâmicos, rodando 24/7 de forma econômica.
+- URL: <https://tvbox.proddyt.com>
+- Marca: Proddyt, frente **Labs** (fonte: [Proddyt-Labs/brand](https://github.com/Proddyt-Labs/brand) `@1`)
 
-## 🧭 Sobre o projeto
+> English summary: static/PHP hub of my homelab on a repurposed Android TV box (Armbian, nginx, Cloudflare Tunnel). Live at tvbox.proddyt.com.
 
-O `labs-tvbox` funciona como ponto central para navegação dos repositórios `labs-*`, catálogo de experimentos e operação contínua do ambiente web.
+## Estrutura
 
-## 📈 Status
+| Caminho | O que é |
+|---|---|
+| `index.php` | Página do hub. Lê `projetos.json` e renderiza o catálogo no servidor (tudo escapado com `htmlspecialchars`). Filtro por categoria, relógio e clima no cabeçalho. |
+| `style.css` | Só o que a marca não cobre; usa apenas tokens (`--bg`, `--surface`, `--brand-text`...). |
+| `projetos.json` | "Banco de dados" do catálogo. |
+| `painel/` | Dashboard pessoal (Kanban/Pomodoro). Hoje `index.html` e `script.js` estão vazios; só o `style.css` tem conteúdo. Não faz parte da UI do hub. |
+| `ecommerce/` | Projeto escolar. **Sincronizado automaticamente de outro repo; não editar aqui.** |
+| `loja-jottave7/` | Demo freelance. **Sincronizado automaticamente de outro repo; não editar aqui.** |
+| `.github/workflows/deploy.yml` | Deploy automático (ver abaixo). |
 
-- **Hub (`labs-tvbox`):** Ativo
-- **Ecossistema `labs-*`:** Em organização e padronização de documentação
+## Adicionar um projeto
 
-## 🔗 Ecossistema Labs (repositórios)
+Acrescente um objeto ao fim de `projetos.json`; ele aparece sozinho no catálogo.
 
-- [labs-tvbox](https://github.com/Proddy-0/labs-tvbox) (hub atual)
-- [labs-craft](https://github.com/Proddy-0/labs-craft)
-- [labs-tools](https://github.com/Proddy-0/labs-tools)
-- labs-book, labs-nexo, labs-wire, labs-punch, labs-vector: privados (Gitea do lab)
+```json
+{
+  "id": "101",
+  "categoria": "BACKEND",
+  "titulo": "Nome do Projeto",
+  "descricao": "O que o projeto faz, em uma frase.",
+  "status": "Dev",
+  "tags": ["PHP", "API"],
+  "url": "/novo-projeto/index.php"
+}
+```
 
-## ✅ Hub de gestão (GitHub Project: Proddyt Labs)
+- `id`: string; aparece no cartão.
+- `categoria`: vira um botão de filtro (valores iguais agrupam).
+- `status`: `Finalizado` e `Online` usam o chip verde, `Dev` o chip de marca, qualquer outro valor o chip neutro.
+- `tags`: lista de strings.
+- `url`: caminho relativo ao site (`/...`) ou `http(s)://`. Outros esquemas viram `#`.
 
-Use o Project **Proddyt Labs** como centro pessoal de execução e conhecimento:
+## Preview local
 
-- URL do Project: <https://github.com/users/Proddy-0/projects/3/views/1>
-- Nome mantido: **Proddyt Labs**
+Requer PHP (`php -v`). Se não houver, instale o PHP CLI ou teste direto no servidor.
 
-### Views sugeridas (simples e práticas)
+```
+php -S 127.0.0.1:8773
+```
 
-- **Projetos** → foco em implementação ativa
-- **Ideias** → brainstorm e experimentos futuros
-- **Estudos** → resumos, matérias e revisões
-- **Tarefas / Backlog** → ações operacionais e manutenção
-- **Concluídos** → histórico do que foi finalizado
+Abra <http://127.0.0.1:8773>. Fontes, tokens da marca e tema vêm do CDN (jsDelivr) e do Google Fonts, então é preciso internet.
 
-### Campos recomendados para separar bem os itens
+## Deploy
 
-- **Tipo** (single select): `Projeto`, `Ideia`, `Estudo`, `Tarefa`
-- **Status** (single select): `Backlog`, `Doing`, `Done`, `Blocked`
-- **Repositório** (text): `labs-tvbox`, `labs-book`, etc.
-- **Prioridade** (single select): `Alta`, `Média`, `Baixa`
+Push em `main` dispara `.github/workflows/deploy.yml` no runner self-hosted da própria TV box: `git fetch origin main`, `git reset --hard origin/main` e `git clean -fd` em `/var/www/html`. Alterações feitas direto no servidor são descartadas.
 
-### Reclassificação inicial dos itens existentes
+O Cloudflare tem uma Cache Rule (Bypass) para o subdomínio `tvbox`, então CSS/PHP novos aparecem sem esperar cache.
 
-**Concluídos (Done)**
+## Marca
 
-- Estrutura inicial do hub em `labs-tvbox`
-- Catálogo dinâmico via `projetos.json`
-- Publicação contínua com Nginx + PHP-FPM + Cloudflare Tunnel
+CSS e tema vêm de `https://cdn.jsdelivr.net/gh/Proddyt-Labs/brand@1/` (`tokens.css`, `base.css`, `theme.js`, `marks/labs-mark.svg`). O `<html>` usa `data-brand="labs"`. Para mudar cores ou componentes, altere o repo da marca, não este.
 
-**Projetos (faltando / em andamento)**
+## Infra
 
-- Implementar notificações push
-- Sistema de Project + Task + TimeEntry
-- Finalizar fluxo `/oauth/authorize` com tela de consent
-- Implementar refresh tokens
-- Implementar PKCE
-- Admin UI para gerenciar clients OAuth
+- Hardware: TV box genérica RK322x, Armbian (armv7l).
+- Web: nginx + PHP-FPM em `/var/www/html`.
+- Borda: Cloudflare Tunnel (sem portas abertas no roteador).
+- Rede local: `http://192.168.1.121`; SSH com o usuário `proddyt`.
 
-**Ideias (faltando / backlog)**
+## Repositórios do ecossistema
 
-- Considerar migração para Vue/Vite quando crescer
-- Decidir Vector vs GitHub Projects
-- Decidir caso de uso real do Wire
-- Definir relação Nexo ↔ `context/`
-
-**Estudos (faltando / backlog)**
-
-- Adicionar resumo de C++
-- Adicionar resumo de SQL
-- Adicionar resumo de Aplicativos I (HTML/CSS)
-- Adicionar resumo de Gestão de Negócios
-- Adicionar resumo de Sistemas Operacionais
-
-**Tarefas (faltando / operacionais)**
-
-- Extrair `groups/roles` para módulo compartilhado
-- Isolamento real por grupo para managers
-
-## 📡 Acessos e Links
-
-- **Domínio Público:** [https://tvbox.proddyt.com](https://tvbox.proddyt.com)
-- **IP Local (Rede Interna):** `http://192.168.1.121`
-- **Usuário SSH:** `proddyt`
-
-## ⚙️ Hardware e Infraestrutura
-
-- **Dispositivo:** TV Box Genérica (Chip RK322x)
-- **Sistema Operacional:** Armbian Buster (32-bit, armv7l)
-- **Servidor Web:** Nginx + PHP-FPM (Processando a engine da página inicial)
-- **Túnel Web:** Cloudflare Tunnel (Zero Trust) - Expõe o servidor para a web de forma segura com HTTPS sem necessidade de abrir portas no roteador local.
-
-## 🛠️ Workflow de Desenvolvimento
-
-O código é editado ao vivo usando a seguinte arquitetura:
-
-1. **Editor:** Visual Studio Code (no Windows).
-2. **Sincronização:** Extensão `ftp-simple`. A cada `Ctrl+S`, a extensão envia o arquivo instantaneamente via SFTP para a TV Box.
-3. **Diretório Raiz (Web):** `/var/www/html`
-4. **Cache Control:** O Cloudflare possui uma _Cache Rule_ configurada (Bypass) para o subdomínio `tvbox`. Isso garante que as atualizações de CSS/PHP subam em tempo real, eliminando dores de cabeça com cache antigo.
-
-## 📂 Estrutura de Arquivos Principal
-
-- `index.php` -> Motor principal que renderiza a página do Proddyt Craft.
-- `projetos.json` -> O "banco de dados" do painel. Basta adicionar um novo objeto JSON aqui para que um novo projeto apareça automaticamente na home page.
-- `style.css` -> Identidade visual dark/neon (Cyber-craft).
-
-## ➕ Como Adicionar Novos Projetos (O Fluxo)
-
-O processo para subir um novo laboratório ou página no Hub é automático e não requer edição na página principal.
-
-1. **Crie a Página:** No seu VS Code, crie a subpasta e os arquivos do novo projeto (ex: `/var/www/html/novo-projeto/index.php`). Dê `Ctrl+S` para enviar à TV Box.
-2. **Registre no JSON:** Abra o arquivo `projetos.json` que está na raiz.
-3. **Adicione o Bloco:** Insira um novo objeto no final da lista seguindo o padrão:
-   ```json
-   {
-     "id": "3",
-     "categoria": "BACKEND",
-     "titulo": "Nome do Projeto",
-     "descricao": "O que esse projeto faz de forma resumida.",
-     "status": "Dev",
-     "tags": ["PHP", "API"],
-     "url": "/novo-projeto/index.php"
-   }
-   ```
-4. **Salve o arquivo:** após salvar, o novo projeto passa a aparecer automaticamente na página inicial.
+[labs-tvbox](https://github.com/Proddy-0/labs-tvbox) (este), [labs-craft](https://github.com/Proddy-0/labs-craft), [labs-tools](https://github.com/Proddy-0/labs-tools). Os demais `labs-*` são privados (Gitea do lab). Tarefas: [GitHub Project Proddyt Labs](https://github.com/users/Proddy-0/projects/3/views/1).
