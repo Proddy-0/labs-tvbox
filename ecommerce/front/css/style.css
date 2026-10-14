@@ -1118,6 +1118,171 @@ body.nav-open {
     margin-bottom: 0.3rem;
 }
 
+/* Elementos clicáveis do card */
+.product-image-wrap,
+.product-card h3 {
+    cursor: pointer;
+}
+ 
+.btn-details {
+    align-self: flex-start;
+    margin: -0.35rem 0 1rem;
+    padding: 0.35rem 0;
+    color: var(--link);
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: underline;
+}
+ 
+.btn-details:hover {
+    color: var(--course-ink);
+}
+ 
+/* Modal de detalhes */
+.product-modal {
+    width: min(820px, calc(100% - 2rem));
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    color: var(--text-main);
+    box-shadow: var(--shadow-card);
+}
+ 
+.product-modal[open] {
+    display: grid;
+    grid-template-columns: 1fr;
+    animation: pmIn 0.25s ease-out;
+}
+ 
+.product-modal::backdrop {
+    background: rgba(10, 42, 64, 0.6);
+}
+ 
+@keyframes pmIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+}
+ 
+body:has(dialog[open]) {
+    overflow: hidden;
+}
+ 
+.pm-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--heading);
+}
+ 
+.pm-close:hover {
+    background: var(--bg-muted);
+}
+ 
+.pm-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    background:
+        radial-gradient(circle at 50% 110%, var(--course) -40%, transparent 70%),
+        var(--course-soft);
+    border-bottom: 4px solid var(--course);
+}
+ 
+.pm-media img {
+    width: auto;
+    max-height: 260px;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.25));
+}
+ 
+.pm-info {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.25rem 1.5rem;
+}
+ 
+.pm-info h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--heading);
+    margin-bottom: 0.5rem;
+}
+ 
+.pm-desc {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+ 
+.pm-list {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+ 
+.pm-list[hidden] {
+    display: none;
+}
+ 
+.pm-list li {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.92rem;
+}
+ 
+.pm-list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: 0.5rem;
+    border-radius: 50%;
+    background: var(--course);
+}
+ 
+.pm-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+ 
+@media (min-width: 768px) {
+    .product-modal[open] {
+        grid-template-columns: 1fr 1.2fr;
+    }
+ 
+    .pm-media {
+        padding: 2rem;
+        border-bottom: 0;
+        border-right: 4px solid var(--course);
+    }
+ 
+    .pm-media img {
+        max-height: 340px;
+    }
+ 
+    .pm-info {
+        padding: 2.25rem 2rem 2rem;
+    }
+}
+
 /* ==========================================================================
    09. DIFERENCIAIS
    ========================================================================== */

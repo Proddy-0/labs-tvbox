@@ -421,6 +421,67 @@ function initProductFilters() {
     apply();
 }
 
+function initProductModal() {
+    const modal = document.getElementById('product-modal');
+    const grid = document.querySelector('[data-products]');
+    if (!modal || !grid || typeof modal.showModal !== 'function') return;
+ 
+    const $ = (id) => document.getElementById(id);
+    const addBtn = $('pm-add');
+    const stepper = addBtn.nextElementSibling;
+ 
+    function abrir(card) {
+        const origem = card.querySelector('.btn-add-cart');
+        if (!origem) return;
+        const d = origem.dataset;
+ 
+        // dados que o addToCart() lê do botão
+        addBtn.dataset.id = d.id;
+        addBtn.dataset.name = d.name;
+        addBtn.dataset.course = d.course;
+        addBtn.dataset.courseClass = d.courseClass || '';
+        addBtn.dataset.price = d.price;
+        addBtn.dataset.img = d.img;
+        if (stepper && stepper.classList.contains('qty-stepper')) stepper.dataset.id = d.id;
+ 
+        // conteúdo visível
+        modal.className = 'product-modal ' + (d.courseClass || '');
+        $('pm-img').src = d.img;
+        $('pm-img').alt = card.querySelector('img').alt;
+        $('pm-course').textContent = d.course;
+        $('pm-title').textContent = d.name;
+        $('pm-desc').textContent = card.querySelector('.product-desc').textContent;
+        $('pm-price').textContent = formatPrice(Number(d.price));
+ 
+        const lista = $('pm-list');
+        lista.innerHTML = '';
+        (card.dataset.detalhes || '').split('|').forEach(texto => {
+            texto = texto.trim();
+            if (!texto) return;
+            const li = document.createElement('li');
+            li.textContent = texto;
+            lista.appendChild(li);
+        });
+        lista.hidden = !lista.children.length;
+ 
+        syncProductSteppers();
+        modal.showModal();
+    }
+ 
+    // clique na imagem, no nome ou em "Ver detalhes" (o botão Adicionar/seletor não abre)
+    grid.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-add-cart, .qty-stepper')) return;
+        if (!e.target.closest('.product-image-wrap, h3, .btn-details')) return;
+        abrir(e.target.closest('.product-card'));
+    });
+ 
+    // fecha no X ou clicando fora (Esc já fecha sozinho)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.closest('[data-pm-close]')) modal.close();
+    });
+}
+ 
+
 // ---- Login (o form faz POST direto pro back/usuarios/login.php) ----
 function initLogin() {
     const form = document.getElementById('loginForm');
@@ -660,6 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarousel();
     initProductFilters();
     initProductSteppers();
+    initProductModal();
     initLogin();
     initPasswordToggles();
     initCadastro();

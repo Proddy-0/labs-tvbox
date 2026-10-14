@@ -118,15 +118,16 @@
 
             <div class="products-grid" data-products>
 
-                <article class="product-card is-info" data-category="informatica">
+                <article class="product-card is-info" data-category="informatica"
+                    data-detalhes="Conceitos de programação e lógica|Redes e protocolos|Hardware e sistemas operacionais|Coleção exclusiva do curso de Informática do CTI">
                     <div class="product-image-wrap">
-                        <span class="product-badge">Novo</span>
                         <img src="img/cards/informatica.png" alt="Carta azul do curso de Informática" width="159" height="273">
                     </div>
                     <div class="product-details">
                         <span class="product-course-tag">Informática</span>
                         <h3>Cartas — Redes &amp; Sistemas</h3>
                         <p class="product-desc">Cartas com conceitos de programação, redes e hardware.</p>
+                        <button type="button" class="btn-details">Ver detalhes</button>
                         <div class="product-bottom">
                             <span class="price-current">R$ 15,00</span>
                             <button type="button" class="btn-add-cart" onclick="addToCart(this)"
@@ -138,7 +139,8 @@
                     </div>
                 </article>
 
-                <article class="product-card is-mec" data-category="mecanica">
+                <article class="product-card is-mec" data-category="mecanica"
+                    data-detalhes="Motores e transmissões|Usinagem e processos de fabricação|Máquinas e ferramentas|Coleção exclusiva do curso de Mecânica do CTI">
                     <div class="product-image-wrap">
                         <img src="img/cards/mecanica.png" alt="Carta vermelha do curso de Mecânica" width="160" height="273">
                     </div>
@@ -146,6 +148,7 @@
                         <span class="product-course-tag">Mecânica</span>
                         <h3>Cartas — Motores &amp; Máquinas</h3>
                         <p class="product-desc">Cartas sobre motores, usinagem e processos mecânicos.</p>
+                        <button type="button" class="btn-details">Ver detalhes</button>
                         <div class="product-bottom">
                             <span class="price-current">R$ 15,00</span>
                             <button type="button" class="btn-add-cart" onclick="addToCart(this)"
@@ -157,7 +160,8 @@
                     </div>
                 </article>
 
-                <article class="product-card is-eletro" data-category="eletronica">
+                <article class="product-card is-eletro" data-category="eletronica"
+                    data-detalhes="Circuitos e componentes|Automação e controle|Leitura de esquemas elétricos|Coleção exclusiva do curso de Eletrônica do CTI">
                     <div class="product-image-wrap">
                         <img src="img/cards/eletronica.png" alt="Carta amarela do curso de Eletrônica" width="160" height="273">
                     </div>
@@ -165,6 +169,7 @@
                         <span class="product-course-tag">Eletrônica</span>
                         <h3>Cartas — Circuitos &amp; Componentes</h3>
                         <p class="product-desc">Cartas sobre circuitos, componentes e automação.</p>
+                        <button type="button" class="btn-details">Ver detalhes</button>
                         <div class="product-bottom">
                             <span class="price-current">R$ 15,00</span>
                             <button type="button" class="btn-add-cart" onclick="addToCart(this)"
@@ -241,6 +246,24 @@
             </div>
         </div>
     </footer>
+
+    <dialog class="product-modal" id="product-modal" aria-labelledby="pm-title">
+        <button type="button" class="pm-close" data-pm-close aria-label="Fechar detalhes"><i class="fa-solid fa-xmark"></i></button>
+        <div class="pm-media"><img id="pm-img" src="" alt=""></div>
+        <div class="pm-info">
+            <span class="product-course-tag" id="pm-course"></span>
+            <h2 id="pm-title"></h2>
+            <p class="pm-desc" id="pm-desc"></p>
+            <ul class="pm-list" id="pm-list"></ul>
+            <div class="pm-bottom">
+                <span class="price-current" id="pm-price"></span>
+                <button type="button" class="btn-add-cart" id="pm-add" onclick="addToCart(this)"
+                    data-id="" data-name="" data-course="" data-course-class="" data-price="0" data-img="">
+                    <i class="fa-solid fa-cart-plus"></i> Adicionar
+                </button>
+            </div>
+        </div>
+    </dialog>
 
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
     <script src="js/script.js"></script>
