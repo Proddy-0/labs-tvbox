@@ -3,7 +3,12 @@
 // Um único arquivo para todas as páginas: cada init* verifica se os
 // elementos existem antes de agir.
 // ==========================================================================
-
+// Enquanto o banco não tem uma lista de tópicos por produto, usa um texto fixo por curso
+const DETALHES_POR_CATEGORIA = {
+    informatica: ['Conceitos de programação e lógica', 'Redes e protocolos', 'Hardware e sistemas operacionais', 'Coleção exclusiva do curso de Informática do CTI'],
+    mecanica: ['Motores e transmissões', 'Usinagem e processos de fabricação', 'Máquinas e ferramentas', 'Coleção exclusiva do curso de Mecânica do CTI'],
+    eletronica: ['Circuitos e componentes', 'Automação e controle', 'Leitura de esquemas elétricos', 'Coleção exclusiva do curso de Eletrônica do CTI']
+};
 const CART_KEY = 'decklogic_cart';
 
 // ---- Utilitários ----
@@ -404,7 +409,97 @@ function initProductFilters() {
         });
         if (empty) empty.hidden = visible > 0;
     }
+// ---- Vitrine dinâmica (produtos.html): busca os produtos direto do banco ----
+function renderProdutosPage() {
+    const container = document.querySelector('[data-products]');
+    if (!container) return;
 
+    fetch(BACK_BASE + 'produtos/listarProdutos.php', { credentials: 'same-origin' })
+        .then(r => r.json())
+        .then(produtos => {
+            container.innerHTML = produtos.map(p => {
+                const imgSrc = p.imagemOrigem === 'upload'
+                    ? BACK_BASE + 'produtos/' + p.imagemCaminho
+                    : FRONT_BASE + p.imagemCaminho;
+
+                const detalhes = DETALHES_POR_CATEGORIA[p.categoria] || [p.descricao];
+
+                return `
+                    <article class="product-card ${p.courseClass}" data-category="${p.categoria}" data-detalhes="${escapeHtml(detalhes.join('|'))}">
+                        <div class="product-image-wrap">
+                            <img src="${imgSrc}" alt="Carta — ${escapeHtml(p.nome)}" width="160" height="273">
+                        </div>
+                        <div class="product-details">
+                            <span class="product-course-tag">${escapeHtml(p.courseLabel)}</span>
+                            <h3>${escapeHtml(p.nome)}</h3>
+                            <p class="product-desc">${escapeHtml(p.descricao)}</p>
+                            <button type="button" class="btn-details">Ver detalhes</button>
+                            <div class="product-bottom">
+                                <span class="price-current">${formatPrice(p.preco)}</span>
+                                <button type="button" class="btn-add-cart" onclick="addToCart(this)"
+                                    data-id="${p.id}" data-name="${escapeHtml(p.nome)}" data-course="${escapeHtml(p.courseLabel)}"
+                                    data-course-class="${p.courseClass}" data-price="${p.preco}" data-img="${imgSrc}">
+                                    <i class="fa-solid fa-cart-plus"></i> Adicionar
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            initProductSteppers();
+            initProductFilters();
+        })
+        .catch(() => {
+            container.innerHTML = '<p class="form-alert form-alert--error" style="display:block;">Não foi possível carregar os produtos.</p>';
+        });
+}
+
+// ---- Modal "Ver detalhes" (funciona mesmo com cards criados depois, via delegação) ----
+function initProductModal() {
+    const modal = document.getElementById('product-modal');
+    if (!modal) return;
+
+    modal.querySelectorAll('[data-pm-close]').forEach(btn => btn.addEventListener('click', () => modal.close()));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
+
+    const pmAdd = document.getElementById('pm-add');
+    if (pmAdd) pmAdd.addEventListener('click', () => modal.close());
+
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.btn-details');
+        if (!btn) return;
+
+        const card = btn.closest('.product-card');
+        if (!card) return;
+
+        const addBtn = card.querySelector('.btn-add-cart');
+        const img = card.querySelector('.product-image-wrap img');
+        const titulo = card.querySelector('h3');
+        const curso = card.querySelector('.product-course-tag');
+        const desc = card.querySelector('.product-desc');
+        const preco = card.querySelector('.price-current');
+        const detalhes = (card.dataset.detalhes || '').split('|').filter(Boolean);
+
+        document.getElementById('pm-img').src = img ? img.src : '';
+        document.getElementById('pm-img').alt = img ? img.alt : '';
+        document.getElementById('pm-course').textContent = curso ? curso.textContent : '';
+        document.getElementById('pm-title').textContent = titulo ? titulo.textContent : '';
+        document.getElementById('pm-desc').textContent = desc ? desc.textContent : '';
+        document.getElementById('pm-price').textContent = preco ? preco.textContent : '';
+        document.getElementById('pm-list').innerHTML = detalhes
+            .map(d => `<li><i class="fa-solid fa-check"></i> ${escapeHtml(d)}</li>`)
+            .join('');
+
+        if (addBtn && pmAdd) {
+            ['id', 'name', 'course', 'courseClass', 'price', 'img'].forEach(key => {
+                pmAdd.dataset[key] = addBtn.dataset[key];
+            });
+        }
+
+        modal.showModal();
+    });
+}
     chips.forEach(chip => {
         chip.addEventListener('click', () => {
             chips.forEach(c => {
@@ -719,9 +814,7 @@ function initSimpleForms() {
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
     initCarousel();
-    initProductFilters();
     initProductSteppers();
-    initProductModal();
     initLogin();
     initPasswordToggles();
     initCadastro();
@@ -732,9 +825,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartBadge();
     renderCartPage();
     renderPerfilPage();
+    renderProdutosPage();   // <- novo: carrega os produtos do banco
+    initProductModal();     // <- novo: liga o botão "Ver detalhes"
     initEncomendaOk();
 
-    // carrinho alterado em outra aba: atualiza contador, cards e página do carrinho
     window.addEventListener('storage', (e) => {
         if (e.key !== CART_KEY) return;
         updateCartBadge();
