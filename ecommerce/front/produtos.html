@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20261019a">
 </head>
 
 <body id="top">
@@ -108,79 +108,15 @@
 
         <section class="container" aria-label="Vitrine de produtos">
             <div class="category-filters" role="group" aria-label="Filtrar por curso">
+                <!-- filtros dos cursos montados pelo js/script.js -->
                 <button type="button" class="filter-chip active" data-filter="todos" aria-pressed="true">Todos</button>
-                <button type="button" class="filter-chip is-info" data-filter="informatica" aria-pressed="false"><span class="dot"></span>Informática</button>
-                <button type="button" class="filter-chip is-mec" data-filter="mecanica" aria-pressed="false"><span class="dot"></span>Mecânica</button>
-                <button type="button" class="filter-chip is-eletro" data-filter="eletronica" aria-pressed="false"><span class="dot"></span>Eletrônica</button>
             </div>
 
             <p class="search-result-info" id="search-result-info" hidden></p>
 
             <div class="products-grid" data-products>
-
-                <article class="product-card is-info" data-category="informatica"
-                    data-detalhes="Conceitos de programação e lógica|Redes e protocolos|Hardware e sistemas operacionais|Coleção exclusiva do curso de Informática do CTI">
-                    <div class="product-image-wrap">
-                        <img src="img/cards/informatica.png" alt="Carta azul do curso de Informática" width="159" height="273">
-                    </div>
-                    <div class="product-details">
-                        <span class="product-course-tag">Informática</span>
-                        <h3>Cartas — Redes &amp; Sistemas</h3>
-                        <p class="product-desc">Cartas com conceitos de programação, redes e hardware.</p>
-                        <button type="button" class="btn-details">Ver detalhes</button>
-                        <div class="product-bottom">
-                            <span class="price-current">R$ 15,00</span>
-                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
-                                data-id="5" data-name="Cartas — Redes &amp; Sistemas" data-course="Informática"
-                                data-course-class="is-info" data-price="15" data-img="img/cards/informatica.png">
-                                <i class="fa-solid fa-cart-plus"></i> Adicionar
-                            </button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card is-mec" data-category="mecanica"
-                    data-detalhes="Motores e transmissões|Usinagem e processos de fabricação|Máquinas e ferramentas|Coleção exclusiva do curso de Mecânica do CTI">
-                    <div class="product-image-wrap">
-                        <img src="img/cards/mecanica.png" alt="Carta vermelha do curso de Mecânica" width="160" height="273">
-                    </div>
-                    <div class="product-details">
-                        <span class="product-course-tag">Mecânica</span>
-                        <h3>Cartas — Motores &amp; Máquinas</h3>
-                        <p class="product-desc">Cartas sobre motores, usinagem e processos mecânicos.</p>
-                        <button type="button" class="btn-details">Ver detalhes</button>
-                        <div class="product-bottom">
-                            <span class="price-current">R$ 15,00</span>
-                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
-                                data-id="6" data-name="Cartas — Motores &amp; Máquinas" data-course="Mecânica"
-                                data-course-class="is-mec" data-price="15" data-img="img/cards/mecanica.png">
-                                <i class="fa-solid fa-cart-plus"></i> Adicionar
-                            </button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card is-eletro" data-category="eletronica"
-                    data-detalhes="Circuitos e componentes|Automação e controle|Leitura de esquemas elétricos|Coleção exclusiva do curso de Eletrônica do CTI">
-                    <div class="product-image-wrap">
-                        <img src="img/cards/eletronica.png" alt="Carta amarela do curso de Eletrônica" width="160" height="273">
-                    </div>
-                    <div class="product-details">
-                        <span class="product-course-tag">Eletrônica</span>
-                        <h3>Cartas — Circuitos &amp; Componentes</h3>
-                        <p class="product-desc">Cartas sobre circuitos, componentes e automação.</p>
-                        <button type="button" class="btn-details">Ver detalhes</button>
-                        <div class="product-bottom">
-                            <span class="price-current">R$ 15,00</span>
-                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
-                                data-id="7" data-name="Cartas — Circuitos &amp; Componentes" data-course="Eletrônica"
-                                data-course-class="is-eletro" data-price="15" data-img="img/cards/eletronica.png">
-                                <i class="fa-solid fa-cart-plus"></i> Adicionar
-                            </button>
-                        </div>
-                    </div>
-                </article>
-
+                <!-- Cards montados pelo js/script.js a partir de back/produtos/catalogo.php -->
+                <p class="products-loading" data-products-loading>Carregando cartas…</p>
             </div>
 
             <div class="products-empty" id="products-empty" hidden>
@@ -247,26 +183,8 @@
         </div>
     </footer>
 
-    <dialog class="product-modal" id="product-modal" aria-labelledby="pm-title">
-        <button type="button" class="pm-close" data-pm-close aria-label="Fechar detalhes"><i class="fa-solid fa-xmark"></i></button>
-        <div class="pm-media"><img id="pm-img" src="" alt=""></div>
-        <div class="pm-info">
-            <span class="product-course-tag" id="pm-course"></span>
-            <h2 id="pm-title"></h2>
-            <p class="pm-desc" id="pm-desc"></p>
-            <ul class="pm-list" id="pm-list"></ul>
-            <div class="pm-bottom">
-                <span class="price-current" id="pm-price"></span>
-                <button type="button" class="btn-add-cart" id="pm-add" onclick="addToCart(this)"
-                    data-id="" data-name="" data-course="" data-course-class="" data-price="0" data-img="">
-                    <i class="fa-solid fa-cart-plus"></i> Adicionar
-                </button>
-            </div>
-        </div>
-    </dialog>
-
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=20261019a"></script>
 </body>
 
 </html>

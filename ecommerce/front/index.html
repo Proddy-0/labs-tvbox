@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20261019a">
 </head>
 
 <body id="top">
@@ -113,7 +113,7 @@
                             <a href="produtos.html" class="btn btn-accent"><i class="fa-solid fa-arrow-right"></i> Ver coleção</a>
                         </div>
                         <div class="carousel-media carousel-media--wide">
-                            <img src="img/cards/colecao.png" alt="As três cartas da coleção: Eletrônica, Informática e Mecânica" width="517" height="273">
+                            <img src="img/cards/colecao.png" alt="As três cartas da coleção: Eletrônica, Informática e Mecânica" width="494" height="273">
                         </div>
                     </article>
 
@@ -125,7 +125,7 @@
                             <a href="produtos.html?q=informatica" class="btn btn-light"><i class="fa-solid fa-arrow-right"></i> Conferir cartas</a>
                         </div>
                         <div class="carousel-media carousel-media--single">
-                            <img src="img/cards/informatica.png" alt="Carta do curso de Informática" width="159" height="273">
+                            <img src="img/cards/informatica.png" alt="Carta do curso de Informática" width="156" height="273">
                         </div>
                     </article>
 
@@ -137,7 +137,7 @@
                             <a href="produtos.html?q=mecanica" class="btn btn-light"><i class="fa-solid fa-arrow-right"></i> Conferir cartas</a>
                         </div>
                         <div class="carousel-media carousel-media--single">
-                            <img src="img/cards/mecanica.png" alt="Carta do curso de Mecânica" width="160" height="273">
+                            <img src="img/cards/mecanica.png" alt="Carta do curso de Mecânica" width="156" height="273">
                         </div>
                     </article>
 
@@ -149,7 +149,7 @@
                             <a href="produtos.html?q=eletronica" class="btn btn-light"><i class="fa-solid fa-arrow-right"></i> Conferir cartas</a>
                         </div>
                         <div class="carousel-media carousel-media--single">
-                            <img src="img/cards/eletronica.png" alt="Carta do curso de Eletrônica" width="160" height="273">
+                            <img src="img/cards/eletronica.png" alt="Carta do curso de Eletrônica" width="156" height="273">
                         </div>
                     </article>
 
@@ -174,66 +174,9 @@
                 <p class="section-subtitle">Cada curso tem sua própria carta, com cor, raridade e conteúdo únicos.</p>
             </header>
 
-            <div class="products-grid">
-
-                <article class="product-card is-info">
-                    <div class="product-image-wrap">
-                        <span class="product-badge">Novo</span>
-                        <img src="img/cards/informatica.png" alt="Carta azul do curso de Informática" width="159" height="273" loading="lazy">
-                    </div>
-                    <div class="product-details">
-                        <span class="product-course-tag">Informática</span>
-                        <h3>Cartas — Redes &amp; Sistemas</h3>
-                        <p class="product-desc">Cartas com conceitos de programação, redes e hardware.</p>
-                        <div class="product-bottom">
-                            <span class="price-current">R$ 15,00</span>
-                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
-                                data-id="5" data-name="Cartas — Redes &amp; Sistemas" data-course="Informática"
-                                data-course-class="is-info" data-price="15" data-img="img/cards/informatica.png">
-                                <i class="fa-solid fa-cart-plus"></i> Adicionar
-                            </button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card is-mec">
-                    <div class="product-image-wrap">
-                        <img src="img/cards/mecanica.png" alt="Carta vermelha do curso de Mecânica" width="160" height="273" loading="lazy">
-                    </div>
-                    <div class="product-details">
-                        <span class="product-course-tag">Mecânica</span>
-                        <h3>Cartas — Motores &amp; Máquinas</h3>
-                        <p class="product-desc">Cartas sobre motores, usinagem e processos mecânicos.</p>
-                        <div class="product-bottom">
-                            <span class="price-current">R$ 15,00</span>
-                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
-                                data-id="6" data-name="Cartas — Motores &amp; Máquinas" data-course="Mecânica"
-                                data-course-class="is-mec" data-price="15" data-img="img/cards/mecanica.png">
-                                <i class="fa-solid fa-cart-plus"></i> Adicionar
-                            </button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card is-eletro">
-                    <div class="product-image-wrap">
-                        <img src="img/cards/eletronica.png" alt="Carta amarela do curso de Eletrônica" width="160" height="273" loading="lazy">
-                    </div>
-                    <div class="product-details">
-                        <span class="product-course-tag">Eletrônica</span>
-                        <h3>Cartas — Circuitos &amp; Componentes</h3>
-                        <p class="product-desc">Cartas sobre circuitos, componentes e automação.</p>
-                        <div class="product-bottom">
-                            <span class="price-current">R$ 15,00</span>
-                            <button type="button" class="btn-add-cart" onclick="addToCart(this)"
-                                data-id="7" data-name="Cartas — Circuitos &amp; Componentes" data-course="Eletrônica"
-                                data-course-class="is-eletro" data-price="15" data-img="img/cards/eletronica.png">
-                                <i class="fa-solid fa-cart-plus"></i> Adicionar
-                            </button>
-                        </div>
-                    </div>
-                </article>
-
+            <div class="products-grid" data-products-destaque>
+                <!-- Cards montados pelo js/script.js a partir de back/produtos/catalogo.php -->
+                <p class="products-loading" data-products-loading>Carregando cartas…</p>
             </div>
         </section>
 
@@ -278,7 +221,7 @@
                 </div>
                 <form class="newsletter-form" id="newsletterForm">
                     <label for="news-email" class="sr-only">Seu e-mail</label>
-                    <input type="email" id="news-email" placeholder="Seu e-mail" required>
+                    <input type="email" id="news-email" name="email" placeholder="Seu e-mail" required>
                     <button type="submit" class="btn btn-accent">Inscrever-se</button>
                 </form>
             </div>
@@ -343,7 +286,7 @@
     </footer>
 
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=20261019a"></script>
 </body>
 
 </html>

@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20261019a">
 </head>
 
 <body id="top">
@@ -100,57 +100,78 @@
 
     <main id="conteudo">
 
-        <section class="container">
-    <div class="status-card">
-        <h1>Missão, Visão e Valores</h1>
+        <section class="page-hero container">
+            <span class="section-eyebrow">Nossa essência</span>
+            <h1>Missão, Visão e Valores</h1>
+            <p>O que move a Deck Logic: por que existimos, aonde queremos chegar e como trabalhamos.</p>
+        </section>
 
-        <h2>Missão</h2>
-        <p>
-            Transformar a trajetória dos cursos técnicos do CTI em cartas
-            colecionáveis criativas e divertidas, aproximando alunos e ex-alunos
-            de Informática, Eletrônica e Mecânica por meio de um produto que
-            celebra identidade, aprendizado e pertencimento.
-        </p>
+        <section class="section container" aria-label="Missão e visão">
+            <div class="mvv-grid">
+                <article class="mvv-card is-info">
+                    <div class="mvv-icon"><i class="fa-solid fa-bullseye" aria-hidden="true"></i></div>
+                    <div>
+                        <span class="section-eyebrow">Por que existimos</span>
+                        <h2>Missão</h2>
+                        <p>Transformar o conteúdo dos cursos técnicos do CTI em cartas colecionáveis criativas, que ensinam brincando e aproximam alunos, ex-alunos e futuros alunos de Informática, Mecânica e Eletrônica.</p>
+                    </div>
+                </article>
+                <article class="mvv-card is-eletro">
+                    <div class="mvv-icon"><i class="fa-solid fa-binoculars" aria-hidden="true"></i></div>
+                    <div>
+                        <span class="section-eyebrow">Aonde queremos chegar</span>
+                        <h2>Visão</h2>
+                        <p>Ser a coleção que todo aluno do CTI reconhece: um símbolo da escola passado de turma em turma e um exemplo de como conteúdo de sala de aula pode virar um produto bonito, útil e acessível.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-        <h2>Visão</h2>
-        <p>
-            Ser reconhecida como a marca colecionável de referência do CTI,
-            tornando-se um símbolo afetivo entre gerações de alunos e um modelo
-            de como o conteúdo educacional pode ganhar vida em produtos criativos
-            e acessíveis.
-        </p>
+        <section class="section container" aria-labelledby="titulo-valores">
+            <header class="section-header">
+                <span class="section-eyebrow">Como trabalhamos</span>
+                <h2 class="section-title" id="titulo-valores">Nossos valores</h2>
+                <p class="section-subtitle">Cinco princípios que guiam cada carta, cada tela do site e cada atendimento no stand.</p>
+            </header>
 
-        <h2>Valores</h2>
+            <div class="values-grid">
+                <article class="value-card is-info">
+                    <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+                    <h3>Criatividade</h3>
+                    <p>Conteúdo técnico vira jogo: ilustração, desafio e curiosidade em vez de resumo decorado.</p>
+                </article>
+                <article class="value-card is-mec">
+                    <i class="fa-solid fa-people-group" aria-hidden="true"></i>
+                    <h3>Pertencimento</h3>
+                    <p>Valorizamos a trajetória de quem estuda, estudou ou quer estudar no CTI.</p>
+                </article>
+                <article class="value-card is-eletro">
+                    <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
+                    <h3>Acessibilidade</h3>
+                    <p>Cores com bom contraste, texto legível e preço justo para caber no bolso do aluno.</p>
+                </article>
+                <article class="value-card">
+                    <i class="fa-solid fa-handshake" aria-hidden="true"></i>
+                    <h3>Colaboração</h3>
+                    <p>Um projeto feito em equipe, unindo design, programação, banco de dados e gestão.</p>
+                </article>
+                <article class="value-card is-info">
+                    <i class="fa-solid fa-medal" aria-hidden="true"></i>
+                    <h3>Qualidade</h3>
+                    <p>Conteúdo revisado, impressão caprichada e encomenda entregue certinho na retirada.</p>
+                </article>
+            </div>
+        </section>
 
-        <ul>
-            <li>
-                <strong>Criatividade</strong> — transformar conteúdo técnico
-                em algo lúdico e visualmente atraente.
-            </li>
-
-            <li>
-                <strong>Identidade e pertencimento</strong> — valorizar a
-                trajetória de quem estuda, estudou ou deseja estudar no CTI.
-            </li>
-
-            <li>
-                <strong>Acessibilidade</strong> — preocupação com contraste,
-                legibilidade e inclusão (inclusive para daltônicos) na
-                identidade visual.
-            </li>
-
-            <li>
-                <strong>Colaboração</strong> — projeto interdisciplinar
-                construído em equipe, unindo design, tecnologia e negócios.
-            </li>
-
-            <li>
-                <strong>Qualidade</strong> — cuidado na produção, no design
-                e na experiência de compra do cliente.
-            </li>
-        </ul>
-    </div>
-</section>
+        <section class="section container">
+            <div class="newsletter-box">
+                <div>
+                    <h2>Conheça a coleção</h2>
+                    <p>Uma carta para cada curso, com a cor e o conteúdo de cada área.</p>
+                </div>
+                <a href="produtos.html" class="btn btn-accent"><i class="fa-solid fa-arrow-right"></i> Ver cartas</a>
+            </div>
+        </section>
 
     </main>
 
@@ -211,7 +232,7 @@
     </footer>
 
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=20261019a"></script>
 </body>
 
 </html>

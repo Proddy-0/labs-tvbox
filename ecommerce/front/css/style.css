@@ -1099,6 +1099,13 @@ body.nav-open {
 .btn-add-cart[hidden] {
     display: none;
 }
+.products-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-muted);
+    padding: 32px 16px;
+}
+
 .products-empty {
     padding: 2.5rem 1.25rem;
     border: 1px dashed var(--border-strong);
@@ -2155,6 +2162,29 @@ textarea.form-control {
     box-shadow: var(--shadow-card);
 }
 
+/* Card inteiro clicável: o link do GitHub estica por cima do card (::after) */
+.dev-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.dev-card .dev-socials a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+}
+
+.dev-card:hover h2 {
+    color: var(--course, var(--navy));
+    text-decoration: underline;
+}
+
+.dev-card:has(.dev-socials a:focus-visible) {
+    outline: 3px solid var(--navy);
+    outline-offset: 2px;
+}
+
 .dev-avatar {
     width: 150px;
     height: 150px;
@@ -3100,4 +3130,439 @@ textarea.form-control {
     .footer-column:last-child {
         grid-column: auto;
     }
+}
+
+/* Painel: amostra de cor do curso e mensagem já lida */
+.color-swatch {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    vertical-align: -0.2em;
+}
+
+.row-muted td {
+    opacity: 0.6;
+}
+
+/* Meu Perfil: dados + minhas compras (lado a lado a partir de 1024px) */
+.perfil-layout {
+    display: grid;
+    gap: 2rem;
+    padding-bottom: 3rem;
+}
+
+.perfil-layout h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.perfil-dados .form-card {
+    width: 100%;
+    max-width: none;
+}
+
+.perfil-compras .empty-cart {
+    padding: 2rem 1rem;
+}
+
+.order-unit {
+    color: var(--text-muted);
+    font-size: 0.85em;
+}
+
+@media (min-width: 1024px) {
+    .perfil-layout {
+        grid-template-columns: minmax(320px, 420px) 1fr;
+        align-items: start;
+    }
+}
+
+/* Missão, Visão e Valores */
+.mvv-grid {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.mvv-card {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 1.75rem;
+    background: var(--course-soft, var(--bg-muted));
+    border: 1px solid var(--border-color);
+    border-left: 6px solid var(--course, var(--navy));
+    border-radius: var(--radius-lg);
+}
+
+.mvv-card h2 {
+    font-size: 1.5rem;
+    margin: 0.25rem 0 0.5rem;
+}
+
+.mvv-card p {
+    color: var(--text-muted);
+    line-height: 1.65;
+}
+
+.mvv-icon {
+    flex: 0 0 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--course, var(--navy));
+    color: #fff;
+    font-size: 1.4rem;
+}
+
+.values-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.value-card {
+    padding: 1.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-top: 4px solid var(--course, var(--navy));
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.value-card:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+}
+
+.value-card i {
+    font-size: 1.5rem;
+    color: var(--course-ink, var(--navy));
+    margin-bottom: 0.75rem;
+}
+
+.value-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.35rem;
+}
+
+.value-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
+    .mvv-grid { grid-template-columns: 1fr 1fr; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .values-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* Número de chamada no card da página Devs */
+.dev-card-num {
+    font-family: var(--font-mono);
+    color: var(--eletro);
+    margin-right: 0.25rem;
+}
+
+/* CTA da página Missão reaproveita o bloco da newsletter: botão no tamanho do texto */
+.newsletter-box > .btn {
+    justify-self: start;
+    align-self: center;
+    width: auto;
+}
+
+/* Valor sem cor de curso: ícone legível nos dois temas */
+.value-card:not([class*="is-"]) i {
+    color: var(--text-muted);
+}
+
+/* ---- Página de detalhe do produto (produto.html) ---- */
+.product-page {
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.breadcrumb {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.breadcrumb a {
+    color: var(--text-muted);
+}
+
+.breadcrumb a:hover {
+    color: var(--course, var(--navy));
+    text-decoration: underline;
+}
+
+.product-detail-card {
+    display: grid;
+    gap: 1.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+
+.pd-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background:
+        radial-gradient(circle at 50% 110%, var(--course, var(--navy)) -40%, transparent 70%),
+        var(--course-soft, var(--bg-muted));
+    border-bottom: 4px solid var(--course, var(--navy));
+}
+
+.pd-media img {
+    width: min(100%, 260px);
+    height: auto;
+    aspect-ratio: 160 / 273;
+    object-fit: contain;
+    filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.35));
+}
+
+.pd-info {
+    padding: 0 1.5rem 1.75rem;
+}
+
+.pd-info h1 {
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    margin: 0.35rem 0 0.5rem;
+}
+
+.pd-price {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--course-ink, var(--navy));
+    margin-bottom: 1rem;
+}
+
+.pd-price small {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.pd-desc {
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+}
+
+/* Texto da carta: um parágrafo só, com a barra na cor do curso (mesma do .pd-media) */
+.pd-about {
+    margin: 0.25rem 0 1.5rem;
+    padding: 1rem 1.15rem;
+    border-left: 3px solid var(--course, var(--navy));
+    border-radius: 0 var(--radius-md, 10px) var(--radius-md, 10px) 0;
+    background: color-mix(in srgb, var(--course, var(--navy)) 8%, transparent);
+}
+
+.pd-about-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+}
+
+.pd-about-title {
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6rem;
+}
+
+.pd-about-text {
+    line-height: 1.7;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.pd-subtitle {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.pd-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: grid;
+    gap: 0.45rem;
+}
+
+.pd-list li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+}
+
+.pd-list i {
+    color: var(--course, var(--navy));
+}
+
+.pd-buy {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.25rem;
+}
+
+.pd-buy > label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.pd-qty {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--border-strong, var(--border-color));
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.pd-qty-btn {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: var(--bg-muted);
+    color: inherit;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.pd-qty-btn:hover {
+    background: var(--course-soft, var(--bg-muted));
+}
+
+.pd-qty-btn:focus-visible {
+    outline: 3px solid var(--course, var(--navy));
+    outline-offset: -3px;
+}
+
+.pd-qty input {
+    width: 56px;
+    height: 44px;
+    border: 0;
+    text-align: center;
+    font: inherit;
+    font-weight: 700;
+    background: transparent;
+    color: inherit;
+    -moz-appearance: textfield;
+}
+
+.pd-qty input::-webkit-outer-spin-button,
+.pd-qty input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.pd-total {
+    margin: 0.85rem 0 1rem;
+    color: var(--text-muted);
+}
+
+.pd-total strong {
+    color: inherit;
+    font-size: 1.1rem;
+}
+
+.pd-actions {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.pd-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.product-details h3 a {
+    color: inherit;
+}
+
+.product-details h3 a:hover,
+a.btn-details:hover {
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .product-detail-card {
+        grid-template-columns: 1fr 1.1fr;
+        gap: 0;
+    }
+
+    .pd-media {
+        border-bottom: 0;
+        border-right: 4px solid var(--course, var(--navy));
+        padding: 3rem 2rem;
+    }
+
+    .pd-info {
+        padding: 2rem 2.25rem;
+    }
+
+    .pd-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Estoque: esgotado / poucas unidades */
+.btn-add-cart:disabled,
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    filter: grayscale(0.8);
+}
+
+.product-badge--esgotado {
+    background: var(--text-muted);
+    color: #fff;
+}
+
+.product-card.is-out .product-image-wrap img {
+    opacity: 0.55;
+    filter: grayscale(0.7);
+}
+
+.product-stock-low {
+    margin: -0.5rem 0 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--mec-ink);
+}
+
+.pd-stock {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: -0.5rem 0 1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.pd-stock.is-low,
+.pd-stock.is-out {
+    color: var(--mec-ink);
+}
+
+/* Esgotado: o seletor de quantidade e o total somem (o display:flex do .pd-qty venceria o [hidden]) */
+.pd-qty[hidden],
+.pd-total[hidden] {
+    display: none;
 }

@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20261019a">
 </head>
 
 <body id="top">
@@ -99,13 +99,23 @@
         <section class="page-hero container">
             <span class="section-eyebrow">Minha conta</span>
             <h1>Meu Perfil</h1>
-            <p>Seus dados cadastrados na Deck Logic.</p>
+            <p>Seus dados e as encomendas que você fez na Deck Logic.</p>
         </section>
 
-        <section class="auth-section" style="padding-top:0;">
-            <div id="perfil-page-container" style="width:100%; display:flex; justify-content:center;">
-                <!-- Preenchido no JS (renderPerfilPage) -->
+        <section class="container perfil-layout">
+            <div class="perfil-dados">
+                <h2>Meus dados</h2>
+                <div id="perfil-page-container">
+                    <!-- Preenchido no JS (renderPerfilPage) -->
+                </div>
             </div>
+            <section class="perfil-compras" aria-labelledby="titulo-compras">
+                <h2 id="titulo-compras">Minhas compras</h2>
+                <div id="perfil-compras">
+                    <!-- Preenchido no JS (renderMinhasCompras) -->
+                    <p class="products-loading">Carregando suas compras…</p>
+                </div>
+            </section>
         </section>
     </main>
 
@@ -145,7 +155,7 @@
     </footer>
 
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=20261019a"></script>
 </body>
 
 </html>

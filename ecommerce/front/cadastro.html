@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20261019a">
 </head>
 
 <body id="top">
@@ -108,6 +108,7 @@
                     <p>Cadastre-se para encomendar as cartas.</p>
                 </header>
 
+                <p class="form-alert form-alert--error" id="cad-telefone-erro" hidden>Informe o telefone com DDD, ex.: (14) 99999-9999.</p>
                 <p class="form-alert form-alert--error" id="cad-email-existe" hidden>Este e-mail já está cadastrado. <a href="login.html">Entrar</a></p>
 
                 <p class="form-legend"><span class="req" aria-hidden="true">*</span> campo obrigatório</p>
@@ -125,8 +126,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="cad-telefone">Telefone <span class="opt">(opcional)</span></label>
-                        <input type="tel" id="cad-telefone" name="telefone" class="form-control" placeholder="(14) 99999-9999" maxlength="15" autocomplete="tel" inputmode="tel">
+                        <label for="cad-telefone">Telefone <span class="req" aria-hidden="true">*</span> <span class="opt">(para achar sua encomenda na retirada)</span></label>
+                        <input type="tel" id="cad-telefone" name="telefone" class="form-control" placeholder="(14) 99999-9999" maxlength="15" minlength="14" autocomplete="tel" inputmode="tel" pattern="\(\d{2}\) \d{4,5}-\d{4}" title="Telefone com DDD, ex.: (14) 99999-9999" required>
                     </div>
 
                     <div class="form-row">
@@ -208,7 +209,7 @@
     </footer>
 
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=20261019a"></script>
 </body>
 
 </html>

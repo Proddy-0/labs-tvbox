@@ -87,26 +87,42 @@ function updateCartBadge() {
 }
 
 // Chamado pelos botões "Adicionar": os dados do produto ficam nos data-* do botão
-function addToCart(button) {
+function addToCart(button, quantidade = 1) {
     const product = {
         id: button.dataset.id,
         name: button.dataset.name,
         course: button.dataset.course,
         courseClass: button.dataset.courseClass,
+        courseStyle: button.dataset.courseStyle || '',
         img: button.dataset.img,
-        price: Number(button.dataset.price)
+        price: Number(button.dataset.price),
+        stock: button.dataset.stock ? Number(button.dataset.stock) : null   // null = sem limite conhecido
     };
 
     const cart = getCart();
     const existing = cart.find(item => item.id === product.id);
+    const limite = product.stock === null ? Infinity : product.stock;
+    const noCarrinho = existing ? existing.qty : 0;
+    const adicionar = Math.min(quantidade, limite - noCarrinho);
+    if (adicionar <= 0) {
+        showToast(limite <= 0
+            ? `${product.name} está esgotada`
+            : `Só há ${limite} unidade${limite > 1 ? 's' : ''} de ${product.name}, e já estão no carrinho`);
+        return;
+    }
     if (existing) {
-        existing.qty += 1;
+        existing.qty += adicionar;
+        existing.stock = product.stock;
     } else {
-        cart.push({ ...product, qty: 1 });
+        cart.push({ ...product, qty: adicionar });
     }
     saveCart(cart);
     syncProductSteppers();
-    showToast(`${product.name} adicionada ao carrinho`);
+    if (adicionar < quantidade) {
+        showToast(`Só havia estoque pra ${adicionar}: ${adicionar} ${adicionar > 1 ? 'adicionadas' : 'adicionada'} ao carrinho`);
+    } else {
+        showToast(adicionar > 1 ? `${adicionar}× ${product.name} adicionadas ao carrinho` : `${product.name} adicionada ao carrinho`);
+    }
 }
 
 // Tira do carrinho perguntando antes (usado pela lixeira e pelo "-" quando a quantidade é 1)
@@ -126,6 +142,10 @@ function changeQty(id, delta) {
 
     if (item.qty + delta <= 0) {
         removeFromCart(id);
+        return;
+    }
+    if (delta > 0 && item.stock != null && item.qty + delta > item.stock) {
+        showToast(`Só há ${item.stock} unidade${item.stock > 1 ? 's' : ''} de ${item.name}`);
         return;
     }
     item.qty += delta;
@@ -192,7 +212,7 @@ function renderCartPage() {
     }
 
     const itemsHtml = cart.map(item => `
-        <article class="cart-item ${item.courseClass || ''}">
+        <article class="cart-item ${item.courseClass || ''}"${item.courseStyle ? ` style="${item.courseStyle}"` : ''}>
             <div class="cart-item-img">
                 ${item.img ? `<img src="${item.img}" alt="" width="47" height="80">` : ''}
             </div>
@@ -257,7 +277,7 @@ function renderPerfilPage() {
         .then(usuario => {
             if (!usuario) return;
             container.innerHTML = `
-                <form class="form-card" id="perfilForm" style="max-width:520px; width:100%;">
+                <form class="form-card" id="perfilForm">
                     <div class="form-group">
                         <label for="perfil-nome">Nome</label>
                         <input type="text" id="perfil-nome" name="nome" class="form-control" value="${escapeHtml(usuario.nome)}" required>
@@ -267,8 +287,8 @@ function renderPerfilPage() {
                         <input type="email" id="perfil-email" name="email" class="form-control" value="${escapeHtml(usuario.email)}" required>
                     </div>
                     <div class="form-group">
-                        <label for="perfil-telefone">Telefone</label>
-                        <input type="text" id="perfil-telefone" name="telefone" class="form-control" value="${escapeHtml(usuario.telefone || '')}">
+                        <label for="perfil-telefone">Telefone <span class="req" aria-hidden="true">*</span></label>
+                        <input type="tel" id="perfil-telefone" name="telefone" class="form-control" value="${escapeHtml(usuario.telefone || '')}" placeholder="(14) 99999-9999" maxlength="15" inputmode="tel" required>
                     </div>
                     ${usuario.curso ? `
                     <div class="form-group">
@@ -285,6 +305,8 @@ function renderPerfilPage() {
                     </button>
                 </form>
             `;
+
+            mascaraTelefone(document.getElementById('perfil-telefone'));
 
             document.getElementById('perfilForm').addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -315,7 +337,73 @@ function renderPerfilPage() {
             });
         })
         .catch(() => {
-            container.innerHTML = `<p class="form-alert form-alert--error" style="display:block;">Não foi possível carregar seu perfil.</p>`;
+            container.innerHTML = `<p class="form-alert form-alert--error">Não foi possível carregar seu perfil.</p>`;
+        });
+    renderMinhasCompras();
+}
+
+// ---- Minhas compras (perfil): encomendas do usuário com o preço pago em cada item ----
+const STATUS_COMPRA = {
+    reservado: 'Reservado · retire no CTI',
+    entregue: 'Entregue',
+    cancelado: 'Cancelado'
+};
+
+function renderMinhasCompras() {
+    const container = document.getElementById('perfil-compras');
+    if (!container) return;
+    if (new URLSearchParams(window.location.search).has('cancelada')) showToast('Encomenda cancelada.');
+
+    fetch(BACK_BASE + 'compras/minhasCompras.php', { credentials: 'same-origin' })
+        .then(r => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then(compras => {
+            if (!compras.length) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fa-solid fa-box-open"></i>
+                        <h2>Nenhuma compra ainda</h2>
+                        <p>Escolha suas cartas e finalize pelo carrinho.</p>
+                        <a href="produtos.html" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Ver produtos</a>
+                    </div>`;
+                return;
+            }
+            container.innerHTML = compras.map(c => `
+                <article class="order-card">
+                    <div class="order-head">
+                        <div>
+                            <strong>Encomenda #${c.id}</strong>
+                            <span> · ${escapeHtml(c.data)}</span>
+                        </div>
+                        <span class="status-pill status-${escapeHtml(c.status)}">${escapeHtml(STATUS_COMPRA[c.status] || c.status)}</span>
+                    </div>
+                    <ul class="order-items">
+                        ${c.itens.map(i => `
+                            <li>
+                                <span>${i.quantidade}× ${escapeHtml(i.nome)} <small class="order-unit">(${formatPrice(i.valor_unitario)} cada)</small></span>
+                                <span>${formatPrice(i.subtotal)}</span>
+                            </li>`).join('')}
+                        ${c.acrescimo ? `
+                            <li>
+                                <span>${c.acrescimo < 0 ? 'Desconto' : 'Acréscimo'}</span>
+                                <span>${formatPrice(c.acrescimo)}</span>
+                            </li>` : ''}
+                    </ul>
+                    <div class="order-total">
+                        <span>Total</span>
+                        <span>${formatPrice(c.total)}</span>
+                    </div>
+                    ${c.status === 'reservado' ? `
+                    <form class="order-actions" action="${BACK_BASE}compras/cancelar.php" method="post"
+                        onsubmit="return confirm('Cancelar a encomenda #${c.id}?')">
+                        <input type="hidden" name="id_compra" value="${c.id}">
+                        <input type="hidden" name="voltar" value="perfil">
+                        <button type="submit" class="btn btn-danger-outline btn-sm"><i class="fa-solid fa-xmark"></i> Cancelar encomenda</button>
+                    </form>` : ''}
+                </article>
+            `).join('');
+        })
+        .catch(() => {
+            container.innerHTML = `<p class="form-alert form-alert--error">Não foi possível carregar suas compras.</p>`;
         });
 }
 
@@ -365,6 +453,270 @@ function initCarousel() {
 
     show(0);
     restart();
+}
+
+// ---- Catálogo: cards montados a partir do banco (back/produtos/catalogo.php) ----
+// Curso do produto (tabela curso, cadastrada no painel) -> nome e cor do card.
+// Curso com "classe" usa o estilo pronto do CSS (is-info/is-mec/is-eletro); sem classe, usa a cor cadastrada.
+function cursoDoProduto(cursos, idCurso) {
+    const c = cursos.find(c => c.id === idCurso);
+    if (!c) return { id: '', nome: '', classe: '', estilo: '' };
+    const estilo = c.classe ? '' :
+        `--course:${c.cor};--course-dark:${c.cor};--course-ink:${c.cor};--course-soft:color-mix(in srgb, ${c.cor} 14%, transparent)`;
+    return { id: String(c.id), nome: c.nome, classe: c.classe, estilo };
+}
+
+// Uma requisição por página, compartilhada por vitrine, destaques e carrinho
+let catalogoPromise = null;
+function carregarCatalogo() {
+    if (!catalogoPromise) {
+        catalogoPromise = fetch(BACK_BASE + 'produtos/catalogo.php', { credentials: 'same-origin' })
+            .then(r => {
+                const json = (r.headers.get('content-type') || '').includes('application/json');
+                if (!r.ok || !json) throw new Error('catálogo indisponível');
+                return r.json();
+            });
+    }
+    return catalogoPromise;
+}
+
+// detalhes vêm do PDF quebrados linha a linha ("microcontrola-|dores"): vira um parágrafo só
+function textoDaCarta(linhas) {
+    return linhas.reduce((txt, linha) => {
+        if (!txt) return linha;
+        return txt.endsWith('-') ? txt.slice(0, -1) + linha : `${txt} ${linha}`;
+    }, '');
+}
+
+function linkProduto(id) {
+    return `produto.html?id=${encodeURIComponent(id)}`;
+}
+
+// opcoes.badge = selo no canto da imagem
+function cardProdutoHtml(p, curso, opcoes = {}) {
+    const esgotado = p.estoque <= 0;
+    const nome = escapeHtml(p.nome);
+    const img = escapeHtml(p.imagem);
+    const alt = escapeHtml(curso.nome ? `Carta do curso de ${curso.nome}` : p.nome);
+    return `
+        <article class="product-card ${curso.classe}${esgotado ? ' is-out' : ''}"${curso.estilo ? ` style="${curso.estilo}"` : ''} data-category="${curso.id}"
+            data-detalhes="${escapeHtml(p.detalhes.join('|'))}">
+            <a class="product-image-wrap" href="${linkProduto(p.id)}" aria-label="Ver detalhes de ${nome}">
+                ${esgotado ? `<span class="product-badge product-badge--esgotado">Esgotado</span>`
+                    : (opcoes.badge ? `<span class="product-badge">${escapeHtml(opcoes.badge)}</span>` : '')}
+                ${p.imagem ? `<img src="${img}" alt="${alt}" loading="lazy">` : ''}
+            </a>
+            <div class="product-details">
+                ${curso.nome ? `<span class="product-course-tag">${escapeHtml(curso.nome)}</span>` : ''}
+                <h3><a href="${linkProduto(p.id)}">${nome}</a></h3>
+                <p class="product-desc">${escapeHtml(p.descricao)}</p>
+                <a class="btn-details" href="${linkProduto(p.id)}">Ver detalhes</a>
+                <div class="product-bottom">
+                    <span class="price-current">${formatPrice(p.valor)}</span>
+                    <button type="button" class="btn-add-cart" onclick="addToCart(this)"
+                        data-id="${p.id}" data-name="${nome}" data-course="${escapeHtml(curso.nome)}"
+                        data-course-class="${curso.classe}" data-course-style="${curso.estilo}"
+                        data-price="${p.valor}" data-img="${img}" data-stock="${p.estoque}"${esgotado ? ' disabled' : ''}>
+                        <i class="fa-solid fa-cart-plus"></i> ${esgotado ? 'Esgotado' : 'Adicionar'}
+                    </button>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+function initCatalogo() {
+    const vitrine = document.querySelector('[data-products]');
+    const destaque = document.querySelector('[data-products-destaque]');
+    const statCartas = document.querySelector('[data-stat="cartas"]');
+    if (statCartas) {
+        carregarCatalogo().then(({ produtos }) => { statCartas.textContent = produtos.length; }).catch(() => {});
+    }
+    if (!vitrine && !destaque) return Promise.resolve();
+
+    return carregarCatalogo()
+        .then(({ cursos, produtos }) => {
+            const card = (p, opcoes) => cardProdutoHtml(p, cursoDoProduto(cursos, p.curso), opcoes);
+            if (vitrine) {
+                vitrine.innerHTML = produtos.map(p => card(p)).join('');
+                // um filtro por curso que tem produto à venda
+                const filtros = document.querySelector('.category-filters');
+                if (filtros) {
+                    filtros.querySelectorAll('.filter-chip:not([data-filter="todos"])').forEach(c => c.remove());
+                    cursos.filter(c => produtos.some(p => p.curso === c.id)).forEach(c => {
+                        const info = cursoDoProduto(cursos, c.id);
+                        filtros.insertAdjacentHTML('beforeend',
+                            `<button type="button" class="filter-chip ${info.classe}"${info.estilo ? ` style="${info.estilo}"` : ''} data-filter="${info.id}" aria-pressed="false"><span class="dot"></span>${escapeHtml(info.nome)}</button>`);
+                    });
+                }
+            }
+            if (destaque) {
+                // destaques = uma carta por curso (a mais recente de cada); a mais nova das três ganha o selo "Novo"
+                const porCurso = cursos
+                    .map(c => produtos.filter(p => p.curso === c.id).pop())
+                    .filter(Boolean);
+                const maisNova = Math.max(...porCurso.map(p => p.id));
+                destaque.innerHTML = porCurso
+                    .map(p => card(p, { badge: p.id === maisNova ? 'Novo' : '' }))
+                    .join('');
+            }
+        })
+        .catch(() => sessaoPromise.then(() => {
+            const msg = `<p class="products-loading">Não foi possível carregar as cartas. ${semBack() ? AVISO_SEM_PHP : 'Tente novamente mais tarde.'}</p>`;
+            if (vitrine) vitrine.innerHTML = msg;
+            if (destaque) destaque.innerHTML = msg;
+        }));
+}
+
+// ---- Página de detalhe do produto (produto.html?id=) ----
+function initProdutoDetalhe() {
+    const alvo = document.getElementById('produto-detalhe');
+    if (!alvo) return Promise.resolve();
+    const id = Number(new URLSearchParams(window.location.search).get('id'));
+
+    return carregarCatalogo()
+        .then(({ cursos, produtos }) => {
+            const p = produtos.find(x => x.id === id);
+            if (!p) {
+                alvo.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <h2>Carta não encontrada</h2>
+                        <p>Ela pode ter saído do catálogo.</p>
+                        <a href="produtos.html" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Ver catálogo</a>
+                    </div>`;
+                return;
+            }
+            const curso = cursoDoProduto(cursos, p.curso);
+            const nome = escapeHtml(p.nome);
+            const esgotado = p.estoque <= 0;
+            const maxQtd = Math.max(1, Math.min(99, p.estoque));
+            document.title = `${p.nome} | Deck Logic`;
+            document.getElementById('pd-breadcrumb').textContent = p.nome;
+
+            alvo.innerHTML = `
+                <article class="product-detail-card ${curso.classe}"${curso.estilo ? ` style="${curso.estilo}"` : ''}>
+                    <div class="pd-media">
+                        ${p.imagem ? `<img src="${escapeHtml(p.imagem)}" alt="${escapeHtml(curso.nome ? `Carta do curso de ${curso.nome}` : p.nome)}">` : ''}
+                    </div>
+                    <div class="pd-info">
+                        ${curso.nome ? `<span class="product-course-tag">${escapeHtml(curso.nome)}</span>` : ''}
+                        <h1>${nome}</h1>
+                        <p class="pd-price">${formatPrice(p.valor)} <small>por unidade</small></p>
+                        <p class="pd-stock ${esgotado ? 'is-out' : ''}">
+                            <i class="fa-solid ${esgotado ? 'fa-circle-xmark' : 'fa-box'}" aria-hidden="true"></i>
+                            ${esgotado ? 'Esgotado no momento' : 'Em estoque'}
+                        </p>
+                        ${p.detalhes.length ? `
+                        <section class="pd-about" aria-labelledby="pd-about-titulo">
+                            <span class="pd-about-label">O que está na carta</span>
+                            <h2 class="pd-about-title" id="pd-about-titulo">${escapeHtml(p.descricao)}</h2>
+                            <p class="pd-about-text">${escapeHtml(textoDaCarta(p.detalhes))}</p>
+                        </section>` : `<p class="pd-desc">${escapeHtml(p.descricao)}</p>`}
+
+                        <div class="pd-buy">
+                            ${esgotado ? '' : `<label for="pd-qtd">Quantidade</label>`}
+                            <div class="pd-qty"${esgotado ? ' hidden' : ''}>
+                                <button type="button" class="pd-qty-btn" data-delta="-1" aria-label="Diminuir quantidade"><i class="fa-solid fa-minus"></i></button>
+                                <input type="number" id="pd-qtd" value="1" min="1" max="${maxQtd}" inputmode="numeric"${esgotado ? ' disabled' : ''}>
+                                <button type="button" class="pd-qty-btn" data-delta="1" aria-label="Aumentar quantidade"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            <p class="pd-total"${esgotado ? ' hidden' : ''}>Total: <strong id="pd-total">${formatPrice(p.valor)}</strong></p>
+                            <div class="pd-actions">
+                                <button type="button" class="btn btn-primary" id="pd-add"
+                                    data-id="${p.id}" data-name="${nome}" data-course="${escapeHtml(curso.nome)}"
+                                    data-course-class="${curso.classe}" data-course-style="${curso.estilo}"
+                                    data-price="${p.valor}" data-img="${escapeHtml(p.imagem)}" data-stock="${p.estoque}"${esgotado ? ' disabled' : ''}>
+                                    <i class="fa-solid fa-cart-plus"></i> ${esgotado ? 'Esgotado' : 'Adicionar ao carrinho'}
+                                </button>
+                                <button type="button" class="btn btn-accent" id="pd-comprar"${esgotado ? ' disabled' : ''}><i class="fa-solid fa-bolt"></i> Comprar agora</button>
+                            </div>
+                            <p class="pd-note"><i class="fa-solid fa-school" aria-hidden="true"></i> Retirada no CTI · pagamento no Pix ou dinheiro</p>
+                        </div>
+                    </div>
+                </article>`;
+
+            const qtd = document.getElementById('pd-qtd');
+            const total = document.getElementById('pd-total');
+            const lerQtd = () => Math.min(maxQtd, Math.max(1, parseInt(qtd.value, 10) || 1));
+            const atualizar = () => { qtd.value = lerQtd(); total.textContent = formatPrice(p.valor * lerQtd()); };
+            alvo.querySelectorAll('.pd-qty-btn').forEach(b => b.addEventListener('click', () => {
+                qtd.value = lerQtd() + Number(b.dataset.delta);
+                atualizar();
+            }));
+            qtd.addEventListener('change', atualizar);
+            const botao = document.getElementById('pd-add');
+            botao.addEventListener('click', () => { addToCart(botao, lerQtd()); });
+            document.getElementById('pd-comprar').addEventListener('click', () => {
+                addToCart(botao, lerQtd());
+                window.location.href = 'carrinho.html';
+            });
+
+            // outras cartas (mesmo curso primeiro)
+            const outros = produtos.filter(x => x.id !== p.id)
+                .sort((a, b) => (b.curso === p.curso) - (a.curso === p.curso))
+                .slice(0, 3);
+            const rel = document.querySelector('[data-products-relacionados]');
+            if (rel && outros.length) {
+                rel.innerHTML = outros.map(x => cardProdutoHtml(x, cursoDoProduto(cursos, x.curso))).join('');
+                document.getElementById('relacionados').hidden = false;
+            }
+        })
+        .catch(() => sessaoPromise.then(() => {
+            alvo.innerHTML = `<p class="products-loading">Não foi possível carregar a carta. ${semBack() ? AVISO_SEM_PHP : 'Tente novamente mais tarde.'}</p>`;
+        }));
+}
+
+// Servidor recusou a reserva por falta de estoque (back/compras/finalizar.php?erro=estoque)
+function initErroEstoque() {
+    const container = document.getElementById('cart-page-container');
+    const params = new URLSearchParams(window.location.search);
+    if (!container || params.get('erro') !== 'estoque') return;
+
+    let falta = [];
+    try { falta = JSON.parse(params.get('falta') || '[]'); } catch (e) { /* mostra aviso genérico */ }
+    const aviso = document.createElement('p');
+    aviso.className = 'form-alert form-alert--error';
+    aviso.setAttribute('role', 'alert');
+    aviso.innerHTML = 'Não deu pra reservar: ' + (falta.length
+        ? falta.map(([nome, restam]) => `<strong>${escapeHtml(nome)}</strong> ${restam > 0 ? `(só restam ${Number(restam)})` : '(esgotada)'}`).join(', ')
+        : 'falta estoque de algum item') + '. Ajustamos o carrinho, confira e tente de novo.';
+    container.before(aviso);
+}
+
+// Carrinho guardado no navegador pode ter preço/nome antigo: alinha com o banco
+// e tira o que foi excluído do catálogo (o back/compras/finalizar.php já cobra o preço do banco).
+function sincronizarCarrinho() {
+    if (!document.getElementById('cart-page-container') || getCart().length === 0) return;
+    carregarCatalogo()
+        .then(({ cursos, produtos }) => {
+            const porId = {};
+            produtos.forEach(p => { porId[String(p.id)] = p; });
+            const antes = JSON.stringify(getCart());
+            const removidos = [];
+            const ajustados = [];
+            const cart = getCart().filter(item => {
+                const p = porId[String(item.id)];
+                if (!p) { removidos.push(item.name); return false; }
+                if (p.estoque <= 0) { removidos.push(`${item.name} (esgotada)`); return false; }
+                item.stock = p.estoque;
+                if (item.qty > p.estoque) { ajustados.push(`${item.name}: ${p.estoque}`); item.qty = p.estoque; }
+                const curso = cursoDoProduto(cursos, p.curso);
+                item.name = p.nome;
+                item.price = p.valor;
+                item.img = p.imagem;
+                item.course = curso.nome;
+                item.courseClass = curso.classe;
+                item.courseStyle = curso.estilo;
+                return true;
+            });
+            if (JSON.stringify(cart) === antes) return;
+            saveCart(cart);
+            renderCartPage();
+            if (removidos.length) showToast(`Removida do carrinho: ${removidos.join(', ')}`);
+            if (ajustados.length) showToast(`Quantidade ajustada ao estoque: ${ajustados.join(', ')}`);
+        })
+        .catch(() => { /* sem back: mantém o carrinho como está */ });
 }
 
 // ---- Vitrine: filtro por curso + busca (?q=) ----
@@ -421,65 +773,6 @@ function initProductFilters() {
     apply();
 }
 
-function initProductModal() {
-    const modal = document.getElementById('product-modal');
-    const grid = document.querySelector('[data-products]');
-    if (!modal || !grid || typeof modal.showModal !== 'function') return;
- 
-    const $ = (id) => document.getElementById(id);
-    const addBtn = $('pm-add');
-    const stepper = addBtn.nextElementSibling;
- 
-    function abrir(card) {
-        const origem = card.querySelector('.btn-add-cart');
-        if (!origem) return;
-        const d = origem.dataset;
- 
-        // dados que o addToCart() lê do botão
-        addBtn.dataset.id = d.id;
-        addBtn.dataset.name = d.name;
-        addBtn.dataset.course = d.course;
-        addBtn.dataset.courseClass = d.courseClass || '';
-        addBtn.dataset.price = d.price;
-        addBtn.dataset.img = d.img;
-        if (stepper && stepper.classList.contains('qty-stepper')) stepper.dataset.id = d.id;
- 
-        // conteúdo visível
-        modal.className = 'product-modal ' + (d.courseClass || '');
-        $('pm-img').src = d.img;
-        $('pm-img').alt = card.querySelector('img').alt;
-        $('pm-course').textContent = d.course;
-        $('pm-title').textContent = d.name;
-        $('pm-desc').textContent = card.querySelector('.product-desc').textContent;
-        $('pm-price').textContent = formatPrice(Number(d.price));
- 
-        const lista = $('pm-list');
-        lista.innerHTML = '';
-        (card.dataset.detalhes || '').split('|').forEach(texto => {
-            texto = texto.trim();
-            if (!texto) return;
-            const li = document.createElement('li');
-            li.textContent = texto;
-            lista.appendChild(li);
-        });
-        lista.hidden = !lista.children.length;
- 
-        syncProductSteppers();
-        modal.showModal();
-    }
- 
-    // clique na imagem, no nome ou em "Ver detalhes" (o botão Adicionar/seletor não abre)
-    grid.addEventListener('click', (e) => {
-        if (e.target.closest('.btn-add-cart, .qty-stepper')) return;
-        if (!e.target.closest('.product-image-wrap, h3, .btn-details')) return;
-        abrir(e.target.closest('.product-card'));
-    });
- 
-    // fecha no X ou clicando fora (Esc já fecha sozinho)
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal || e.target.closest('[data-pm-close]')) modal.close();
-    });
-}
  
 
 // ---- Login (o form faz POST direto pro back/usuarios/login.php) ----
@@ -536,9 +829,14 @@ function initCadastro() {
     const params = new URLSearchParams(window.location.search);
     const aviso = document.getElementById('cad-email-existe');
     if (aviso && params.get('erro') === 'email') aviso.hidden = false;
+    const avisoTel = document.getElementById('cad-telefone-erro');
+    if (avisoTel && params.get('erro') === 'telefone') avisoTel.hidden = false;
 
-    // Máscara (14) 99999-9999
-    const tel = document.getElementById('cad-telefone');
+    mascaraTelefone(document.getElementById('cad-telefone'));
+}
+
+// Máscara (14) 99999-9999 (cadastro e perfil)
+function mascaraTelefone(tel) {
     if (!tel) return;
     tel.addEventListener('input', () => {
         const d = tel.value.replace(/\D/g, '').slice(0, 11);
@@ -695,33 +993,50 @@ function initEncomendaOk() {
     `;
 }
 
-// ---- Contato / Newsletter ----
+// ---- Contato / Newsletter: gravam no banco (back/contato/) ----
+function enviarFormSimples(form, url, msgOk) {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (semBack()) {
+            mostrarAvisoSemBack(form);
+            return;
+        }
+        const botao = form.querySelector('[type="submit"]');
+        if (botao) botao.disabled = true;
+        fetch(BACK_BASE + url, {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: new URLSearchParams(new FormData(form))
+        })
+            .then(r => r.json().catch(() => ({})).then(data => ({ ok: r.ok, data })))
+            .then(({ ok, data }) => {
+                if (!ok) {
+                    alert(data.erro || 'Não foi possível enviar agora. Tente novamente mais tarde.');
+                    return;
+                }
+                showToast(msgOk);
+                form.reset();
+            })
+            .catch(() => alert('Não foi possível enviar agora. Tente novamente mais tarde.'))
+            .finally(() => { if (botao) botao.disabled = false; });
+    });
+}
+
 function initSimpleForms() {
     const contato = document.getElementById('contatoForm');
-    if (contato) {
-        contato.addEventListener('submit', (e) => {
-            e.preventDefault();
-            showToast('Mensagem enviada! Responderemos em breve.');
-            contato.reset();
-        });
-    }
+    if (contato) enviarFormSimples(contato, 'contato/enviar.php', 'Mensagem enviada! Responderemos em breve.');
 
     const newsletter = document.getElementById('newsletterForm');
-    if (newsletter) {
-        newsletter.addEventListener('submit', (e) => {
-            e.preventDefault();
-            showToast('Inscrição feita! Você vai receber os lançamentos.');
-            newsletter.reset();
-        });
-    }
+    if (newsletter) enviarFormSimples(newsletter, 'contato/newsletter.php', 'Inscrição feita! Você vai receber os lançamentos.');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
     initCarousel();
-    initProductFilters();
-    initProductSteppers();
-    initProductModal();
+    Promise.all([initCatalogo(), initProdutoDetalhe()]).then(() => {
+        initProductFilters();
+        initProductSteppers();
+    });
     initLogin();
     initPasswordToggles();
     initCadastro();
@@ -730,7 +1045,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initGuardaBack();
     initTema();
     updateCartBadge();
+    initErroEstoque();
     renderCartPage();
+    sincronizarCarrinho();
     renderPerfilPage();
     initEncomendaOk();
 
