@@ -44,8 +44,8 @@
                     <input type="email" id="email" name="email" class="form-control" value="<?= htmlspecialchars($linha['email']) ?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="telefone">Telefone <span class="opt">(opcional)</span></label>
-                    <input type="tel" id="telefone" name="telefone" class="form-control" value="<?= htmlspecialchars($linha['telefone'] ?? '') ?>">
+                    <label for="telefone">Telefone <span class="req" aria-hidden="true">*</span></label>
+                    <input type="tel" id="telefone" name="telefone" class="form-control" value="<?= htmlspecialchars($linha['telefone'] ?? '') ?>" required>
                 </div>
                 <div class="form-group">
                     <?php $ehVoce = $id == $_SESSION['id_usuario']; ?>

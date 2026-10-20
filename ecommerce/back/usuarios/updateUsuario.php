@@ -5,7 +5,13 @@
     $id = $_POST['id_usuario'];
     $nome = $_POST['nome'];
     $email = $_POST['email'];
-    $telefone = $_POST['telefone'];
+    $telefone = trim($_POST['telefone'] ?? '');
+    if (!telefoneValido($telefone)) {
+        echo "Telefone obrigatório (com DDD).";
+        echo "<br><br>";
+        echo "<a href='javascript:history.back()'>Voltar</a>";
+        exit;
+    }
     // o admin logado não pode tirar o próprio acesso (senão fica trancado fora do painel)
     $ehAdmin = isset($_POST['admin']) || $id == $_SESSION['id_usuario'];
     $varSQL = "

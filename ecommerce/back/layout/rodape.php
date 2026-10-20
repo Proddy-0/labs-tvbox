@@ -55,7 +55,7 @@
     </footer>
 
     <div class="toast-container" id="toast-container" aria-live="polite"></div>
-    <script src="../../front/js/script.js"></script>
+    <script src="../../front/js/script.js?v=20261019c"></script>
 </body>
 
 </html>

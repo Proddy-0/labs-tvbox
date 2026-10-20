@@ -247,7 +247,7 @@ function renderCartPage() {
                 </div>
                 <div class="cart-summary-row">
                     <span>Entrega</span>
-                    <span>Retirada no CTI</span>
+                    <span>Retirada no CTI · Sala 6</span>
                 </div>
                 <div class="cart-summary-total">
                     <span>Total</span>
@@ -344,7 +344,7 @@ function renderPerfilPage() {
 
 // ---- Minhas compras (perfil): encomendas do usuário com o preço pago em cada item ----
 const STATUS_COMPRA = {
-    reservado: 'Reservado · retire no CTI',
+    reservado: 'Reservado · retire no CTI, Sala 6',
     entregue: 'Entregue',
     cancelado: 'Cancelado'
 };
@@ -631,7 +631,7 @@ function initProdutoDetalhe() {
                                 </button>
                                 <button type="button" class="btn btn-accent" id="pd-comprar"${esgotado ? ' disabled' : ''}><i class="fa-solid fa-bolt"></i> Comprar agora</button>
                             </div>
-                            <p class="pd-note"><i class="fa-solid fa-school" aria-hidden="true"></i> Retirada no CTI · pagamento no Pix ou dinheiro</p>
+                            <p class="pd-note"><i class="fa-solid fa-school" aria-hidden="true"></i> Retirada no CTI, Sala 6 · pagamento no Pix ou dinheiro</p>
                         </div>
                     </div>
                 </article>`;
@@ -985,7 +985,7 @@ function initEncomendaOk() {
         <div class="empty-cart">
             <i class="fa-solid fa-circle-check"></i>
             <h2>Encomenda registrada!</h2>
-            <p>Retire suas cartas no CTI. Acompanhe o status em Minhas encomendas.</p>
+            <p>Retire suas cartas no CTI, na Sala 6. Acompanhe o status em Minhas encomendas.</p>
             <a href="${BACK_BASE}compras/encomendas.php" class="btn btn-primary">
                 <i class="fa-solid fa-box"></i> Minhas encomendas
             </a>
@@ -1030,8 +1030,31 @@ function initSimpleForms() {
     if (newsletter) enviarFormSimples(newsletter, 'contato/newsletter.php', 'Inscrição feita! Você vai receber os lançamentos.');
 }
 
+// Painel: <select data-filtra-produtos="#fk_produto"> mostra só os produtos (option[data-curso]) do curso escolhido;
+// o produto só libera depois de escolher o curso
+function initFiltroProdutoPorCurso() {
+    document.querySelectorAll('[data-filtra-produtos]').forEach(filtro => {
+        const produtos = document.querySelector(filtro.dataset.filtraProdutos);
+        if (!produtos) return;
+        const aplicar = () => {
+            // sem curso escolhido não dá pra escolher produto
+            const curso = filtro.value;
+            produtos.disabled = curso === '';
+            produtos.querySelectorAll('option[data-curso]').forEach(op => {
+                const fora = op.dataset.curso !== curso;
+                op.hidden = fora;
+                op.disabled = fora;
+            });
+            if (produtos.selectedOptions[0]?.disabled) produtos.value = '';
+        };
+        filtro.addEventListener('change', aplicar);
+        aplicar();
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
+    initFiltroProdutoPorCurso();
     initCarousel();
     Promise.all([initCatalogo(), initProdutoDetalhe()]).then(() => {
         initProductFilters();

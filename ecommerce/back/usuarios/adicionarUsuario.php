@@ -25,8 +25,8 @@
                     <input type="email" id="email" name="email" class="form-control" maxlength="100" required>
                 </div>
                 <div class="form-group">
-                    <label for="telefone">Telefone <span class="opt">(opcional)</span></label>
-                    <input type="tel" id="telefone" name="telefone" class="form-control" maxlength="20">
+                    <label for="telefone">Telefone <span class="req" aria-hidden="true">*</span></label>
+                    <input type="tel" id="telefone" name="telefone" class="form-control" maxlength="20" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">

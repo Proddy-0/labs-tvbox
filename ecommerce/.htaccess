@@ -1,0 +1,7 @@
+# Bloqueia arquivos que não podem ser baixados pelo navegador (senha do banco, scripts SQL, logs, docs internas)
+<FilesMatch "^\.env|\.(sql|log|md|brM3)$">
+    Require all denied
+</FilesMatch>
+
+# Sem listagem de pastas
+Options -Indexes

@@ -13,6 +13,11 @@
         ':id_compra' => $_POST['id_compra'] ?? 0,
         ':fk_usuario' => $_SESSION['id_usuario']
     ]);
+    if (($_POST['voltar'] ?? '') == 'perfil') {
+        // cancelou pela tela Meu Perfil do site
+        header("Location: ../../front/perfil.html" . ($update->rowCount() ? "?cancelada=1" : ""));
+        exit;
+    }
     header("Location: encomendas.php" . ($update->rowCount() ? "?cancelada=1" : ""));
     exit;
 ?>

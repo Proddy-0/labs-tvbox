@@ -3,34 +3,30 @@
     include "../util.php";
     $conn = conecta();
 
+    $cursos = listaCursos($conn);
     $valorMax = $_POST['valor'] ?? '';
+    $cursoId = ($_POST['curso'] ?? '') === '' ? null : cursoValido($conn, $_POST['curso']);
+
+    $filtros = "";
+    $params = [];
     if ($valorMax != "") {
-        $select = $conn->prepare("
-            SELECT *
-            FROM produto
-            WHERE valor_unitario <= :paramValor
-              AND excluido = false
-            ORDER BY nome");
-        $select->execute([':paramValor' => $valorMax]);
-    } else {
-        $select = $conn->query("
-            SELECT *
-            FROM produto
-            WHERE excluido = false
-            ORDER BY nome");
+        $filtros .= " AND produto.valor_unitario <= :paramValor";
+        $params[':paramValor'] = $valorMax;
     }
+    if ($cursoId !== null) {
+        $filtros .= " AND produto.fk_curso = :paramCurso";
+        $params[':paramCurso'] = $cursoId;
+    }
+    $select = $conn->prepare("
+        SELECT produto.*, curso.nome AS curso_nome
+        FROM produto
+        LEFT JOIN curso ON curso.id_curso = produto.fk_curso
+        WHERE produto.excluido = false
+        $filtros
+        ORDER BY produto.nome");
+    $select->execute($params);
     $produtos = $select->fetchAll(PDO::FETCH_ASSOC);
 
-    // Imagem: primeiro a enviada pelo painel (imagens/produtos/<id>.ext), senão o caminho da coluna imagem (arquivo do front)
-    function imagemProduto($linha) {
-        foreach (['jpg', 'jpeg', 'png', 'gif', 'webp'] as $ext) {
-            $arquivo = "imagens/produtos/{$linha['id_produto']}.$ext";
-            if (file_exists($arquivo)) {
-                return $arquivo;
-            }
-        }
-        return $linha['imagem'] ? "../../front/" . $linha['imagem'] : "";
-    }
 
     $titulo = "Produtos";
     $ativo = "produtos";
@@ -50,6 +46,7 @@
                 <form action="" method="post" class="inline-form">
                     <label for="filtro-valor" class="sr-only">Valor máximo</label>
                     <input type="number" id="filtro-valor" name="valor" step="0.01" min="0" class="form-control" placeholder="Valor máximo" value="<?= htmlspecialchars($valorMax) ?>">
+                    <?= seletorCurso($cursos, $cursoId, false) ?>
                     <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
                 </form>
                 <a href="Adicionarprodutos.php" class="btn btn-outline btn-sm"><i class="fa-solid fa-plus"></i> Adicionar produto</a>
@@ -58,13 +55,14 @@
             <div class="table-wrap">
                 <table class="data-table data-table--stack">
                     <thead>
-                        <tr><th>Foto</th><th>Nome</th><th>Descrição</th><th class="num">Valor</th><th>Ações</th></tr>
+                        <tr><th>Foto</th><th>Nome</th><th>Curso</th><th>Descrição</th><th class="num">Valor</th><th>Ações</th></tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($produtos as $p) { $id = (int) $p['id_produto']; $img = imagemProduto($p); ?>
+                    <?php foreach ($produtos as $p) { $id = (int) $p['id_produto']; $img = imagemDoProduto($p, "../../"); ?>
                         <tr>
                             <td data-label="Foto"><?= $img ? '<img class="table-thumb" src="' . htmlspecialchars($img) . '" alt="">' : '—' ?></td>
                             <td class="cell-title" data-label="Nome"><?= htmlspecialchars($p['nome'] ?? '') ?></td>
+                            <td data-label="Curso"><?= htmlspecialchars($p['curso_nome'] ?? '—') ?></td>
                             <td data-label="Descrição"><?= htmlspecialchars($p['descricao']) ?></td>
                             <td class="num" data-label="Valor">R$ <?= number_format($p['valor_unitario'], 2, ',', '.') ?></td>
                             <td class="cell-actions" data-label="">
@@ -74,7 +72,7 @@
                         </tr>
                     <?php } ?>
                     <?php if (count($produtos) == 0) { ?>
-                        <tr><td colspan="5" class="panel-empty" data-label="">Nenhum produto encontrado.</td></tr>
+                        <tr><td colspan="6" class="panel-empty" data-label="">Nenhum produto encontrado.</td></tr>
                     <?php } ?>
                     </tbody>
                 </table>

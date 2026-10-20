@@ -20,6 +20,11 @@
         echo json_encode(["erro" => "Nome e e-mail são obrigatórios."]);
         exit;
     }
+    if (!telefoneValido($telefone)) {
+        http_response_code(400);
+        echo json_encode(["erro" => "Telefone obrigatório, com DDD."]);
+        exit;
+    }
 
     // Garante que o e-mail não pertence a outro usuário
     $checa = $conn->prepare("

@@ -31,7 +31,11 @@ Para aplicar a cor de um curso em qualquer componente, adicione a classe `is-inf
 
 ## Adicionar um produto
 
-Copie um `<article class="product-card ...">` em `index.html`/`produtos.html` e ajuste a classe do curso, `data-category`, a imagem e os `data-*` do botão **Adicionar** (nome, curso, preço, imagem) — o carrinho lê esses atributos. O `data-id` precisa ser o `id_produto` da tabela `produto` (hoje: 5 Informática, 6 Mecânica, 7 Eletrônica), senão a encomenda ignora o item.
+Produtos vêm do banco: cadastre pelo painel em `back/produtos/listaprodutos.php` (nome, descrição, preço, curso, detalhes e imagem). A vitrine (`produtos.html`) e os destaques da home (`index.html`, 3 mais recentes) são montados pelo `js/script.js` a partir de `back/produtos/catalogo.php`. O carrinho alinha preço/nome com o banco ao abrir, e a encomenda grava o preço do banco.
+
+Cursos (filtros e cor dos cards) ficam na tabela `curso`, cadastrada no painel em `back/cursos/cursos.php`.
+
+Banco: rodar uma vez, em ordem, os arquivos de `db/migracoes/` (001 a 003). `produto.imagem` guarda o caminho a partir da raiz do site (mesma convenção do SGE).
 
 ## Rodar localmente (com login, cadastro e encomendas)
 
@@ -49,3 +53,5 @@ Usuários de teste: `admin@decklogic.com` / `admin123` (painel) e `local@decklog
 | Minhas encomendas (cliente) | `back/compras/encomendas.php` |
 | Estoque e encomendas (admin) | `back/painel/estoque.php` |
 | Usuários (admin) | `back/usuarios/usuarios.php` |
+| Cursos (admin) | `back/cursos/cursos.php` |
+| Mensagens de contato e newsletter (admin) | `back/contato/mensagens.php` |

@@ -11,10 +11,15 @@
         exit;
     }
     $produtos = $conn->query("
-        SELECT id_produto, nome
+        SELECT id_produto, nome, fk_curso
         FROM produto
         WHERE excluido = false
         ORDER BY nome")->fetchAll(PDO::FETCH_ASSOC);
+    $cursos = listaCursos($conn);
+    $cursoId = null;
+    foreach ($produtos as $p) {
+        if ($p['id_produto'] == $linha['fk_produto']) { $cursoId = (int) $p['fk_curso']; }
+    }
 
     $titulo = "Alterar entrada";
     $ativo = "entradas";
@@ -33,10 +38,19 @@
             <form action="updateEntradas.php" method="post">
                 <input type="hidden" name="id_entrada" value="<?= $id ?>">
                 <div class="form-group">
+                    <label for="filtro-produto-curso">Curso <span class="req" aria-hidden="true">*</span></label>
+                    <select id="filtro-produto-curso" class="form-control" data-filtra-produtos="#fk_produto" required>
+                        <option value="" disabled<?= $cursoId === null ? ' selected' : '' ?>>Selecione um curso</option>
+                        <?php foreach ($cursos as $c) { ?>
+                            <option value="<?= (int) $c['id_curso'] ?>"<?= (int) $c['id_curso'] === $cursoId ? ' selected' : '' ?>><?= htmlspecialchars($c['nome']) ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="fk_produto">Produto <span class="req" aria-hidden="true">*</span></label>
                     <select id="fk_produto" name="fk_produto" class="form-control" required>
                         <?php foreach ($produtos as $p) { ?>
-                            <option value="<?= (int) $p['id_produto'] ?>"<?= $p['id_produto'] == $linha['fk_produto'] ? ' selected' : '' ?>><?= htmlspecialchars($p['nome'] ?? '') ?></option>
+                            <option value="<?= (int) $p['id_produto'] ?>" data-curso="<?= (int) $p['fk_curso'] ?>"<?= $p['id_produto'] == $linha['fk_produto'] ? ' selected' : '' ?>><?= htmlspecialchars($p['nome'] ?? '') ?></option>
                         <?php } ?>
                     </select>
                 </div>

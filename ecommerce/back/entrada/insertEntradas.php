@@ -2,6 +2,10 @@
     include "../usuarios/verificaAdm.php";
     include "../util.php";
     $conn = conecta();
+    if ((int) ($_POST['quantidade'] ?? 0) <= 0) {
+        header("Location: entradas.php?erro=quantidade");
+        exit;
+    }
     $fk_produto =$_POST['fk_produto'];
     $quantidade =$_POST['quantidade'];
     $custo_unitario =$_POST['custo_unitario'];

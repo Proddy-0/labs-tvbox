@@ -3566,3 +3566,20 @@ a.btn-details:hover {
 .pd-total[hidden] {
     display: none;
 }
+
+/* Lado direito do .panel-card-head: filtro de curso + botão de ação juntos */
+.panel-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.panel-card-actions .form-control {
+    width: auto;
+    min-width: 11rem;
+    min-height: 0;
+    height: 34px; /* mesma altura do .btn-sm ao lado */
+    padding-top: 0;
+    padding-bottom: 0;
+}

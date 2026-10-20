@@ -14,16 +14,9 @@
         exit;
     }
 
-    $imagem = "";
-    foreach (['jpg', 'jpeg', 'png', 'gif', 'webp'] as $ext) {
-        if (file_exists("imagens/produtos/$id.$ext")) {
-            $imagem = "imagens/produtos/$id.$ext";
-            break;
-        }
-    }
-    if ($imagem == "" && $linha['imagem']) {
-        $imagem = "../../front/" . $linha['imagem'];
-    }
+    $imagem = imagemDoProduto($linha, "../../");
+
+    $cursos = listaCursos($conn);
 
     $titulo = "Alterar produto";
     $ativo = "produtos";
@@ -52,6 +45,19 @@
                 <div class="form-group">
                     <label for="valor_unitario">Valor unitário (R$) <span class="req" aria-hidden="true">*</span></label>
                     <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" step="0.01" min="0" value="<?= htmlspecialchars($linha['valor_unitario']) ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="fk_curso">Curso <span class="req" aria-hidden="true">*</span></label>
+                    <select id="fk_curso" name="fk_curso" class="form-control" required>
+                        <option value="">Selecione</option>
+                        <?php foreach ($cursos as $c) { ?>
+                        <option value="<?= $c['id_curso'] ?>"<?= $linha['fk_curso'] == $c['id_curso'] ? ' selected' : '' ?>><?= htmlspecialchars($c['nome']) ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="detalhes">Detalhes <span class="opt">(opcional · um por linha, aparecem no "Ver detalhes")</span></label>
+                    <textarea id="detalhes" name="detalhes" class="form-control" rows="4" maxlength="500"><?= htmlspecialchars(str_replace('|', "\n", $linha['detalhes'] ?? '')) ?></textarea>
                 </div>
                 <?php if ($imagem != "") { ?>
                 <div class="current-image">

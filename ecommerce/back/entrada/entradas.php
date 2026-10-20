@@ -2,7 +2,9 @@
     include "../usuarios/verificaAdm.php";
     include "../util.php";
     $conn = conecta();
-    $entradas = $conn->query("
+    $cursos = listaCursos($conn);
+    $cursoId = cursoDoFiltro($conn);
+    $select = $conn->prepare("
         SELECT
             entrada.id_entrada,
             entrada.quantidade,
@@ -12,7 +14,10 @@
             produto.nome
         FROM entrada
         INNER JOIN produto ON produto.id_produto = entrada.fk_produto
-        ORDER BY entrada.data_entrada DESC")->fetchAll(PDO::FETCH_ASSOC);
+        " . ($cursoId !== null ? "WHERE produto.fk_curso = :curso" : "") . "
+        ORDER BY entrada.data_entrada DESC");
+    $select->execute($cursoId !== null ? [':curso' => $cursoId] : []);
+    $entradas = $select->fetchAll(PDO::FETCH_ASSOC);
 
     $titulo = "Entradas de estoque";
     $ativo = "entradas";
@@ -27,10 +32,21 @@
 
         <?php include "../layout/painel-nav.php"; ?>
 
+        <?php if (($_GET['erro'] ?? '') == 'estoque') { ?>
+            <p class="form-alert form-alert--error">Não dá: tirar essa quantidade deixaria encomendas entregues ou reservadas sem estoque.</p>
+        <?php } elseif (($_GET['erro'] ?? '') == 'quantidade') { ?>
+            <p class="form-alert form-alert--error">A quantidade da entrada precisa ser maior que zero.</p>
+        <?php } ?>
+
         <section class="panel-card">
             <div class="panel-card-head">
                 <h2>Histórico</h2>
-                <a href="adicionarEntradas.php" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Registrar entrada</a>
+                <div class="panel-card-actions">
+                    <form action="entradas.php" method="get" class="inline-form">
+                        <?= seletorCurso($cursos, $cursoId) ?>
+                    </form>
+                    <a href="adicionarEntradas.php<?= $cursoId !== null ? "?curso=$cursoId" : "" ?>" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Registrar entrada</a>
+                </div>
             </div>
             <div class="table-wrap">
                 <table class="data-table data-table--stack">
@@ -52,7 +68,7 @@
                         </tr>
                     <?php } ?>
                     <?php if (count($entradas) == 0) { ?>
-                        <tr><td colspan="6" class="panel-empty" data-label="">Nenhuma entrada registrada. Registre o estoque inicial de cada carta.</td></tr>
+                        <tr><td colspan="6" class="panel-empty" data-label=""><?= $cursoId !== null ? "Nenhuma entrada de carta desse curso." : "Nenhuma entrada registrada. Registre o estoque inicial de cada carta." ?></td></tr>
                     <?php } ?>
                     </tbody>
                 </table>

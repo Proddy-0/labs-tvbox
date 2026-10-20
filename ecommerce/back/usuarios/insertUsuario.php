@@ -5,7 +5,7 @@
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $senha = password_hash($_POST["senha"], PASSWORD_DEFAULT);
-    $telefone = $_POST['telefone'];
+    $telefone = trim($_POST['telefone'] ?? '');
     // Verifica se o email já existe
     $varSQL = "
         SELECT id_usuario
@@ -16,6 +16,16 @@
     $select->execute();
     // cadastro feito pela tela do site (front/cadastro.html)
     $doSite = ($_POST['origem'] ?? '') == 'site';
+    if (!telefoneValido($telefone)) {
+        if ($doSite) {
+            header("Location: ../../front/cadastro.html?erro=telefone");
+            exit;
+        }
+        echo "Telefone obrigatório (com DDD).";
+        echo "<br><br>";
+        echo "<a href='adicionarUsuario.php'>Voltar</a>";
+        exit;
+    }
     if ($select->fetch()) {
         if ($doSite) {
             header("Location: ../../front/cadastro.html?erro=email");

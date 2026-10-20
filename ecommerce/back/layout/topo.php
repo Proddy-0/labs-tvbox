@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../front/css/style.css">
+    <link rel="stylesheet" href="../../front/css/style.css?v=20261019b">
 </head>
 
 <body id="top" data-front="../../front/">
@@ -55,7 +55,7 @@
                 <svg class="logo-svg" aria-hidden="true"><use href="#logo-full" /></svg>
             </a>
 
-            <form class="search-form" action="produtos.html" method="get" role="search">
+            <form class="search-form" action="../../front/produtos.html" method="get" role="search">
                 <label for="busca" class="sr-only">Buscar cartas</label>
                 <input type="search" id="busca" name="q" placeholder="Buscar cartas de Informática, Mecânica ou Eletrônica">
                 <button type="submit" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>

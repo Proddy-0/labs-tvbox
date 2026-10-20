@@ -8,6 +8,7 @@
             compra.id_compra,
             compra.status,
             compra.data,
+            COALESCE(compra.acrescimo_total, 0) AS acrescimo,
             produto.nome,
             compra_produto.quantidade,
             compra_produto.valor_unitario
@@ -28,7 +29,7 @@
                 'status' => $linha['status'],
                 'data' => $linha['data'],
                 'itens' => [],
-                'total' => 0
+                'total' => $linha['acrescimo']   // acréscimo/desconto da venda (SGE)
             ];
         }
         $encomendas[$id]['itens'][] = $linha;
@@ -42,7 +43,7 @@
         <section class="page-hero">
             <span class="section-eyebrow">Área do cliente</span>
             <h1>Minhas encomendas</h1>
-            <p>Olá, <?= htmlspecialchars($_SESSION['nome']) ?>. Aqui ficam as cartas que você encomendou para retirar no CTI.</p>
+            <p>Olá, <?= htmlspecialchars($_SESSION['nome']) ?>. Aqui ficam as cartas que você encomendou para retirar no CTI, na <strong>Sala 6</strong>.</p>
         </section>
 
         <?php if (isset($_GET['cancelada'])) { ?>

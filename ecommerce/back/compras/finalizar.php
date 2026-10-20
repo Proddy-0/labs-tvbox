@@ -20,7 +20,8 @@
     $select = $conn->prepare("
         SELECT valor_unitario
         FROM produto
-        WHERE id_produto = :id AND excluido = false");
+        WHERE id_produto = :id AND excluido = false
+        FOR UPDATE");   // trava a linha do produto: duas reservas ao mesmo tempo não furam o estoque
 
     $conn->beginTransaction();
     try {
@@ -39,6 +40,7 @@
             VALUES (:fk_compra, :fk_produto, :valor_unitario, :quantidade)");
 
         $gravados = 0;
+        $faltando = [];
         foreach ($itens as $idProduto => $quantidade) {
             $idProduto = (int) $idProduto;
             $quantidade = (int) $quantidade;
@@ -50,6 +52,12 @@
             if ($valor === false) {
                 continue; // produto inexistente ou excluído
             }
+            // só reserva o que está disponível (entradas - entregues - já reservados)
+            $estoque = resumoEstoque($conn, $idProduto)[0];
+            if ($quantidade > $estoque['disponivel']) {
+                $faltando[] = [$estoque['nome'], max(0, $estoque['disponivel'])];
+                continue;
+            }
             $insertItem->execute([
                 ':fk_compra' => $idCompra,
                 ':fk_produto' => $idProduto,
@@ -57,6 +65,12 @@
                 ':quantidade' => $quantidade
             ]);
             $gravados++;
+        }
+
+        if ($faltando) {
+            $conn->rollBack();
+            header("Location: ../../front/carrinho.html?erro=estoque&falta=" . urlencode(json_encode($faltando, JSON_UNESCAPED_UNICODE)));
+            exit;
         }
 
         if ($gravados == 0) {
