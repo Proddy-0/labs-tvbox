@@ -1,6 +1,14 @@
 <?php
-
-// Carrega as variaveis do .env, se ainda nao tiverem sido carregadas
+$pastaMailer = file_exists(__DIR__ . '/PHPMailer/src/PHPMailer.php')
+    ? __DIR__ . '/PHPMailer/src'
+    : dirname(__DIR__) . '/PHPMailer/src';
+require_once "$pastaMailer/Exception.php";
+require_once "$pastaMailer/PHPMailer.php";
+require_once "$pastaMailer/SMTP.php";
+use PHPMailer\PHPMailer\PHPMailer;
+    // Carrega o .env localizado na raiz do projeto
+    carregaEnv(dirname(__DIR__) . "/.env");
+    $caminhoEnv = dirname(__DIR__) . "/.env";
 function carregaEnv($paramCaminho)
 {
     if (!file_exists($paramCaminho)) {
@@ -10,13 +18,12 @@ function carregaEnv($paramCaminho)
     foreach (file($paramCaminho, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $linha) {
         $linha = trim($linha);
 
-        // pula comentarios
         if ($linha === "" || $linha[0] === "#") {
             continue;
         }
 
         [$nome, $valor] = explode("=", $linha, 2);
-        $nome  = trim($nome);
+        $nome = trim($nome);
         $valor = trim($valor);
 
         putenv("$nome=$valor");
@@ -24,32 +31,30 @@ function carregaEnv($paramCaminho)
     }
 }
 
-// util.php esta em back/, e o .env esta na raiz do projeto (um nivel acima)
-carregaEnv(dirname(__DIR__) . "/.env");
 
+
+// Conexão com o banco de dados
 function conecta($paramString = "")
 {
-    // nao mandou nada, monta a string a partir das variaveis do .env
     if ($paramString == "") {
-        $host     = $_ENV['DB_HOST'];
-        $port     = $_ENV['DB_PORT'];
+        $host = $_ENV['DB_HOST'];
+        $port = $_ENV['DB_PORT'];
         $database = $_ENV['DB_DATABASE'];
-        $user     = $_ENV['DB_USER'];
+        $user = $_ENV['DB_USER'];
         $password = $_ENV['DB_PASSWORD'];
 
         $string_conexao = "pgsql:host=$host;port=$port;dbname=$database;user=$user;password=$password";
     } else {
-        // assume a string recebida
         $string_conexao = $paramString;
     }
 
-    try { //tente
+    try {
         $c = new PDO($string_conexao);
-    } catch (PDOException $e) { // se der erro ...
-        echo "Serviço indisponivel no momento,
-                tente mais tarde !<br>" . $e->getMessage();
+    } catch (PDOException $e) {
+        echo "Serviço indisponível no momento, tente mais tarde!<br>" . $e->getMessage();
         exit;
     }
+
     return $c;
 }
 
@@ -156,47 +161,96 @@ function detalhesParaBanco($texto)
     return $linhas ? mb_substr(implode('|', $linhas), 0, 500) : null;
 }
 
+// Upload de imagens
 function salvaUpload($id, $paramCaminho, $paramFiles, $paramCampo)
 {
     if (isset($paramFiles[$paramCampo])) {
-        // obtem a extensão do arquivo
         $ext = strtolower(pathinfo(
             $paramFiles[$paramCampo]['name'],
             PATHINFO_EXTENSION
         ));
-        // só aceita imagem: sem isso daria pra subir um .php e executar no servidor
+
         if (!in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
             echo "Formato de imagem não permitido.";
             return;
         }
+
         if (!is_dir($paramCaminho)) {
             mkdir($paramCaminho, 0755, true);
         }
+
         $arquivoImagem = "$paramCaminho/$id.$ext";
-        // apaga imagem antiga do mesmo id com outra extensão (senão a antiga continua sendo achada)
-        foreach (glob("$paramCaminho/$id.*") ?: [] as $antiga) {
-            if ($antiga != $arquivoImagem) {
-                unlink($antiga);
+        try {
+            if (move_uploaded_file(
+                $paramFiles[$paramCampo]['tmp_name'],
+                $arquivoImagem
+            )) {
+                echo "<br>Arquivo $arquivoImagem criado com sucesso.\n";
             }
-        }
-        if (move_uploaded_file($paramFiles[$paramCampo]['tmp_name'], $arquivoImagem)) {
-            return $arquivoImagem;
+        } catch (PDOException $e) { // se der erro ...
+            echo "Erro, verifique o arquivo se a pasta imagens existe";
         }
     }
-    return null;
 }
 
-// produto.imagem guarda o caminho a partir da RAIZ do site (mesma convenção do SGE, que grava
-// "<pasta>/produto<id>.<ext>" e mostra em eq.projetoscti.com.br/<equipe>/<imagem>).
-// $prefixo = caminho da página atual até a raiz (front/ -> "../", back/<pasta>/ -> "../../").
-function imagemDoProduto($linha, $prefixo)
+function EnviaEmail($pEmailDestino, $pAssunto, $pHtml)
 {
-    $imagem = trim($linha['imagem'] ?? '');
-    if ($imagem == '') {
-        return '';
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->Host       = $_ENV['SMTP_HOST'];
+    $mail->Port       = (int) $_ENV['SMTP_PORT'];
+    $mail->SMTPAuth   = true;
+    $mail->SMTPSecure = 'tls';
+    $mail->Username   = $_ENV['SMTP_USER'];
+    $mail->Password   = $_ENV['SMTP_PASSWORD'];
+    $mail->CharSet    = 'UTF-8';
+
+    // Só use isto se o servidor tiver certificado autoassinado
+    $mail->SMTPOptions = ['ssl' => [
+        'verify_peer'       => false,
+        'verify_peer_name'  => false,
+        'allow_self_signed' => true,
+    ]];
+
+    $mail->setFrom($_ENV['SMTP_USER'], 'Suporte de senhas');
+    $mail->addAddress($pEmailDestino, 'Usuario');
+    $mail->isHTML(true);
+    $mail->Subject = $pAssunto;
+    $mail->Body    = $pHtml;
+
+    $enviado = $mail->send();
+    if (!$enviado) {
+        error_log('Erro ao enviar e-mail: ' . $mail->ErrorInfo);
     }
-    if (preg_match('#^https?://#i', $imagem)) {
-        return $imagem;
+    return $enviado;
+}
+// Token do link "esqueci a senha": HMAC do e-mail + hash da senha atual + expiração.
+// Trocar a senha invalida o link, e ninguém sem o APP_SEGREDO consegue forjar um.
+function geraTokenRecuperacao($email, $hashSenha, $expira)
+{
+    $dados = strtolower($email) . '|' . $hashSenha . '|' . (int) $expira;
+    return hash_hmac('sha256', $dados, $_ENV['APP_SEGREDO']);
+}
+
+// Usado pelo redefinir.php para validar o link
+function tokenRecuperacaoValido($email, $hashSenha, $expira, $token)
+{
+    if ((int) $expira < time()) {
+        return false;
     }
-    return $prefixo . ltrim($imagem, '/');
+    return hash_equals(geraTokenRecuperacao($email, $hashSenha, $expira), (string) $token);
+}
+// Quantidade em estoque de um produto, usando a função qtd_estoque do banco.
+// Em caso de erro devolve null e preenche $paramErro.
+function qtd_prod($paramConn, $paramId, &$paramErro)
+{
+    try {
+        $select = $paramConn->prepare("SELECT qtd_estoque(:p)");
+        $select->bindValue(':p', (int) $paramId, PDO::PARAM_INT);
+        $select->execute();
+        return (int) $select->fetchColumn();
+    } catch (PDOException $e) {
+        $paramErro = $e->getMessage();
+        return null;
+    }
 }
